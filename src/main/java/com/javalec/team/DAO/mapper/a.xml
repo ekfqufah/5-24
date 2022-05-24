@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 패키지 이름 -->
+<mapper namespace="com.javalec.spring_mvc_board_mybatis.dao.IBDao">
+
+    <!--resultMap이 아닌 resultType 사용 -->
+    <!-- id : 해당하는 IBDao의 메소드 이름 -->
+    <!-- public ArrayList<BDto> list(); -->
+    <select id="list" resultType="com.javalec.spring_mvc_board_mybatis.dto.BDto">
+        select bId ,bName ,bTitle ,bContent ,bDate ,bHit from mvc_board order by bId desc
+    </select>
+
+    <select id="contentView" resultType="com.javalec.spring_mvc_board_mybatis.dto.BDto">
+        <!-- resultType : 결과값이 필요할 때 사용 -->
+        select bId, bName, bTitle, bContent, bDate, bHit from mvc_board where bId=#{param1}
+    </select>
+</mapper>
