@@ -1,0 +1,98 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6254522C-AEC5-9896-BD90-7EA0A80FBFC6" name="history">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 06:19:24 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<ordsAlias>table_15</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="h_code" id="B12CDAB5-4A2C-3D7F-3943-61E85583F000">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 06:23:48 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>1000</dataTypeSize>
+<ownDataTypeParameters>1000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="h_amount" id="211B02F1-1729-D3C9-9C80-CEC147622C30">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 06:23:48 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1000</dataTypePrecision>
+<ownDataTypeParameters>,1000,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_id" id="871091E1-35B0-6D70-8C70-2EDE66DDDD23">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 06:24:28 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E96BC89C-BADC-1918-A01A-6CBC2B47BF09" referredColumn="99EA73C6-F68D-1278-F1A1-F48C3D1F0DDC"/>
+</associations>
+</Column>
+<Column name="g_code" id="01CD65FE-7D3D-3242-9E5F-CA623A37F49F">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 06:25:27 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1000</dataTypePrecision>
+<ownDataTypeParameters>,1000,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2AB20E8B-A11B-0961-A98B-821DE8283642" referredColumn="AA208C6F-427A-C287-AEEC-6FF9118B8EBF"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="AC56682E-079A-53A8-336D-533202387FE2" name="history_PK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 06:23:48 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B12CDAB5-4A2C-3D7F-3943-61E85583F000"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="41DB57E9-6BFF-4BB0-90F9-2A0873CE8F40" name="history_user_t_FK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 06:24:28 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="871091E1-35B0-6D70-8C70-2EDE66DDDD23"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="16846AB3-B332-F86B-9935-3B7333E7E3E8" name="history_goods_FK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 06:25:27 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="01CD65FE-7D3D-3242-9E5F-CA623A37F49F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

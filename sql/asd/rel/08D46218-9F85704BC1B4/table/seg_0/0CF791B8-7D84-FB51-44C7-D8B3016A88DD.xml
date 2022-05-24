@@ -1,0 +1,143 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0CF791B8-7D84-FB51-44C7-D8B3016A88DD" name="user_t">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:49:42 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<ordsAlias>table_1</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="u_id" id="99EA73C6-F68D-1278-F1A1-F48C3D1F0DDC">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:56:24 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_name" id="577969DC-261A-8AF1-FB9D-71F599D50E3C">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:56:38 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_date" id="E3691C54-796C-5860-A2D3-7ED760F329D8">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:56:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_birth" id="26DFBB9F-333A-ED9E-08C9-A776B351CFC2">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:56:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_tel" id="32FD593C-B81E-EC3D-2BB0-43E72B863301">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:56:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_pwd" id="460677B8-4A49-E1EB-23AB-48BC5970B679">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:56:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_email" id="6A890075-AE6B-6FF1-8FAC-14A006567255">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:56:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_auth" id="9B372DA8-DA47-C989-B9B8-E24E95527EEF">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:56:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_point" id="B6196C9A-BFDD-4196-0593-6F8CE6360F41">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 04:57:28 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1000</dataTypePrecision>
+<ownDataTypeParameters>,1000,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_addr" id="90959FF8-6CF9-07D0-6609-5DC01FE5F290">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:43:07 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A0B71BDF-E125-F6AE-F3F1-09BD7F31CB55" name="user_t_PK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:00:10 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="99EA73C6-F68D-1278-F1A1-F48C3D1F0DDC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

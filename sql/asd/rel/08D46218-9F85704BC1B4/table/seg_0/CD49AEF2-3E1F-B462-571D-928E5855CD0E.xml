@@ -1,0 +1,108 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="CD49AEF2-3E1F-B462-571D-928E5855CD0E" name="faq">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 07:05:37 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<ordsAlias>table_21</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="f_code" id="3D109647-3177-289D-63BC-7C02A711BC1D">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 07:06:01 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,3,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="f_category" id="BB1BE2A9-0027-449F-1C5C-FF1F5914AC14">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 07:06:01 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="f_title" id="95FD1D7F-B52C-6553-9262-1B954F09F35E">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 07:06:01 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="f_content" id="C88EB678-3D82-5C4C-6DD2-FE8A579AE03A">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 07:06:01 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="f_date" id="AC51072E-A010-1E88-29E3-884F3DDE0FE3">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 07:07:32 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="u_id" id="91CFC3CD-7036-15D4-F368-308EB52C1F39">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 07:07:42 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="94482623-DD49-0107-6782-3BC60AA8BB3D" referredColumn="99EA73C6-F68D-1278-F1A1-F48C3D1F0DDC"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="6074D264-7DDF-8F7F-58B6-5B7C08920BB3" name="faq_PK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 07:06:01 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3D109647-3177-289D-63BC-7C02A711BC1D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="BB095A46-15C8-B3D4-7B56-DF789C1209CE" name="faq_user_t_FK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 07:07:42 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="91CFC3CD-7036-15D4-F368-308EB52C1F39"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

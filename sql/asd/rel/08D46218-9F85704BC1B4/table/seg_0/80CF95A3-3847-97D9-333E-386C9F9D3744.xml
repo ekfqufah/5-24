@@ -1,0 +1,86 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="80CF95A3-3847-97D9-333E-386C9F9D3744" name="seat">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:58:07 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<ordsAlias>table_13</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="se_code" id="24AA3806-C9B1-7884-B3E0-C38E8DD1571E">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:58:31 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1000</dataTypePrecision>
+<ownDataTypeParameters>,1000,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="p_code" id="30ED6DA6-0192-C9AC-C334-BB5E015A95C5">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:58:48 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1000</dataTypePrecision>
+<ownDataTypeParameters>,1000,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E968E349-A02C-0268-237C-DF28B746B4EE" referredColumn="3B5FA940-2563-2430-238D-6AF680E05A0F"/>
+</associations>
+</Column>
+<Column name="h_code" id="4B146467-9F43-85CA-9F11-3652FD67C264">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:59:28 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1000</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="60CA0E90-B0CA-49E4-8F62-63AF04E4A079" referredColumn="8DAEBB6D-0953-3C1C-B663-D76D2B0487C9"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D8865BE1-19B6-A7AF-12CD-92F355029D15" name="seat_PK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:58:31 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="24AA3806-C9B1-7884-B3E0-C38E8DD1571E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F67709A2-93D4-002B-3B1E-04E097DCF988" name="seat_price_FK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:58:48 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="30ED6DA6-0192-C9AC-C334-BB5E015A95C5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C89D4587-864D-29AB-3476-B2E5747BD4EC" name="seat_hall_FK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:59:28 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4B146467-9F43-85CA-9F11-3652FD67C264"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

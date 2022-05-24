@@ -1,0 +1,71 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="710BB4B5-B21B-B2E9-DD30-0611CDD95AB3" name="review">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:45:08 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<ordsAlias>table_5</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="r_code" id="3D34C178-2791-9A3A-7862-6773A1CF6F3A">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:45:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1000</dataTypePrecision>
+<ownDataTypeParameters>,1000,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="r_name" id="82122EBF-6587-9EF6-8927-CF5679D4AEDC">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:45:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="r_content" id="E612267F-F018-8849-1BFD-E84681AEDE4C">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:45:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1000 BYTE</dataTypeSize>
+<ownDataTypeParameters>1000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="r_date" id="17ACEBF5-0155-978E-6EEE-82B9FE20DCB9">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:45:44 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="739D3667-B082-1ED5-8069-D110A939B557" name="review_PK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:46:46 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3D34C178-2791-9A3A-7862-6773A1CF6F3A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

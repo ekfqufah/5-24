@@ -1,0 +1,73 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="723C13EE-852A-1999-7068-623112E6AF0B" name="hall">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:54:56 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<ordsAlias>table_12</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="h_code" id="8DAEBB6D-0953-3C1C-B663-D76D2B0487C9">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:55:28 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1000</dataTypePrecision>
+<ownDataTypeParameters>,1000,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="h_name" id="E4B9DF73-9CBD-76FF-F759-A5EB016CE581">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:55:28 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>100</dataTypePrecision>
+<ownDataTypeParameters>,100,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="t_code" id="24999388-6D04-B5B2-3E85-F040A929E556">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:57:34 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1000</dataTypePrecision>
+<ownDataTypeParameters>,1000,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9A692FF3-24DE-E4E8-5297-542D17F47016" referredColumn="17928D73-3778-6301-222D-8FBD8BAE1649"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="20516EC2-B9B7-33D9-A449-736F24FF183F" name="hall_PK">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:57:32 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8DAEBB6D-0953-3C1C-B663-D76D2B0487C9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="ED84294D-E97A-8C4C-227B-9314DBA6B11F" name="t_code">
+<createdBy>Administrator</createdBy>
+<createdTime>2022-05-24 05:57:34 UTC</createdTime>
+<ownerDesignName>asd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="24999388-6D04-B5B2-3E85-F040A929E556"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
