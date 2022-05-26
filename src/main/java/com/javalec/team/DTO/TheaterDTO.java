@@ -1,4 +1,4 @@
-package com.javalec.team.DTO;
+package com.javalec.team.dto;
 
 public class TheaterDTO {
     int t_code;

@@ -1,9 +1,12 @@
-package com.javalec.team.DTO;
+package com.javalec.team.dto;
 
 public class PriceDTO {
-    int p_code;
-    int p_price;
+    private int p_code;
+    private int p_price;
 
+    public PriceDTO() {
+
+    }
     public PriceDTO(int p_code, int p_price) {
         this.p_code = p_code;
         this.p_price = p_price;
