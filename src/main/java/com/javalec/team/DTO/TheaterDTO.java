@@ -6,6 +6,9 @@ public class TheaterDTO {
     String t_addr;
     int t_tel;
 
+    public TheaterDTO() {
+    }
+
     public TheaterDTO(int t_code, String t_name, String t_addr, int t_tel) {
         this.t_code = t_code;
         this.t_name = t_name;

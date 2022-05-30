@@ -1,19 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2022-05-25
-  Time: 오전 11:46
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text
-    <title>Title</title>
-
-<body>/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
+    <title>좌석 선택</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
     <body>
-${test.resultRegion} <br>
-${test.resultName}
-</body>
+    ${test.resultRegion} <br>
+    ${test.resultName}
+    </body>
 </html>

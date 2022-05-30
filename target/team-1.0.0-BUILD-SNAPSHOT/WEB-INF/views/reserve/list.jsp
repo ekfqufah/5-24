@@ -19,11 +19,9 @@
         <td>이름</td>
         <td>인덱스</td>
     </tr>
-    <c:forEach items="${pricelist}" var="dto" varStatus="status">
+    <c:forEach items="${plist}" var="dto" varStatus="status">
         <tr>
-            <td>${dto.p_code}</td>
-            <td>${dto.p_price}</td>
-            <td>${status.index}</td>
+            <td>${dto.m_code}</td>
         </tr>
     </c:forEach>
 </table>

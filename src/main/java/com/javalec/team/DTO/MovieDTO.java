@@ -1,20 +1,23 @@
 package com.javalec.team.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class MovieDTO {
-    private String m_code;
-    private Date m_date;
-    private String m_title;
-    private String m_intro;
-    private int m_time;
-    private Date m_period;
-    private int m_grade;
-    private String m_genre;
-    private String m_director;
-    private int m_rate;
-    private String m_position;
-    private String m_pics;
+     String m_code;
+     Date m_date;
+     String m_title;
+     String m_intro;
+     int m_time;
+     Date m_period;
+     int m_grade;
+     String m_genre;
+     String m_director;
+     int m_rate;
+     String m_position;
+     String m_pics;
+
+    public MovieDTO() {
+    }
 
     public MovieDTO(String m_code, Date m_date, String m_title, String m_intro, int m_time, Date m_period, int m_grade, String m_genre, String m_director, int m_rate, String m_position, String m_pics) {
         this.m_code = m_code;
@@ -29,6 +32,12 @@ public class MovieDTO {
         this.m_rate = m_rate;
         this.m_position = m_position;
         this.m_pics = m_pics;
+    }
+
+    public MovieDTO(String m_code, String m_title, Date m_period) {
+        this.m_code = m_code;
+        this.m_title = m_title;
+        this.m_period = m_period;
     }
 
     public String getM_code() {
@@ -127,21 +136,4 @@ public class MovieDTO {
         this.m_pics = m_pics;
     }
 
-    @Override
-    public String toString() {
-        return "MovieDTO{" +
-                "m_code='" + m_code + '\'' +
-                ", m_date=" + m_date +
-                ", m_title='" + m_title + '\'' +
-                ", m_intro='" + m_intro + '\'' +
-                ", m_time=" + m_time +
-                ", m_period=" + m_period +
-                ", m_grade=" + m_grade +
-                ", m_genre='" + m_genre + '\'' +
-                ", m_director='" + m_director + '\'' +
-                ", m_rate=" + m_rate +
-                ", m_position='" + m_position + '\'' +
-                ", m_pics='" + m_pics + '\'' +
-                '}';
-    }
 }

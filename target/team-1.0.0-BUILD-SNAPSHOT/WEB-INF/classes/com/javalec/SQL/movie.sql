@@ -113,17 +113,20 @@ CREATE TABLE theather (
                           t_tel  VARCHAR2(100 BYTE)
 );
 ALTER TABLE theather ADD CONSTRAINT theather_pk PRIMARY KEY ( t_code );
-CREATE TABLE user_t (
-                        u_id    VARCHAR2(100 BYTE) NOT NULL,
-                        u_name  VARCHAR2(100 BYTE),
-                        u_date  DATE,
-                        u_birth VARCHAR2(100 BYTE),
-                        u_tel   VARCHAR2(100 BYTE),
-                        u_pwd   VARCHAR2(100 BYTE),
-                        u_email VARCHAR2(100 BYTE),
-                        u_auth  VARCHAR2(100 BYTE),
-                        u_point NUMBER(10),
-                        u_addr  VARCHAR2(200 BYTE)
+CREATE TABLE USER_T
+(U_ID VARCHAR2(100)
+    ,U_NAME VARCHAR2(100)
+    ,U_PWD VARCHAR2(100)
+    ,U_ADDR1 VARCHAR2(1000)
+    ,U_ADDR2 VARCHAR2(1000)
+    ,U_ADDR3 VARCHAR2(1000)
+    ,U_DATE DATE
+    ,U_BIRTH VARCHAR2(100)
+    ,U_tel VARCHAR2(100)
+    ,U_EMAIL VARCHAR2(100)
+    ,U_AUTH VARCHAR2(10)default 'C'
+    ,U_POINT NUMBER(30)default 0
+    ,U_MONEY NUMBER(30)default 0
 );
 ALTER TABLE user_t ADD CONSTRAINT user_t_pk PRIMARY KEY ( u_id );
 ALTER TABLE book

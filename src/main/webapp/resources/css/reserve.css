@@ -116,91 +116,27 @@
 }
 
 /*선택 지역 영화관*/
-#regionTheater1 {
+#regionTheater {
   width: 100%;
   height: 100%;
   border-style: none;
   overflow: hidden;
 }
-#regionTheater2 {
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  overflow: hidden;
-}
-#regionTheater3 {
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  overflow: hidden;
-}
-#regionTheater4 {
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  overflow: hidden;
-}
-#regionTheater5 {
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  overflow: hidden;
-}
-#regionTheater6 {
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  overflow: hidden;
-}
-#regionTheater7 {
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  overflow: hidden;
-}
-#regionTheater8 {
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  overflow: hidden;
-}
-#regionTheater9 {
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  overflow: hidden;
-}
+
 #regionTheater option {
   text-align: center;
+}
+#rtat{
+  width: 100%;
+  height: 100%;
+  border-style: none;
+  overflow: hidden;
 }
 /*선택 지역 극장*/
 .layer1 {
   display: none;
 }
-.layer2 {
-  display: none;
-}
-.layer3 {
-  display: none;
-}
-.layer4 {
-  display: none;
-}
-.layer5 {
-  display: none;
-}
-.layer6 {
-  display: none;
-}
-.layer7 {
-  display: none;
-}
-.layer8 {
-  display: none;
-}
-.layer9 {
-  display: none;
-}
+
 /*날짜, 시간, 상영관*/
 #currentDate {
   border-style: none;
