@@ -16,7 +16,7 @@ public interface Res_movie_ListService {
     public List<TheaterDTO> findTheaterByRegionCode(String Rcode);
 
 //    선택 영화의 상영관 및 시간
-//    public List<HtimeDTO> findTheaterByMovie(String Mcode);
+    public List<HtimeDTO> findTheaterByMovie(String Mcode);
 
 
 

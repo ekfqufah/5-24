@@ -8,11 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Array;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 @Repository
@@ -34,7 +30,7 @@ public class Res_Movie_Reserve_Dao {
         System.out.println("sql : " + sql);
         return (ArrayList<MovieDTO>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(MovieDTO.class));
     }
-
+    /*==================== 예매 ====================*/
     //영화 목록 출력
     public ArrayList<MovieDTO> getMovieList(){
         String sql = "select m_code,m_title, m_period from movie";
@@ -43,7 +39,8 @@ public class Res_Movie_Reserve_Dao {
     //영화 날짜 유효성 검사
     public int DateValidation(String MCode){
         String sql = "select 종영날짜 from 상영테이블 where m_code="+MCode;
-        Date
+//        Date
+        return 0;
     }
 
     //선택한 지역의 영화관 리스트 출력
@@ -52,42 +49,70 @@ public class Res_Movie_Reserve_Dao {
         return (List<TheaterDTO>) jdbcTemplate.query(sql,new BeanPropertyRowMapper(TheaterDTO.class));
     }
 
-//    public ArrayList<TheaterDTO> getTheaterList(String Rcode){
-//        String sql = "select t_code, t_name from theather where t_code like '"+Rcode+"%'";
-//        return (ArrayList<TheaterDTO>) jdbcTemplate.query(sql,new BeanPropertyRowMapper(TheaterDTO.class));
-//    }
-
     //상영 테이블에서 해당 영화의 상영관 번호 가져오기
     // MCode : 영화 코드
     public ArrayList<ScreenDTO> getTheaterNum(String Mcode){
-        String sql = "select 새로운 컬럼 from screen where m_code="+Mcode;
+        String sql = "select h_num from screen where m_code="+Mcode;
         return (ArrayList<ScreenDTO>) jdbcTemplate.query(sql,new BeanPropertyRowMapper(ScreenDTO.class));
     }
 
     //영화 코드를 이용해 상영관 번호, 영화 시간 가져오기
-    public ArrayList<HtimeDTO> getTheaterDetail(String Mcode){
+    public List<HtimeDTO> getTheaterDetail(String Mcode){
         //각 영화에 배정된 상영관 번호 numlist에 저장
-        ArrayList<Integer> numlist = new ArrayList<Integer>();
         ArrayList<ScreenDTO> TheaterNum = getTheaterNum(Mcode);
-        Iterator iter = TheaterNum.iterator();
-        while(iter.hasNext()){
-            numlist.add((Integer)iter.next());
+
+        ArrayList<Integer> numlist = new ArrayList<Integer>();
+        for(int i=0;i< TheaterNum.size();i++){
+            //h_num 잘 나옴
+            numlist.add(TheaterNum.get(i).getH_num());
         }
 
-        StringBuilder sql = new StringBuilder("select * from h_time where h_num="+numlist.get(0));
+        StringBuilder sql = new StringBuilder("select h_num,h_time,h_st from h_time where h_num="+numlist.get(0));
         for(int i=1;i<numlist.size();i++) {
             sql.append(
                     " union " +
-                            "select * from h_time where h_num="+numlist.get(i));
+                            "select h_num,h_time,h_st from h_time where h_num="+numlist.get(i));
         }
-        System.out.println(sql);
-        return (ArrayList<HtimeDTO>) jdbcTemplate.query(String.valueOf(sql), new BeanPropertyRowMapper(HtimeDTO.class));
+        String Determinedsql = sql.toString();
+//        System.out.println(sql);
+        return (List<HtimeDTO>) jdbcTemplate.query(Determinedsql, new BeanPropertyRowMapper(HtimeDTO.class));
     }
 
+    /*==================== 좌석 선택 ====================*/
+    public ArrayList<MovieDTO> listMInfo(String Mcode) {
+        String sql = "select m_title, m_date, m_intro, m_genre, m_director, m_rate, m_grade from movie where m_code="+Mcode;
+        System.out.println("sql = " + sql);
+        return (ArrayList<MovieDTO>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(MovieDTO.class));
+    }
+    public ArrayList<TheaterDTO> listTInfo(int Tcode) {
+        String sql = "select t_name, t_addr from theather where t_code="+Tcode;
+        return (ArrayList<TheaterDTO>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(TheaterDTO.class));
+    }
 
+    //조조 여부 확인
+    //상영관 번호 + 시간
+    public ArrayList<HtimeDTO> jValidation(int hall, String time){
+        String sql="select * from h_time where h_num ="+hall+" and h_time = '"+time+"'";
+        return (ArrayList<HtimeDTO>) jdbcTemplate.query(sql,new BeanPropertyRowMapper(HtimeDTO.class));
+    }
 
-
-
-
-
+    //가격 가져오기 (조조 여부에 따라)
+    // 1. price 테이블에서 pcode 가져오기
+    public ArrayList<PriceDTO> getPcode(){
+        String sql ="select * from price";
+        return (ArrayList<PriceDTO>) jdbcTemplate.query(sql,new BeanPropertyRowMapper(PriceDTO.class));
+    }
+    // 2. PCode로 조조 영화 여부 확인
+    public ArrayList<Integer> getPrice(int status){
+        ArrayList<PriceDTO> pCodeList = getPcode();
+        ArrayList<Integer> priceList = new ArrayList<Integer>(); //가격 저장용 ArrayList
+        for(int i = 0;i< pCodeList.size();i++){
+            int code = pCodeList.get(i).getP_code();
+            int pcode = (code/100)%100;
+            if(status != pcode){
+                priceList.add(pCodeList.get(i).getP_price());
+            }
+        }
+        return priceList;
+    }
 }

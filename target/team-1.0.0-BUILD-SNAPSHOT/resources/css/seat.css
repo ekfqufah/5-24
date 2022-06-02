@@ -1,0 +1,107 @@
+.wrapper{
+    border: 1px solid navy;
+    width: 80%;
+    height: 1000px;
+    position: fixed;
+    margin-left: 9%;
+    border-radius: 30px;
+}
+.left-part{
+    width: 44%;
+    height: 100%;
+    margin-left: 8%;
+    margin-top: 3%;
+    float: left;
+    position: absolute;
+}
+.reserveInfo{
+    margin-left: 8%;
+    width: 100%;
+    height: 30%;
+    border: 1px solid tomato;
+    margin-bottom: 5px;
+    border-radius: 15px;
+}
+.payInfo{
+    margin-left: 8%;
+    width: 100%;
+    height: 50%;
+    border: 1px solid tomato;
+    margin-bottom: 5px;
+    border-radius: 15px;
+}
+.right-part{
+    width: 48%;
+    height: 100%;
+    margin-left: 53%;
+    float: right;
+    position: absolute;
+}
+.payment{
+    width: 800px;
+    height: 800px;
+    margin-left: 18%;
+    margin-top: 10%;
+    border: 1px solid green;
+}
+
+#payIn{
+    width: 45%;
+    height: 100%;
+    border: 1px solid lightblue;
+    float: left;
+}
+#payProcess{
+    width: 45%;
+    height: 100%;
+    border: 1px solid lightblue;
+    float: left;
+}
+.mainTheater{
+    margin-top: 25%;
+    margin-left: 10%;
+    width: 600px;
+    height: 500px;
+    border: 1px solid navy;
+}
+.screen{
+    width: 80%;
+    height: 10%;
+    border: 1px solid black;
+    margin: auto;
+    margin-top: 5%;
+    transform: perspective(100px) rotateX(-10deg);
+    text-align: center;
+    line-height: 80%;
+}
+.leftSeat{
+    padding-top: 3%;
+    margin-left: 3%;
+    margin-top: 15%;
+    width: 15%;
+    height: 60%;
+    border: 1px solid tomato;
+    float: left;
+}
+.middleSeat{
+    padding-top: 3%;
+    padding-left: 3%;
+    margin-left: 5%;
+    margin-top: 15%;
+    width: 50%;
+    height: 60%;
+    border: 1px solid salmon;
+    float: left;
+}
+.rightSeat{
+    padding-top: 3%;
+    margin-left: 5%;
+    margin-top: 15%;
+    width: 15%;
+    height: 60%;
+    border: 1px solid green;
+    float: left;
+}
+.seat{
+    zoom:2.1;
+}

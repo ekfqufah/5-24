@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public class Res_Movie_ListServiceImpl implements Res_movie_ListService {
 
+    /*===== 예매 =====*/
     @Override
     public void listMovie(Model model) {
         Res_Movie_Reserve_Dao dao = new Res_Movie_Reserve_Dao();
@@ -23,17 +24,16 @@ public class Res_Movie_ListServiceImpl implements Res_movie_ListService {
     @Override
     public List<TheaterDTO> findTheaterByRegionCode(String Rcode) {
         Res_Movie_Reserve_Dao dao = new Res_Movie_Reserve_Dao();
-        System.out.println("@@@Service Rcode: " + Rcode);
         List<TheaterDTO> tlist = dao.getTheaterList(Rcode);
         return tlist;
     }
 
-//    @Override
-//    public List<HtimeDTO> findTheaterByMovie(String Mcode) {
-//        Res_Movie_Reserve_Dao dao = new Res_Movie_Reserve_Dao();
-//        return
-//    }
-
+    @Override
+    public List<HtimeDTO> findTheaterByMovie(String Mcode) {
+        Res_Movie_Reserve_Dao dao = new Res_Movie_Reserve_Dao();
+        List<HtimeDTO> htlist = dao.getTheaterDetail(Mcode);
+        return htlist;
+    }
 
 
 //

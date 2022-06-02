@@ -7,16 +7,100 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<%
+    request.setCharacterEncoding("UTF-8");
+%>
 </head>
 <body>
+<%
+    response.setContentType("text/html;charset=UTF-8");
+%>
 <script src="${pageContext.request.contextPath}/resources/js/reserve.js"></script>
 <form action = "seat" method="post" name="resvform">
     <div class="res-wrapper">
         <div class="res-header">
-            <div id="t1">
-<%--        Bean Space     --%>
-            </div>
+                <!-- 선택 사항 알려줌 -->
+                <div class="res-result">
+                    <div class="res-result-movie">
+                        영화 제목 : <input type="text" id="resultName" name="resultName" disabled/><br>
+                        영화 코드 : <input type="text" id="resultNameCode" name="resultNameCode"/>
+                        <input type="hidden" id="SresultName" name="SresultName"/><br>
+                    </div>
+                    <div class="res-result-theater">
+                        지역 명 : <input type="text" id="resultRegion" name="resultRegion" disabled/><br>
+                        지역 코드 : <input type="text" name="resultRegionCode" id="resultRegionCode"><br>
+                        극장 명 : <input type="text" id="resultTheater" name="resultTheater" disabled/><br>
+                        극장 코드 : <input type="text" name="resultTheaterCode" id="resultTheaterCode">
+
+                        <input type="hidden" id="SresultRegion" name="SresultRegion"/><br>
+                        <input type="hidden" id="SresultTheater" name="SresultTheater"/><br>
+                    </div>
+                    <div class="res-result-time">
+                        날짜 : <input type="text" id="resultDate" name="resultDate" /><br>
+                        상영관 : <input type="text" id="resultHall" name="resultHall" /><br>
+                        시간 : <input type="text" id="resultTime" name="resultTime" />
+                    </div>
+<%--                    <input type="submit" value="좌석 선택">--%>
+                    <input type="button" value="좌석 선택" onclick="sendData();">
+                </div>
         </div>
+        <script>
+            function sendData(){
+                var reserveform = document.resvform;
+
+                var Mname = $('#resultName').val();
+                var Mcode = $('#resultNameCode').val();
+                if (!Mname == null || !Mcode == null){
+                    alert("영화를 선택해주세요")
+                    $('#movie').focus();
+                }
+                var Rname = $('#resultRegion').val();
+                var Rcode = $('#resultRegionCode').val();
+                if (!Rname|| !Rcode){
+                    alert("지역을 선택해주세요")
+                    $('#region').focus();
+                }
+
+                var Tname = $('#resultTheater').val();
+                var Tcode = $('#resultTheaterCode').val();
+                if (!Tname|| !Tcode){
+                    alert("영화관을 선택해주세요")
+                    $('#regionTheater').focus();
+                }
+
+
+                var Sdate = $('#resultDate').val();
+                if(!Sdate){
+                    alert('날짜를 선택해주세요');
+                    $('#datepicker').focus();
+                }
+                var Shall = $('#resultHall').val();
+                var Stime = $('#resultTime').val();
+
+                if (!Tname|| !Tcode){
+                    alert("상영관과 시간을 선택해주세요")
+                    $('#regionTheater').focus();
+                }
+
+                if(Mname && Mcode && Rname && Rcode && Tname && Tcode && Sdate && Shall && Stime){
+                    reserveform.submit();
+                }
+                console.log(form);
+                console.log(Mname);
+                console.log(Mcode);
+                console.log(Rname);
+
+                console.log(Rcode);
+                console.log(Tname);
+                console.log(Tcode);
+
+                console.log(Sdate);
+                console.log(Shall);
+                console.log(Stime);
+
+
+            }
+        </script>
         <div class="res-content">
             <!-- 영화 선택 -->
             <div class="res-movie">
@@ -54,7 +138,6 @@
                     <script>
                         jQuery('#region').change(function () {
                             var Rcode = jQuery('#region option:selected').val();
-                            console.log(Rcode);
                             $.ajax({
                                 url: "ajaxOne",
                                 type: "post",
@@ -65,9 +148,9 @@
                                 success: function (data) {
                                     $("#regionTheater").html(""); // 태그 초기화
                                     for(var i = 0; i<data.length;i++){
-                                        $('#regionTheater').append("<option id=rtat value="+data[i].t_code+">" +data[i].t_name + "</option>");
-                                        console.log(data[i].t_code);
-                                        console.log(data[i].t_name);
+                                        $('#regionTheater').append("<option value="+data[i].t_code+">" +data[i].t_name + "</option>");
+                                        // console.log(data[i].t_code);
+                                        // console.log(data[i].t_name);
                                     }
                                 },
                                 error: function () {
@@ -93,78 +176,82 @@
                 </div>
                 <div class="reserve-date">
                     <script>
-                        jQuery('#findHall').onclick(function () {
-                            //얘네는 form문으로 넘길 때 필요
-                            //이 ajax에서는 영화 코드만 가지고 놀기
-                            // var MovieName = $('#resultName').val();
-                            var MovieCode = $('#resultNameCode').val();
-                            console.log(MovieCode);
-                            // if (MovieName == null || MovieCode == null) {
-                            //     alert('영화를 선택해주세요');
-                            // }
-                            // var RegionName = $('#resultRegion').val();
-                            // var RegionCode = $('#resultRegionCode').val();
-                            // if (RegionName == null || RegionCode == null) {
-                            //     alert('지역를 선택해주세요');
-                            // }
-                            // var TheaterName = $('#resultTheater').val();
-                            // var TheaterCode = $('#resultTheaterCode').val();
-                            // if (TheaterName == null || TheaterCode == null) {
-                            //     alert('영화관를 선택해주세요');
-                            // }
-                            //
-                            // var SelectedDate = $('#resultDate').val();
-                            // var SelectedHall = $('#resultHall').val();
-                            // var SelectedTime = $('#resultTime').val();
-                            //
-                            // var form = document.resvform;
-                            // var obj1 = document.getElementById("movie");
-                            // var idx1 = obj1.options.selectedIndex;
-                            // var resultName = obj1.options[idx1].value
-                            // var resultRegionCode = form.resultRegionCode.value;
-                            // var resultTheaterCode = form.resultTheaterCode.value;
-                        // }
-                        //     $.ajax({
-                        //         url: "reserve?resultName=" + resultName + "&resultRegionCode=" + resultRegionCode + "&resultTheaterCode=" + resultTheaterCode,
-                        //         type: "get",
-                        //         success: function (data) {
-                        //             alert('success');
-                        //         },
-                        //         error: function () {
-                        //             alert('fail');
-                        //         }
-                        //     });
-                        }
+                        function ajaxt(){
+                            var Mcode = document.getElementById("resultNameCode").value;
+                            $.ajax({
+                                url: "ajaxTwo",
+                                type: "post",
+                                dataType:"json",
+                                data: {
+                                    "Mcode": Mcode
+                                },
+                                success: function (data) {
+                                    $("#htlist1").html("");
+                                    $("#htlist2").html("");
+                                    $("#htlist3").html("");
+                                    $("#htlist4").html("");
+                                    html1='';
+                                    html2='';
+                                    html3='';
+                                    html4='';
+                                    for(var i =0;i<data.length;i++){
+                                        // if(data[i].h_num == (i+1)){
+                                        //     //div안의 i번째 자식
+                                        // }
+                                       if(data[i].h_num == 1){
+                                           html1+="<option value="+data[i].h_num+">" + data[i].h_time +"</option>";
+                                           // console.log(html1);
+                                           // console.log(data[i].h_num);
+                                           // console.log(data[i].h_time);
+                                        }
+                                        if(data[i].h_num == 2){
+                                            html2+="<option value="+data[i].h_num+">" + data[i].h_time +"</option>";
+                                        }
+                                        if(data[i].h_num == 3){
+                                            html3+="<option value="+data[i].h_num+">" + data[i].h_time +"</option>";
+                                        }
+                                        if(data[i].h_num == 4){
+                                            html4+="<option value="+data[i].h_num+">" + data[i].h_time +"</option>";
+                                        }
+                                    }
+                                    $('#htlist1').append(html1);
+                                    $('#htlist2').append(html2);
+                                    $('#htlist3').append(html3);
+                                    $('#htlist4').append(html4);
+                                },
+                                error: function () {
+                                    alert('fail');
+                                }
+                            });
+                        };
                     </script>
-
                     <input type="text" id="datepicker" />
-                    <input type="button" id="findHall" value="조회하기"><br>
+
+<%-- 2022.05.31 상영관 및 시간 출력 --%>
+                    <div id = "hallAndTime">
+                        <select id="htlist1" name="htlist1" size="10">
+                            상영관1
+                        </select>
+                        <select id="htlist2" name="htlist2" size="10">
+                            상영관2
+                        </select>
+                        <select id="htlist3" name="htlist3" size="10">
+                            상영관3
+                        </select>
+                        <select id="htlist4" name="htlist4" size="10">
+                            상영관4
+                        </select>
+                    </div>
+                </div>
+                <div class="reserve-getData">
+                    <input type="button" id="findHall" value="조회하기" onclick="ajaxt();">
                 </div>
             </div>
         </div>
-        <!-- 선택 사항 알려줌 -->
-        <div class="res-result">
-            <div class="res-result-movie">
-                영화 제목 : <input type="text" id="resultName" name="resultName" disabled/><br>
-                영화 코드 : <input type="text" id="resultNameCode" name="resultNameCode" disabled/>
-            </div>
-            <div class="res-result-theater">
-                지역 명 : <input type="text" id="resultRegion" name="resultRegion" disabled/><br>
-                지역 코드 : <input type="text" name="resultRegionCode" id="resultRegionCode"><br>
-                극장 명 : <input type="text" id="resultTheater" name="resultTheater" disabled/><br>
-                극장 코드 : <input type="text" name="resultTheaterCode" id="resultTheaterCode">
-            </div>
-            <div class="res-result-time">
-                날짜 : <input type="text" id="resultDate" name="resultDate" /><br>
-                상영관 : <input type="text" id="resultHall" name="resultHall" /><br>
-                시간 : <input type="text" id="resultTime" name="resultTime" />
-            </div>
-            <input type="submit" value="좌석 선택">
-        </div>
+
         <script>
             $(function() {
                 var today = getToday();
-                console.log(today);
 
                 $("#datepicker").datepicker();
                 $("#datepicker").val();
@@ -184,15 +271,18 @@
                 return date.getFullYear() + "-" + ("0"+(date.getMonth()+1)).slice(-2)+ "-" + ("0"+date.getDate()).slice(-2);
             };
         </script>
+
         <script>
             $(function () {
                 var outer = $("#resultName");
+                var hidden = $("#SresultName");
                 var inner = $("#resultNameCode");
                 $("#movie").change(function () {
                     var element = $(this).find("option:selected");
                     var rtouter = element.text(); //지역 명
                     var rtinner = element.attr("value"); //지역 코드
                     outer.val(rtouter);
+                    hidden.val(rtouter);
                     inner.val(rtinner);
                 });
             });
@@ -200,26 +290,82 @@
 
             $(function () {
                 var outer = $("#resultRegion");
+                var hidden = $("#SresultRegion");
                 var inner = $("#resultRegionCode");
                 $("#region").change(function () {
                     var element = $(this).find("option:selected");
                     var rtouter = element.text(); //지역 명
                     var rtinner = element.attr("value"); //지역 코드
                     outer.val(rtouter);
+                    hidden.val(rtouter);
                     inner.val(rtinner);
                 });
             });
 
             $(function () {
                 var outer = $('#resultTheater');
+                var hidden = $('#SresultTheater');
                 var inner = $('#resultTheaterCode');
                 $('#regionTheater').change(function () {
                     var element = $(this).find('option:selected');
-
                     var rtouter = element.text(); //극장 명
                     var rtinner = element.attr('value'); // 극장 코드
                     outer.val(rtouter);
+                    hidden.val(rtouter);
                     inner.val(rtinner);
+                });
+            });
+
+            $(function () {
+                var hall = $('#resultHall');
+                var time = $('#resultTime');
+                $('#htlist1').change(function () {
+                    hall.val('');
+                    time.val('');
+                    var element = $(this).find('option:selected');
+                    var mtime = element.text(); //시간
+                    var mcode = element.attr('value'); // 상영관코드(H_NUM)
+                        hall.val(mcode);
+                        time.val(mtime);
+                 });
+            });
+            $(function () {
+                var hall = $('#resultHall');
+                var time = $('#resultTime');
+                $('#htlist2').change(function () {
+                    hall.val('');
+                    time.val('');
+                    var element = $(this).find('option:selected');
+                    var mtime = element.text(); //시간
+                    var mcode = element.attr('value'); // 상영관코드(H_NUM)
+                    hall.val(mcode);
+                    time.val(mtime);
+                });
+            });
+            $(function () {
+                var hall = $('#resultHall');
+                var time = $('#resultTime');
+                $('#htlist3').change(function () {
+                    hall.val('');
+                    time.val('');
+                    var element = $(this).find('option:selected');
+                    var mtime = element.text(); //시간
+                    var mcode = element.attr('value'); // 상영관코드(H_NUM)
+                    hall.val(mcode);
+                    time.val(mtime);
+                });
+            });
+            $(function () {
+                var hall = $('#resultHall');
+                var time = $('#resultTime');
+                $('#htlist4').change(function () {
+                    hall.val('');
+                    time.val('');
+                    var element = $(this).find('option:selected');
+                    var mtime = element.text(); //시간
+                    var mcode = element.attr('value'); // 상영관코드(H_NUM)
+                    hall.val(mcode);
+                    time.val(mtime);
                 });
             });
         </script>

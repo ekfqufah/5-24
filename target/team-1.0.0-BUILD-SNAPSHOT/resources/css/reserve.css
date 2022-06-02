@@ -74,7 +74,7 @@
 .reserve-date {
   margin: auto;
   width: 95%;
-  height: 85%;
+  height: 75%;
   border: 1px solid black;
 }
 .res-time {
@@ -126,26 +126,86 @@
 #regionTheater option {
   text-align: center;
 }
-#rtat{
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  overflow: hidden;
-}
-/*선택 지역 극장*/
-.layer1 {
-  display: none;
-}
 
+/*상영관 및 시간 */
+#hallAndTime div{
+  border : 1px solid black;
+  width : 100px;
+  height : 200px;
+  float : left;
+}
+#hallAndTime select{
+  border : none;
+  overflow: hidden;
+  width: 20%;
+  height: 50%;
+}
+.reserve-getData{
+  margin: auto;
+  text-align: center;
+}
 /*날짜, 시간, 상영관*/
 #currentDate {
   border-style: none;
+}
+#hallAndTime div{
+  border : 1px solid black;
+  width : 100px;
+  height : 200px;
+  float : left;
+}
+/*==========================================*/
+/* 선택 결과*/
+
+/* 프레임 */
+
+.res-result {
+  position: absolute;
+  margin: auto;
+  width: 80%;
+  height: 100px;
+  left: 10%;
+  bottom: 12%;
+}
+
+
+.res-result-movie {
+  margin-left: 10%;
+  width: 20%;
+  height: 100px;
+  border: 1px solid black;
+  float: left;
+}
+.res-result-movie input{
+  width: 50%;
+  text-align: center;
+}
+.res-result-theater {
+  width: 20%;
+  height: 100px;
+  border: 1px solid black;
+  float: left;
+}
+.res-result-theater input{
+  width: 50%;
+  text-align: center;
+}
+.res-result-time {
+  width: 20%;
+  height: 100px;
+  border: 1px solid black;
+  float: left;
+  text-align: center;
+  line-height: 570%;
+}
+.res-result-time input{
+  width: 50%;
+  text-align: center;
 }
 
 /*셀렉션 박스 값 받는 input */
 #result-name {
   /* border-style: none; */
-
   width: 50%;
   text-align: center;
 }
@@ -163,38 +223,3 @@
 }
 
 /*선택 결과 표시*/
-.res-result {
-  position: absolute;
-  margin: auto;
-  width: 80%;
-  height: 100px;
-  left: 10%;
-  bottom: 12%;
-}
-.res-result-movie {
-  margin-left: 10%;
-  width: 20%;
-  height: 100px;
-  border: 1px solid black;
-  float: left;
-}
-.res-result-theater {
-  width: 20%;
-  height: 100px;
-  border: 1px solid black;
-  float: left;
-}
-.res-result-date {
-  width: 20%;
-  height: 100px;
-  border: 1px solid black;
-  float: left;
-}
-.res-result-time {
-  width: 20%;
-  height: 100px;
-  border: 1px solid black;
-  float: left;
-  text-align: center;
-  line-height: 570%;
-}

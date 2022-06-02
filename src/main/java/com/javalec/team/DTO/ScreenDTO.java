@@ -1,22 +1,23 @@
 package com.javalec.team.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ScreenDTO {
     int sc_code;
-    String sc_time;
-    int t_code;
-    Date sc_date;
     int m_code;
-    int h_code;
+    int h_num;
+    Date m_date;
+    Date m_period;
 
-    public ScreenDTO(int sc_code, String sc_time, int t_code, Date sc_date, int m_code, int h_code) {
+    public ScreenDTO() {
+    }
+
+    public ScreenDTO(int sc_code, int m_code, int h_num, Date m_date, Date m_period) {
         this.sc_code = sc_code;
-        this.sc_time = sc_time;
-        this.t_code = t_code;
-        this.sc_date = sc_date;
         this.m_code = m_code;
-        this.h_code = h_code;
+        this.h_num = h_num;
+        this.m_date = m_date;
+        this.m_period = m_period;
     }
 
     public int getSc_code() {
@@ -27,30 +28,6 @@ public class ScreenDTO {
         this.sc_code = sc_code;
     }
 
-    public String getSc_time() {
-        return sc_time;
-    }
-
-    public void setSc_time(String sc_time) {
-        this.sc_time = sc_time;
-    }
-
-    public int getT_code() {
-        return t_code;
-    }
-
-    public void setT_code(int t_code) {
-        this.t_code = t_code;
-    }
-
-    public Date getSc_date() {
-        return sc_date;
-    }
-
-    public void setSc_date(Date sc_date) {
-        this.sc_date = sc_date;
-    }
-
     public int getM_code() {
         return m_code;
     }
@@ -59,11 +36,27 @@ public class ScreenDTO {
         this.m_code = m_code;
     }
 
-    public int getH_code() {
-        return h_code;
+    public int getH_num() {
+        return h_num;
     }
 
-    public void setH_code(int h_code) {
-        this.h_code = h_code;
+    public void setH_num(int h_num) {
+        this.h_num = h_num;
+    }
+
+    public Date getM_date() {
+        return m_date;
+    }
+
+    public void setM_date(Date m_date) {
+        this.m_date = m_date;
+    }
+
+    public Date getM_period() {
+        return m_period;
+    }
+
+    public void setM_period(Date m_period) {
+        this.m_period = m_period;
     }
 }

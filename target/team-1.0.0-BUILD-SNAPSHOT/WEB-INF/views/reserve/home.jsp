@@ -61,7 +61,7 @@
 <div class="deco3"></div>
 <div class="deco4"></div>
 <a href="getreserved">예매 하기</a>
-<a href="selecttest">예매 하기</a>
+<a href="gspage">좌석 선택 하기</a>
 <a href="selecttest">jdbcTest</a>
 
 </body>
