@@ -1,11 +1,11 @@
 package com.javalec.team.controller;
 
 import com.javalec.Util.Constant;
+import com.javalec.team.AppConfig;
 import com.javalec.team.dao.Res_Movie_Reserve_Dao;
 import com.javalec.team.dto.*;
 import com.javalec.team.service.Res_Movie_ListServiceImpl;
-import com.javalec.team.service.Res_Movie_SeatService;
-import com.javalec.team.service.Res_Movie_SeatServiceImpl;
+//import com.javalec.team.service.Res_Movie_SeatService;
 import com.javalec.team.service.Res_movie_ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,9 +21,11 @@ import java.util.List;
 
 @Controller
 public class Res_movie_Controller {
-    JdbcTemplate template;
+    AppConfig appConfig = new AppConfig();
+    public JdbcTemplate template;
     Res_movie_ListService ReserveService;
-    Res_Movie_SeatService SeatService;
+//    Res_Movie_SeatService SeatService;
+    Res_Movie_Reserve_Dao dao;
 
     @Autowired
     public void setTemplate(JdbcTemplate template) {
@@ -35,7 +37,7 @@ public class Res_movie_Controller {
     @RequestMapping("selecttest")
     @ResponseBody
     public String pricelist(Model model) {
-        Res_Movie_Reserve_Dao dao = new Res_Movie_Reserve_Dao();
+        dao = appConfig.dao();
         ArrayList<MovieDTO> pList = dao.listTest();
         model.addAttribute("plist",pList);
 //        ReserveService = new Res_Movie_ListServiceImpl();
@@ -53,10 +55,11 @@ public class Res_movie_Controller {
 //  예매 사이트 이동
     @RequestMapping("getreserved")
     public String respage(Model model){
-        ReserveService = new Res_Movie_ListServiceImpl(); //영화 리스트 받아옴
+        ReserveService = appConfig.reserveList(); //영화 리스트 받아옴
         ReserveService.listMovie(model); //list : MovieList
         return "reserve/reserve";
     }
+
 //  좌석 선택 사이트 이동 DEMO1
     @RequestMapping("gspage")
     public String spage(){
@@ -70,7 +73,7 @@ public class Res_movie_Controller {
     @ResponseBody
     public List<TheaterDTO> getTheatherList(HttpServletRequest req){
         String Rcode = req.getParameter("Rcode"); // View에서 지역 코드 받아옴
-        ReserveService = new Res_Movie_ListServiceImpl();
+        ReserveService = appConfig.reserveList();
         List<TheaterDTO> tlist = ReserveService.findTheaterByRegionCode(Rcode);
         return tlist;
     }
@@ -80,76 +83,32 @@ public class Res_movie_Controller {
     @ResponseBody
     public List<HtimeDTO> getTimeAndHall(HttpServletRequest req){
         String Mcode = req.getParameter("Mcode");
-        ReserveService = new Res_Movie_ListServiceImpl();
+        ReserveService = appConfig.reserveList();
+//        ReserveService = new Res_Movie_ListServiceImpl();
         List<HtimeDTO> HallTimeList = ReserveService.findTheaterByMovie(Mcode);
-//        for (int i = 0;i<HallTimeList.size();i++){
-//            if(1 == HallTimeList.get(i).getH_num()){
-//                System.out.println("@@@###HallTimeLIst : "+ i+") " + HallTimeList.get(i).getH_time());
-//            }
-////            System.out.println("@@@###HallTimeLIst : "+ i+") " + HallTimeList.get(i).getH_num());
-//        }
+        for (int i = 0;i<HallTimeList.size();i++){
+            if(1 == HallTimeList.get(i).getH_num()){
+                System.out.println("@@@###HallTimeLIst : "+ i+") " + HallTimeList.get(i).getH_time());
+            }
+//            System.out.println("@@@###HallTimeLIst : "+ i+") " + HallTimeList.get(i).getH_num());
+        }
         return HallTimeList;
     }
-
-//    @RequestMapping("ajaxOne")
-//    public String getTheatherList(HttpServletRequest req, Model model){
-//        String Rcode = req.getParameter("Rcode");
-//        System.out.println("@@@Controller Rcode : " + Rcode);
-//        ReserveService = new Res_Movie_ListServiceImpl();
-//        ReserveService.findTheaterByRegionCode(Rcode, model);
-//
-//
-//
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("rs","1234");
-//        model.addAttribute("mt1",map);
-//        return "reserve/reserve";
-//    }
-
-
-//    @RequestMapping("ajaxTwo")
-//    @ResponseBody
-//    public List<HallDTO> getHallAndTimeList(HttpServletRequest req){
-//        String Rcode = req.getParameter("Rcode");
-//        ReserveService = new Res_Movie_ListServiceImpl();
-//        List<TheaterDTO> tlist = ReserveService.findTheaterByRegionCode(Rcode);
-//        return tlist;
-//    }
-
-//    @RequestMapping("findSpecificTheater")
-//    public String getTheatherList(HttpServletRequest req, Model model){
-//        String rCode = req.getParameter("rCode");
-//        System.out.println("Controller rcode : " + rCode);
-//        ReserveService = new Res_Movie_ListServiceImpl();
-//        ReserveService.listTest(rCode, model);
-//        System.out.println("Controller ==> getmodel" + model.getClass());
-//        return "reserve/reserve";
-//    }
-//
-//    /*----- 시간 및 상영관 조회 ---20220526서버통신됨--*/
-//    @RequestMapping("reserve")
-//    @ResponseBody
-//    public String findvacant(@RequestParam("resultName") String rn, @RequestParam("resultRegionCode") String rrc, @RequestParam("resultTheaterCode") String rt, Model model) {
-//        System.out.println(rn);
-//        System.out.println(rrc);
-//        System.out.println(rt);
-//
-//        System.out.println("findvacant실행");
-//        return "reserve/reserve";
-//    }
 
 //  좌석 선택
     @RequestMapping("seat")
     public String selectSeat(HttpServletRequest req, HttpServletResponse response, Model model){
         response.setHeader("Content-Type","text/html;charset=utf-8");
-        Res_Movie_Reserve_Dao sdao = new Res_Movie_Reserve_Dao();
+        dao = appConfig.dao();
 
         String Mname = req.getParameter("SresultName"); //영화 제목
         String Tname = req.getParameter("SresultTheater"); //영화관 명
         String Rname = req.getParameter("SresultRegion"); //지역 명
+
         String Mcode = req.getParameter("resultNameCode"); //영화 코드
         String Rcode = req.getParameter("resultRegionCode"); //지역 번호(1~9)
         String Tcode = req.getParameter("resultTheaterCode"); //영화관 코드(101~90x)
+
         String Sdate = req.getParameter("resultDate"); //선택 날짜
         String Shall = req.getParameter("resultHall"); //선택 상영관 (1~4)
         String Stime = req.getParameter("resultTime"); //선택 시간
@@ -160,16 +119,44 @@ public class Res_movie_Controller {
 
         //조조 여부 (0,1)
         int hnum = Integer.parseInt(Shall);
-        ArrayList<HtimeDTO> jlist = sdao.jValidation(hnum, Stime);
+        ArrayList<HtimeDTO> jlist = dao.jValidation(hnum, Stime);
         int rstatus = jlist.get(0).getH_st();
         model.addAttribute("rst",rstatus);
 
-        ArrayList<Integer> priceList = sdao.getPrice(rstatus);
+        ArrayList<Integer> priceList = dao.getPrice(rstatus);
         for (int i =0;i< priceList.size();i++){
             priceList.get(i);
         }
-        model.addAttribute("pList",priceList);
+
+        //좌석 리스트 가져오기
+        ArrayList<SeatDTO> slist = dao.getSeatInfo(Shall);
+        
+
+        //선택된 좌석 제외
+
+
+        model.addAttribute("sInfo",slist); //좌석 정보
+        model.addAttribute("pList",priceList); //가격 정보
         return "reserve/seat";
     }
 
+
+//
+//    @RequestMapping("pProc")
+//    public void getBookedTest(HttpServletRequest req){
+//        String movieName = req.getParameter("name");
+//        System.out.println("movieName = " + movieName);
+//        String totalMoney = req.getParameter("amount");
+//        System.out.println("totalMoney = " + totalMoney);
+//    }
+
+
+    @RequestMapping("st")
+    public String gt(HttpServletRequest req){
+        String movieName = req.getParameter("name");
+        System.out.println("movieName = " + movieName);
+        String totalMoney = req.getParameter("amount");
+        System.out.println("totalMoney = " + totalMoney);
+        return "checkReserveData";
+    }
 }

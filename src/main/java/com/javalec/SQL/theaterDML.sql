@@ -1,3 +1,15 @@
+drop  table theather cascade constraints;
+
+CREATE TABLE theather (
+                          t_code NUMBER(10) NOT NULL,
+                          t_name VARCHAR2(100 BYTE),
+                          t_addr VARCHAR2(300 BYTE),
+                          t_tel  VARCHAR2(100 BYTE)
+);
+ALTER TABLE theather ADD CONSTRAINT theather_pk PRIMARY KEY ( t_code );
+-- ALTER TABLE theather   DISABLE CONSTRAINT theather_pk;
+
+-- DML
 INSERT INTO theather(t_code,t_name,t_addr,t_tel) VALUES(101,'강남','서울특별시 강남구 역삼동','02)101');
 INSERT INTO theather(t_code,t_name,t_addr,t_tel) VALUES(102,'강변','서울특별시 광진구 구의동','02)102');
 INSERT INTO theather(t_code,t_name,t_addr,t_tel) VALUES(103,'건대입구','서울특별시 광진구 자양동','02)103');
@@ -90,4 +102,3 @@ INSERT INTO theather(t_code,t_name,t_addr,t_tel) VALUES(908,'순천','전라남�
 INSERT INTO theather(t_code,t_name,t_addr,t_tel) VALUES(909,'익산','전라북도 익산시 영등동','064)909');
 INSERT INTO theather(t_code,t_name,t_addr,t_tel) VALUES(910,'정읍','전라북도 정읍시 수성동','064)910');
 INSERT INTO theather(t_code,t_name,t_addr,t_tel) VALUES(911,'제주','제주특별자치도 제주시','064)911');
-commit;

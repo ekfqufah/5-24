@@ -5,401 +5,514 @@
     <title>좌석 선택</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <%--    <link href="${pageContext.request.contextPath}/resources/css/seat.css" rel="stylesheet">--%>
-    <style>
-        .wrapper{
-            border: 1px solid navy;
-            width: 80%;
-            height: 90%;
-            position: fixed;
-            margin-left: 10%;
-            border-radius: 30px;
-        }
-        .left-part{
-            width: 44%;
-            height: 100%;
-            margin-left: 8%;
-            margin-top: 3%;
-            float: left;
-            position: absolute;
-        }
-        .reserveInfo{
-            margin-top: 5%;
-            margin-left: 8%;
-            width: 100%;
-            height: 30%;
-            border: 1px solid tomato;
-            margin-bottom: 5px;
-            border-radius: 15px;
-        }
-        .payInfo{
-            margin-left: 8%;
-            width: 100%;
-            height: 50%;
-            border: 1px solid tomato;
-            margin-bottom: 5px;
-            border-radius: 15px;
-        }
-        .right-part{
-            width: 48%;
-            height: 100%;
-            margin-left: 53%;
-            float: right;
-            position: absolute;
-        }
-        .payment{
-            width: 800px;
-            height: 800px;
-            margin-left: 18%;
-            margin-top: 10%;
-            border: 1px solid green;
-        }
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+<% request.setCharacterEncoding("UTF-8"); %>
+<style>
+    *{
+        margin: auto;
+        padding: 0%;
+    }
+    .background{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: tomato;
+        z-index: -2;
+    }
+    .wrapper{
+        width: 99.8%;
+        height:700px;
+        margin-top: 8%;
+        /* background-color: tomato; */
+    }
+    .wrapper-middle{
+        width: 90%;
+        height: 95%;
+        border-radius: 20px;
+        margin-top: 1.1%;
+        background-color: white;
+    }
+    .wrapper-left{
+        width:48%;
+        height:650px;
+        border:1px solid black;
+        border-radius: 20px;
+        float: left;
+        margin-top: .5%;
+        margin-left: 1%;
+    }
+    .wrapper-right{
+        width:48%;
+        height:650px;
+        border:1px solid black;
+        /*테두리 지우기*/
+        float: right;
+        margin-top: .5%;
+        margin-right: 1%;
+    }
+    .box-info{
+        width: 100%;
+        height: 40%;
+    }
+    .box-pic{
+        width: 33.6%;
+        height: 100%;
+        border: 1px solid royalblue;
+        float: left;
+        margin-left: 3%;
+    }
+    .box-reserve-info{
+        width: 59.7%;
+        height: 100%;
+        border: 1px solid royalblue;
+        float: right;
+        margin-right: 2.5%;
+    }
+    .table-info{
+        width: 100%;
+        height: 50%;
+        text-align: center;
+        border-collapse: collapse;
+        margin-top: 16%;
+    }
+    th, td{
+        border-bottom: 1px solid black;
+    }
+    .box-payinfo{
+        width: 68%;
+        height: 59.5%;
+        float: left;
+    }
+    .box-pay-num{
+        width: 98%;
+        height: 38%;
+    }
+    .box-pay-num>div{
+        margin-left: 2%;
+        text-align: center;
+        margin-top: 2%;
+    }
+    .box-teen-num{
+        width: 30%;
+        height: 100%;
+        border: 1px solid navy;
+        border-radius: 20px;
+        float: left;
+    }
+    .box-teen-num >h1{
+        padding-top: 10%;
+    }
+    .box-teen-num >h2{
+        padding-top: 16%;
+    }
+    .box-teen-num >input{
+        margin-top: 12%;
+        text-align: center;
+        width: 80%;
+        font-size: 40px;
+        border: none;
+        background-color: white;
+    }
+    .box-adult-num{
+        width: 30%;
+        height: 100%;
+        border: 1px solid navy;
+        border-radius: 20px;
+        float: left;
+        display: inline-block;
+    }
+    .box-adult-num >h1{
+        padding-top: 10%;
+    }
+    .box-adult-num >h2{
+        padding-top: 16%;
+    }
+    .box-adult-num>input{
+        margin-top: 12%;
+        text-align: center;
+        width: 80%;
+        font-size: 40px;
+        border: none;
+        background-color: white;
+    }
+    .box-total-num{
+        width: 30%;
+        height: 100%;
+        border: 1px solid navy;
+        border-radius: 20px;
+        float: left;
+        display: inline-block;
+    }
+    .box-total-num >h1{
+        padding-top: 10%;
+    }
+    .box-total-num>h2{
+        padding-top: 16%;
+    }
+    .box-total-num>input{
+        margin-top: 12%;
+        text-align: center;
+        width: 80%;
+        font-size: 40px;
+        border: none;
+        background-color: white;
+    }
+    .box-pay-select{
+        width: 98%;
+        height: 61%;
+    }
+    #teenPrice{
+        text-align: center;
+        width: 95%;
+        height: 80%;
+        overflow: hidden;
+        margin-top: 5%;
+    }
+    #adultPrice{
+        text-align: center;
+        width: 95%;
+        height: 80%;
+        overflow: hidden;
+        margin-top: 5%;
+    }
+    .box-pay-teen{
+        width: 45%;
+        height: 90%;
+        border: 1px solid silver;
+        float: left;
+        margin-left: 4%;
+        margin-top: 2%;
+        text-align: center;
+    }
+    .box-pay-teen>input{
+        text-align: center;
+    }
+    .box-pay-adult{
+        width: 45%;
+        height: 90%;
+        border: 1px solid silver;
+        float: right;
+        margin-right: 3%;
+        margin-top: 2%;
+        text-align: center;
+    }
+    .box-pay-adult>input{
+        text-align: center;
+    }
 
-        #payIn{
-            width: 60%;
-            height: 100%;
-            border: 1px solid lightblue;
-            float: left;
-            margin-right: 1%;
-            margin-left: 1%;
-        }
-        #payIn select{
-            overflow: hidden;
-            text-align: center;
-            width: 100%;
-            height: 80%;
-            margin-top: 6%;
-            font-size: 16px;
-        }
-        #payProcess{
-            width: 30%;
-            height: 100%;
-            border: 1px solid lightblue;
-            float: left;
-        }
-
-        .middle-price{
-            margin-top: 2%;
-            width: 98%;
-            height: 45%;
-            border: 1px solid black;
-            float: left;
-        }
-        .middle-price div{
-            width: 98%;
-            height: 45%;
-            border: 1px solid black;
-        }
-
-        .left-price{
-            width: 48%;
-            height: 45%;
-            border: 1px solid black;
-            float: left;
-            margin: auto;
-        }
-        .left-price input{
-            margin-left: 15%;
-            text-align: center;
-            margin-top: 2%;
-        }
-        .right-price{
-            float: left;
-            width: 48%;
-            height: 45%;
-            border: 1px solid black;
-            margin-left: 1%;
-            margin: auto;
-        }
-        .right-price input{
-            margin-left: 15%;
-            text-align: center;
-            margin-top: 2%;
-        }
-
-        .mainTheater{
-            margin-top: 25%;
-            margin-left: 10%;
-            width: 600px;
-            height: 500px;
-            border: 1px solid navy;
-        }
-        .screen{
-            width: 80%;
-            height: 10%;
-            border: 1px solid black;
-            margin: auto;
-            margin-top: 5%;
-            transform: perspective(100px) rotateX(-10deg);
-            text-align: center;
-            line-height: 80%;
-        }
-        .leftSeat{
-            padding-top: 3%;
-            margin-left: 3%;
-            margin-top: 15%;
-            width: 15%;
-            height: 60%;
-            border: 1px solid tomato;
-            float: left;
-        }
-        .middleSeat{
-            padding-top: 3%;
-            padding-left: 3%;
-            margin-left: 5%;
-            margin-top: 15%;
-            width: 50%;
-            height: 60%;
-            border: 1px solid salmon;
-            float: left;
-        }
-        .rightSeat{
-            padding-top: 3%;
-            margin-left: 5%;
-            margin-top: 15%;
-            width: 15%;
-            height: 60%;
-            border: 1px solid green;
-            float: left;
-        }
-        .seat{
-            zoom:2.1;
-        }
-    </style>
-<%
-    request.setCharacterEncoding("UTF-8");
-%>
+    .box-pay{
+        width: 31.3%;
+        height: 59.5%;
+        float: right;
+    }
+    .box-pay-info{
+        margin-top: 5%;
+        height: 60%;
+        border: 1px solid green;
+        text-align: center;
+    }
+    .box-pay-info>input{
+        text-align: center;
+        margin-top: 5%;
+        width: 80%;
+        height: 10%;
+    }
+    .box-pay-info>table{
+        margin-top: 10%;
+    }
+    .box-pay-info>h2{
+        margin-top: 10%;
+    }
+    #tPrice{
+        text-align: right;
+        border: none;
+        background-color: white;
+    }
+    #aPrice{
+        text-align: right;
+        border: none;
+        background-color: white;
+    }
+    #totalPrice{
+        width: 80%;
+        height: 15%;
+        border: none;
+        background-color: white;
+        font-size: 20px;
+    }
+    .btn-pay{
+        margin-top: 20%;
+        width: 100%;
+        height: 20%;
+        border-radius: 20px;
+        z-index: 5;
+    }
+    .mainScreen{
+        width: 80%;
+        height: 10%;
+        border: 2px solid black;
+        margin: auto;
+        margin-top: 7%;
+        transform: perspective(100px) rotateX(-5deg);
+        text-align: center;
+        line-height: 350%;
+        margin-bottom: 7%;
+    }
+    .hseat{
+        zoom : 4;
+        margin-left: 2.8%;
+    }
+</style>
 </head>
 <body>
-<%
-    response.setContentType("text/html;charset=UTF-8");
-%>
-<div class="wrapper"></div>
-<div class="left-part">
-    <div class="reserveInfo">
-        <table width="400" border="1">
-            <tr>
-                <td>영화 제목</td><td>${ReserveDetail.movieName}</td>
-            </tr>
-            <tr>
-                <td>지역 명</td><td>${ReserveDetail.regionName}</td>
-            </tr>
-            <tr>
-                <td>영화관 이름</td><td>${ReserveDetail.theaterName}</td>
-            </tr>
-            <tr>
-                <td>상영관</td><td>${ReserveDetail.hall}</td>
-            </tr>
-            <tr>
-                <td>시간</td><td>${ReserveDetail.time}</td>
-            </tr>
-            <tr>
-                <td>날짜</td><td>${ReserveDetail.date}</td>
-            </tr>
-            <tr>
-                <td>조조 여부</td> <td>${rst}</td>
-            </tr>
-        </table>
-        조조 여부 : 0 => 조조 아님
-        <table>
-            <tr>
-                <td>가격</td>
-            </tr>
-            <c:forEach items="${pList}" var="plist">
-                <tr>
-                    <td>${plist}</td>
-                </tr>
-            </c:forEach>
-
-        </table>
-    </div>
-    <div class="payInfo">
-        <div id="payIn">
-            <div class="middle-price">
-                <div class="total-num">
-                    청소년 : <input type="text" name="tpay" id="tpay"><br>
-                    성인 : <input type="text" name="apay" id="apay">
-                </div>
-                <div class="total-price">
-                    가격) 청소년 : <input type="text" name="tprice" id="tprice" disabled><br>
-                    가격) 성인 : <input type="text" name="aprice" id="aprice" disabled><br>
-                    총 가격 : <input type="text" name="totalPayment" id="totalPayment" disabled>
-
-                    <input type="hidden" name="htprice" id="htprice">
-                    <input type="hidden" name="haprice" id="haprice">
-                    <input type="hidden" name="htotalPayment" id="htotalPayment">
+<% response.setContentType("text/html;charset=UTF-8"); %>
+<div class="background"></div>
+<div class="wrapper">
+    <div class="wrapper-middle">
+        <div class="wrapper-left">
+            <div class="box-info">
+                <div class="box-pic"></div>
+                <div class="box-reserve-info">
+                    <table class="table-info">
+                        <tr>
+                            <td>제목</td>
+                            <td colspan="2">${ReserveDetail.movieName}</td>
+                        </tr>
+                        <tr>
+                            <td>일자</td>
+                            <td colspan="2">${ReserveDetail.date}</td>
+                        </tr>
+                        <tr>
+                            <td>시간</td>
+                            <td>${ReserveDetail.time}</td>
+                            <td>${rst}</td>
+                        </tr>
+                        <tr>
+                            <td>영화관</td>
+                            <td colspan="2">${ReserveDetail.regionName} | ${ReserveDetail.theaterName}</td>
+                        </tr>
+                        <tr>
+                            <td>상영관</td>
+                            <td colspan="2">${ReserveDetail.hall}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div class="left-price">
-                <input type="text" value="청소년" disabled><br>
-                <select id="teenPrice" name="teenPrice" size="4">
-                    <option value="0">0</option>
-                    <option value="${pList[0]}">1</option>
-                    <option value="${pList[0]*2}">2</option>
-                    <option value="${pList[0]*3}">3</option>
-                    <option value="${pList[0]*4}">4</option>
-                </select>
+
+            <script>
+                /*==================== 좌석 선택 ====================*/
+                /*
+                * 인원 미선택 시 좌석 선택 못하게 (V)
+                * 인원수만큼 선택 가능하게
+                * [ 카운트 초기화 ]
+                * 1 - 설정한 인원수 넘길 시
+                * 2 - 인원수 변동 생길시
+                * */
+                $(document).ready(function() {
+                    let count = 0;
+                    // let tNum = $("#teenPrice option:selected").text();
+                    // let aNum = $("#adultPrice option:selected").text();
+                    // let total = Number(tNum) + Number(aNum);//총 인원
+                    let numarr = new Array();
+                    let totalNumarr = new Array();
+
+                    $('.hseat').on('click',function () {
+                        let svalue = $(this).val();//선택한 좌석 value값 가져옴 (a1~g10)
+                        let num = $('#totalNum').val(); //총 인원
+                        console.log('선택 전 count : ' + count);
+                        if(this.check = true){
+                            count++;//좌석 선택 수 카운트
+                        }
+                        console.log('선택 후 count : ' + count);
+
+                        numarr.push(svalue); //선택 좌석 배열에 넣음
+
+                        console.log('count : ' + count);
+                        console.log('num : ' + num);
+                        console.log(numarr);
+                        for (let i = 0; i < numarr.length; i++) {
+                            console.log('배열 값 :  ' + numarr[i]);
+                        }
+                        if(!num){
+                            alert('인원을 선택해주세요');
+                            this.checked = false;
+                            --count;
+                            numarr.pop();
+                        }
+                        //초기화 1
+                        if(count > num && num){
+                            alert('더 이상 선택할 수 없습니다.');
+                            this.checked = false;
+                            --count;
+                            numarr.pop();
+                            console.log('삭제후 => count : ' + count);
+                            console.log('삭제후 => num : ' + num);
+                            console.log('삭제후 =>  numarr : ' + numarr);
+                        } });
+                    //초기화 2
+                    $('#teenPrice, #adultPrice').on('change', function(){ count = 0; });
+
+                    $('.btn-pay').on("click",function () {
+                        let seatarr = new Array();
+                        for (let i = 0; i < numarr.length; i++) {
+                           seatarr[i] = numarr[i];
+                        }
+                        console.log(seatarr);
+                        let tMoney= $('#teenPrice').val();
+                        let aMoney=$('#adultPrice').val();
+                        let num = $('#totalPrice').val();
+
+                        if(num > 0 && seatarr[0] != null){
+                            alert('결제 시작쓰');
+                            let totalSum = $('#htotalPayment').val();
+                            let mName = $('#msname').val(); //영화 제목
+                            console.log('총 금액 : ' + totalSum);
+
+                            //상영관 코드, 사용자 아이디, 좌석 번호 코드, 영화 코드, 예매 날짜
+                            var IMP = window.IMP;
+                            IMP.init('imp55234985');
+                            IMP.request_pay({
+                                pg : 'inicis',
+                                pay_method : 'card',
+                                merchant_uid : 'merchant_' + new Date().getTime(),
+                                name : mName,  //영화 제목 -> 영화 코드
+                                amount : '100', // 총 가격
+                                buyer_email : 'iamport@siot.do'/*구매자 이메일*/, //변경해도 되는지
+                                buyer_name : '구매자이름', //사용자 아이디
+                                buyer_tel : '010-1234-5678'/*구매자 연락처*/, //좌석 번호 코드
+                                buyer_addr : '서울특별시 강남구 삼성동'/*구매자 주소*/, //
+                                buyer_postcode : '123-456',/*구매자 우편번호*/ //예매 날짜
+                            }, function(rsp) {
+                                console.log(rsp);
+                                if(rsp.success) {
+                                    let msg = '결제 완료';
+                                    alert(msg);
+                                    location.href="st";
+                                    $.ajax({
+                                        type: 'post',
+                                        url: 'pProc',
+                                        data: {
+                                            "name": mName,
+                                            "amount": totalSum,
+                                            "textex" : 'testing'
+                                        },
+                                    });
+                                }else{
+                                    let msg = '결제 실패';
+                                }
+                            });
+                        }else{
+                            if(seatarr[0] == null){
+                                alert('좌석을 선택해주세요');
+                            }
+                            if(num == 0 || !num){
+                                alert('인원을 선택해주세요');
+                            }
+                        }
+                    });
+                });
+            </script>
+
+            <div class="box-payinfo">
+                <div class="box-pay-num">
+                    <div class="box-teen-num">
+                        <h2>청소년</h2>
+                        <input type="text" id="teenNum" disabled/>
+                    </div>
+                    <div class="box-adult-num">
+                        <h2>성인</h2>
+                        <input type="text" id="adultNum" disabled/>
+                    </div>
+                    <div class="box-total-num">
+                        <h2>총 인원</h2>
+                        <input type="text" id="totalNum" disabled/>
+                    </div>
+                </div>
+                <div class="box-pay-select">
+                    <div class="box-pay-teen">
+                        <input type="text" value="청소년" disabled><br>
+                        <select id="teenPrice" name="teenPrice" size="4" onchange="chanfunc();">
+                            <option value="0">0</option>
+                            <option value="${pList[0]}">1</option>
+                            <option value="${pList[0]*2}">2</option>
+                            <option value="${pList[0]*3}">3</option>
+                            <option value="${pList[0]*4}">4</option>
+                        </select>
+                    </div>
+                    <div class="box-pay-adult">
+                        <input type="text" value="성인" disabled><br>
+                        <select id="adultPrice" name="adultPrice" size="5" onchange="chanfunc();">
+                            <option value="0">0</option>
+                            <option value="${pList[1]}">1</option>
+                            <option value="${pList[1]*2}">2</option>
+                            <option value="${pList[1]*3}">3</option>
+                            <option value="${pList[1]*4}">4</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div class="right-price">
-                <input type="text" value="으른" disabled><br>
-                <select id="adultPrice" name="adultPrice" size="4">
-                    <option value="0">0</option>
-                    <option value="${pList[1]}">1</option>
-                    <option value="${pList[1]*2}">2</option>
-                    <option value="${pList[1]*3}">3</option>
-                    <option value="${pList[1]*4}">4</option>
-                </select>
+            <script>
+                function chanfunc() {
+                    let teenNumber = $("#teenNum"); let adultNumber = $("#adultNum"); let totalNumber = $("#totalNum");
+                    //인원수 불러옴 (MAX : 4명)
+                    let tNum = $("#teenPrice option:selected").text(); let aNum = $("#adultPrice option:selected").text();
+                    teenNumber.val(tNum); adultNumber.val(aNum);
+                    let total = Number(tNum) + Number(aNum); totalNumber.val(total);
+                    let teenPrice = $("#tPrice"); let adultPrice = $("#aPrice"); let totalprice = $("#totalPrice");
+                    let hprice1 = $("#htprice"); let hprice2 = $("#haprice"); let htotalprice = $("#htotalprice");
+                    //가격
+
+                    let tPrice = $("#teenPrice option:selected").val(); let aPrice = $("#adultPrice option:selected").val();
+                    teenPrice.val(tPrice); adultPrice.val(aPrice);
+                    hprice1.val(tPrice); hprice2.val(aPrice);
+
+                    let teenagerPrice = Number(hprice1.val()); let AdultPrice = Number(hprice2.val()); let totalSum = teenagerPrice + AdultPrice;
+                    totalprice.val(totalSum); htotalprice.val(totalSum);
+                    if (total > 4) {
+                        alert("최대 4명까지 선택 가능합니다");
+                        teenNumber.val(null); adultNumber.val(null); totalNumber.val(null);
+                        //가격
+                        teenPrice.val(null); adultPrice.val(null); totalprice.val(null);
+                        location.reload();
+                        $('#teenPrice').focus();
+                    } }
+            </script>
+
+            <div class="box-pay">
+                <div class="box-pay-info">
+                    <table>
+                        <tr>
+                            <td>청소년</td>
+                            <td><input type="text" id="tPrice" disabled>원</td>
+                            <input type="hidden" id="htprice">
+                        </tr>
+                        <tr>
+                            <td>성인</td>
+                            <td><input type="text" id="aPrice" disabled>원</td>
+                            <input type="hidden" id="haprice">
+                        </tr>
+                    </table>
+                    <h2>총 가격</h2>
+                    <input type="text" id="totalPrice" disabled>
+                    <input type="hidden" id="htotalprice">
+                </div>
+                <input type="button" class="btn-pay" id="reserveBtn" value="결제하기"/>
             </div>
         </div>
-        <script>
-            $('#teenPrice, #adultPrice').change(function (){
-                var result1 = $('#tpay');
-                var result2 = $('#apay');
-
-                var price1 = $('#tprice');
-                var price2 = $('#aprice');
-                var totalprice = $('#totalPayment');
-
-                var hprice1 = $('#htprice');
-                var hprice2 = $('#haprice');
-                var htotalprice = $('#htotalPayment');
-
-
-                //인원수 불러옴 (MAX : 4명)
-                var tNum = $('#teenPrice     option:selected').text();
-                var aNum = $('#adultPrice option:selected').text();
-                result1.val(tNum);
-                result2.val(aNum);
-                var total = Number(tNum)+Number(aNum);
-
-                //가격
-                var tPrice = $('#teenPrice option:selected').val();
-                var aPrice = $('#adultPrice option:selected').val();
-                price1.val(tPrice);
-                price2.val(aPrice);
-
-                hprice1.val(tPrice);
-                hprice2.val(aPrice);
-
-                var teenPrice = Number(hprice1.val());
-                var AdultPrice = Number(hprice2.val());
-                var totalSum = teenPrice + AdultPrice;
-
-                console.log('청소년 가격 : ' + teenPrice);
-                console.log('청소년 가격 : ' + teenPrice);
-                console.log('총 가격 : ' +totalSum);
-
-                totalprice.val(totalSum);
-                htotalprice.val(totalSum);
-
-
-                if(total>4){
-                    alert('최대 4명까지 선택 가능합니다');
-                    result1.val(null);
-                    result2.val(null);
-                    $('#teenPrice').val('0');
-                    $('#adultPrice').val('0');
-                    total=0;
-                    price1.val(null);
-                    price2.val(null);
-                    totalprice.val(null);
-                }
-            });
-        </script>
-        <div id="payProcess">
-
-            인원수, 영화 정보,지역 및 극장 명,총 가격,결제하기<br>
-            인원수 선택한 값만큼 자리 고를 수 있게 해야함<br>
-            모든 영화관은 위 상영관 공동으로 사용할 예정<br>
-            모든 자리 코드화 해야함<br>
-            A1~A10<br>
-            G1~G10<br>
-            이미 선택한 자리는 선택 못하도록
+        <div class="wrapper-right">
+            <div class="mainScreen">
+                <h1>SCREEN</h1>
+            </div>
+            <div id="seatcase">
+                <c:forEach items="${sInfo}" var="sData" varStatus="status">
+                    <input type="checkbox" class="hseat" id="${sData.se_code}" name ="hseat" value="${sData.se_code}" >
+                </c:forEach>
+            </div>
         </div>
     </div>
-</div>
-<div class="right-part">
-    <div class="mainTheater">
-        <div class="screen">
-            <h1>SCREEN</h1>
-        </div>
-        <div class="leftSeat">
-            <input type="checkbox" class="seat" name="" value="a1">
-            <input type="checkbox" class="seat" name="" value="a2">
-            <input type="checkbox" class="seat" name="" value="b1">
-            <input type="checkbox" class="seat" name="" value="b2">
-            <input type="checkbox" class="seat" name="" value="c1">
-            <input type="checkbox" class="seat" name="" value="c2">
-            <input type="checkbox" class="seat" name="" value="d1">
-            <input type="checkbox" class="seat" name="" value="d2">
-            <input type="checkbox" class="seat" name="" value="e1">
-            <input type="checkbox" class="seat" name="" value="e2">
-            <input type="checkbox" class="seat" name="" value="f1">
-            <input type="checkbox" class="seat" name="" value="f2">
-            <input type="checkbox" class="seat" name="" value="g1">
-            <input type="checkbox" class="seat" name="" value="g2">
-        </div>
-        <div class="middleSeat">
-            <input type="checkbox" class="seat" name="" value="a3">
-            <input type="checkbox" class="seat" name="" value="a4">
-            <input type="checkbox" class="seat" name="" value="a5">
-            <input type="checkbox" class="seat" name="" value="a6">
-            <input type="checkbox" class="seat" name="" value="a7">
-            <input type="checkbox" class="seat" name="" value="a8">
-            <input type="checkbox" class="seat" name="" value="b3">
-            <input type="checkbox" class="seat" name="" value="b4">
-            <input type="checkbox" class="seat" name="" value="b5">
-            <input type="checkbox" class="seat" name="" value="b6">
-            <input type="checkbox" class="seat" name="" value="b7">
-            <input type="checkbox" class="seat" name="" value="b8">
-            <input type="checkbox" class="seat" name="" value="c3">
-            <input type="checkbox" class="seat" name="" value="c4">
-            <input type="checkbox" class="seat" name="" value="c5">
-            <input type="checkbox" class="seat" name="" value="c6">
-            <input type="checkbox" class="seat" name="" value="c7">
-            <input type="checkbox" class="seat" name="" value="c8">
-            <input type="checkbox" class="seat" name="" value="d3">
-            <input type="checkbox" class="seat" name="" value="d4">
-            <input type="checkbox" class="seat" name="" value="d5">
-            <input type="checkbox" class="seat" name="" value="d6">
-            <input type="checkbox" class="seat" name="" value="d7">
-            <input type="checkbox" class="seat" name="" value="d8">
-            <input type="checkbox" class="seat" name="" value="e3">
-            <input type="checkbox" class="seat" name="" value="e4">
-            <input type="checkbox" class="seat" name="" value="e5">
-            <input type="checkbox" class="seat" name="" value="e6">
-            <input type="checkbox" class="seat" name="" value="e7">
-            <input type="checkbox" class="seat" name="" value="e8">
-            <input type="checkbox" class="seat" name="" value="f3">
-            <input type="checkbox" class="seat" name="" value="f4">
-            <input type="checkbox" class="seat" name="" value="f5">
-            <input type="checkbox" class="seat" name="" value="f6">
-            <input type="checkbox" class="seat" name="" value="f7">
-            <input type="checkbox" class="seat" name="" value="f8">
-            <input type="checkbox" class="seat" name="" value="g3">
-            <input type="checkbox" class="seat" name="" value="g4">
-            <input type="checkbox" class="seat" name="" value="g5">
-            <input type="checkbox" class="seat" name="" value="g6">
-            <input type="checkbox" class="seat" name="" value="g7">
-            <input type="checkbox" class="seat" name="" value="g8">
-        </div>
-        <div class="rightSeat">
-            <input type="checkbox" class="seat" name="" value="a9">
-            <input type="checkbox" class="seat" name="" value="a10">
-            <input type="checkbox" class="seat" name="" value="b9">
-            <input type="checkbox" class="seat" name="" value="b10">
-            <input type="checkbox" class="seat" name="" value="c9">
-            <input type="checkbox" class="seat" name="" value="c10">
-            <input type="checkbox" class="seat" name="" value="d9">
-            <input type="checkbox" class="seat" name="" value="d10">
-            <input type="checkbox" class="seat" name="" value="e9">
-            <input type="checkbox" class="seat" name="" value="e10">
-            <input type="checkbox" class="seat" name="" value="f9">
-            <input type="checkbox" class="seat" name="" value="f10">
-            <input type="checkbox" class="seat" name="" value="g9">
-            <input type="checkbox" class="seat" name="" value="g10">
-        </div>
-    </div>
-    <object width="400" height="400" data="https://www.youtube.com"></object>
 </div>
 </body>
 </html>

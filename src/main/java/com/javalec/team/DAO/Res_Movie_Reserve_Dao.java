@@ -18,10 +18,14 @@ public class Res_Movie_Reserve_Dao {
     public Res_Movie_Reserve_Dao() {
         jdbcTemplate = Constant.template;
     }
-    @Autowired
-    public void setDatasSource(DataSource dataSource){
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+
+    //    public Res_Movie_Reserve_Dao() {
+//        jdbcTemplate = Constant.template;
+//    }
+//    @Autowired
+//    public void setDatasSource(DataSource dataSource){
+//        this.jdbcTemplate = new JdbcTemplate(dataSource);
+//    }
 
     //테스트용 SQL
     public ArrayList<MovieDTO> listTest() {
@@ -58,6 +62,7 @@ public class Res_Movie_Reserve_Dao {
 
     //영화 코드를 이용해 상영관 번호, 영화 시간 가져오기
     public List<HtimeDTO> getTheaterDetail(String Mcode){
+        System.out.println("@@@DAO=>Mcode = " + Mcode);
         //각 영화에 배정된 상영관 번호 numlist에 저장
         ArrayList<ScreenDTO> TheaterNum = getTheaterNum(Mcode);
 
@@ -67,14 +72,14 @@ public class Res_Movie_Reserve_Dao {
             numlist.add(TheaterNum.get(i).getH_num());
         }
 
-        StringBuilder sql = new StringBuilder("select h_num,h_time,h_st from h_time where h_num="+numlist.get(0));
+        StringBuilder sql = new StringBuilder("select h_num,h_time,h_st from hall_time where h_num="+numlist.get(0));
         for(int i=1;i<numlist.size();i++) {
             sql.append(
                     " union " +
-                            "select h_num,h_time,h_st from h_time where h_num="+numlist.get(i));
+                            "select h_num,h_time,h_st from hall_time where h_num="+numlist.get(i));
         }
         String Determinedsql = sql.toString();
-//        System.out.println(sql);
+        System.out.println(Determinedsql);
         return (List<HtimeDTO>) jdbcTemplate.query(Determinedsql, new BeanPropertyRowMapper(HtimeDTO.class));
     }
 
@@ -92,7 +97,7 @@ public class Res_Movie_Reserve_Dao {
     //조조 여부 확인
     //상영관 번호 + 시간
     public ArrayList<HtimeDTO> jValidation(int hall, String time){
-        String sql="select * from h_time where h_num ="+hall+" and h_time = '"+time+"'";
+        String sql="select * from hall_time where h_num ="+hall+" and h_time = '"+time+"'";
         return (ArrayList<HtimeDTO>) jdbcTemplate.query(sql,new BeanPropertyRowMapper(HtimeDTO.class));
     }
 
@@ -115,4 +120,11 @@ public class Res_Movie_Reserve_Dao {
         }
         return priceList;
     }
+
+    //좌석 정보 가져오기
+    public ArrayList<SeatDTO> getSeatInfo(String sHall){
+        String sql = "select h_num, se_code from seat where h_num="+sHall;
+        return (ArrayList<SeatDTO>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(SeatDTO.class));
+    }
+
 }

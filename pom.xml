@@ -32,13 +32,19 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-
-		<!-- JDBC Template -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>4.1.4.RELEASE</version>
+			<version>5.3.20</version>
 		</dependency>
+
+<!--		&lt;!&ndash; JDBC Template &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework</groupId>-->
+<!--			<artifactId>spring-jdbc</artifactId>-->
+<!--			<version>4.1.4.RELEASE</version>-->
+<!--		</dependency>-->
 		<!-- JSON MAPPER -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

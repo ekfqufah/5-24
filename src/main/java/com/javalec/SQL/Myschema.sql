@@ -19,7 +19,7 @@ CREATE TABLE screen (
 ALTER TABLE screen ADD CONSTRAINT screen_pk PRIMARY KEY ( sc_code );
 
 
--- Seat
+-- Seat (220603 SeatDML)
 drop table seat cascade constraints;
 create table seat(
                      h_num number(2),

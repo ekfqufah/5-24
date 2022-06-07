@@ -14,5 +14,4 @@ public class MovieMemory {
     String date;
     String hall;
     String time;
-
 }
