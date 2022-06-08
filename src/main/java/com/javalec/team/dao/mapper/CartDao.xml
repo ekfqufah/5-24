@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javalec.team.dao.CartDao">
+
+     
+	
+	<insert id="insertCart">
+		insert into cart(c_code,c_amount,G_CODE,u_id,g_price) VALUES(CART_SEQ.nextval,${c_amount},${g_code},'${u_id}',${g_price})
+    </insert>
+    
+    <select id="getAllCart" resultType="com.javalec.team.dto.CartDto">
+        <!-- select c_code,c_amount,G_CODE,u_id,g_price from cart where u_id=#{u_id}  -->
+        Select c.c_code as c_code , c.c_amount as c_amount, c.g_code as g_code, c.u_id as u_id ,  c.g_price as g_price
+        ,  g.img_origin as img_origin ,  g.img_1 as img_1,  g.g_name as g_name
+	  from cart c , goods g
+	  where c.g_code = g.g_code(+)
+	  and c.u_id = #{u_id}
+    </select>  
+ 
+    
+    <delete id="delCart" parameterType="hashmap">
+       	 delete from cart where c_code= #{c_code}
+    </delete>
+    
+    <select id="cartlistbuy" resultType="com.javalec.team.dto.CartDto">
+        select c_code,c_amount,G_CODE,u_id,g_price from cart where u_id=#{u_id} and c_code=#{c_code}
+    </select> 
+    
+    <update id="updateCart" parameterType="hashmap">
+       	update cart set c_amount = #{c_amount} , g_price = #{g_price} where u_id =#{u_id} and g_code  =#{g_code}
+       	
+    </update>
+  
+</mapper>
