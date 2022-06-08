@@ -46,6 +46,10 @@ public class Res_movie_Controller {
         return "reserve/seat";
     }
 
+    @RequestMapping("gspagasdsae")
+    public String spagasdsade(){
+        return "abc";
+    }
 
     /*==================== SELECT ====================*/
     @RequestMapping("ajaxOne")

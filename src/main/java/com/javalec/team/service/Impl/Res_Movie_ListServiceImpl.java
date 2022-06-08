@@ -48,4 +48,5 @@ public class Res_Movie_ListServiceImpl implements Res_movie_ListService {
         ArrayList<MovieDto> pList = dao.listTest();
         model.addAttribute("plist",pList);
     }
+    
 }
