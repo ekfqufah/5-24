@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/javalec/team/controller/GoodsController.java=UTF-8
+encoding//src/main/java/com/javalec/team/controller/Res_movie_Controller.java=UTF-8
+encoding//src/main/java/com/javalec/team/dao/Res_Movie_Reserve_Dao.java=UTF-8
+encoding//src/main/java/com/javalec/team/dto/MovieMemory.java=UTF-8
+encoding//src/main/java/com/javalec/team/service/Impl/Res_Movie_ListServiceImpl.java=UTF-8
