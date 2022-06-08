@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javalec.team.dao.GoodDao"> <!-- dao파일 경로 --> 
+
+    <select id="get" resultType="com.javalec.team.dto.GoodDto">
+    	select go_yn from good where r_code=#{r_code} and u_id=#{u_id}
+    </select>
+
+   <insert id="insert" parameterType="hashmap">
+   		insert into good(go_code, u_id, r_code, go_yn)
+   		 values(good_seq.nextval, #{u_id}, #{r_code}, 1)
+    </insert>
+    
+</mapper>
