@@ -48,6 +48,7 @@ public class Res_movie_Controller {
 
     @RequestMapping("gspagasdsae")
     public String spagasdsade(){
+        String str = "asdsadadadsasd";
         return "abc";
     }
 
