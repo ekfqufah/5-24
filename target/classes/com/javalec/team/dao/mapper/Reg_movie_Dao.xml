@@ -10,7 +10,7 @@
     </insert>
     
     <select id="list" resultType="com.javalec.team.dto.MovieDto">
-        select m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics 
+        select m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics ,m_originimg 
         from movie 
         order by m_date desc
     </select>

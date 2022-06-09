@@ -102,8 +102,9 @@ $(function (){
             	$('#datalist').append("<tr><td>영화코드</td><td>영화포스터</td><td>영화제목</td><td>개봉일자</td><td>영화소개</td><td>상영시간</td><td>관람등급</td><td>장르</td><td>감독명</td><td>평점</td><td>비고</td></tr>")
             	for(var i = 0; i<data.length;i++){
             		console.log("@@@@@@@@"+data[i].m_position)
-            /* 		$('#datalist').append("<tr onclick='location.href=\"../movieDisplay?m_code="+data[i].m_code+"\"' style='cursor:pointer'><td>"+data[i].m_code+"</td>"+ */
-            		$('#datalist').append("<tr style='cursor:pointer'><td>"+data[i].m_code+"</td>"+
+            		$('#datalist').append("<tr onclick='location.href=\"movieDisplay?m_code="+data[i].m_code+"\"' style='cursor:pointer'><td>"+data[i].m_code+"</td>"+ 
+            		
+            		/* $('#datalist').append("<tr style='cursor:pointer'><td>"+data[i].m_code+"</td>"+ */
             							     "<td><img src='${pageContext.request.contextPath}/resources/"+data[i].m_position+"' class='img_list'></td>"+
             							     "<td>"+data[i].m_title+"</td>"+
             								"<td>"+data[i].m_date2+"</td>"+

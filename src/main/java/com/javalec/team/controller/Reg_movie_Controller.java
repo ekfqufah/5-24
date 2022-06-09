@@ -48,6 +48,7 @@ public class Reg_movie_Controller {
 		MovieDto movieDto = service.getMove(param);		
 		model.addAttribute("movie",movieDto);
 		ArrayList<MovieDto> dtoList =service.getStillCut(param);
+		System.out.println(dtoList.get(0).getM_pics());
 		model.addAttribute("dtoList",dtoList);
 	}
 
@@ -151,6 +152,7 @@ public class Reg_movie_Controller {
 public String movie_list(HttpServletRequest request, Model model) {
 	System.out.println("request 값 제대로 나옴??? movie_list ===>"+request.getParameter("kind"));
 	ArrayList<MovieDto> list = service.list();
+	//System.out.println(list.get(0).getM_position());
 	model.addAttribute("list", list);
 	return "reg_movie/movie_list";
 }
