@@ -8,7 +8,7 @@
 
      <select id="getGoods" resultType="com.javalec.team.dto.GoodsDto" parameterType="hashmap">
         <!-- select mem_pwd from mvc_member where mem_uid=#{mem_uid} --> 
-        select g_name,g_code,g_price from goods where g_code = #{g_code}
+        select * from goods where g_code = #{g_code}
     </select> 
  
    <insert id="insertBuy">

@@ -14,9 +14,20 @@
         values(#{u_id}, #{u_pwd}, #{u_name}, #{u_birth}, #{u_email}, #{u_tel}, #{u_addr1}, #{u_addr2}, #{u_addr3}, sysdate)
     </insert>
     
-    <delete id="outUser">
+    <select id="getMyUser_t" resultType="com.javalec.team.dto.UserDto">
+        select U_NAME,U_PWD,U_ADDR1 ,U_ADDR2,U_ADDR3,U_DATE 
+        ,U_BIRTH,U_tel,U_EMAIL,U_AUTH ,U_POINT ,U_MONEY from user_t where u_id=#{u_id} 
+    </select>
+    
+  
+    
+    
+    <delete id="outUser" parameterType="hashmap">
 		delete from user_t where u_id=#{u_id}
     </delete>
+   
+    
+    
     <insert id="editUser" parameterType="hashmap">
         update user_t set u_pwd = #{u_pwd}, u_birth = #{u_birth}, u_email = #{u_email}, u_tel = #{u_tel}, 
         u_addr1 = #{u_addr1}, u_addr2 = #{u_addr2}, u_addr3 = #{u_addr3} where u_id = #{u_id} 

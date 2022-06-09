@@ -137,6 +137,13 @@ public class UserServiceImpl implements UserService{
 		
 		return dto;
 	}
+
+	@Override
+	public UserDto getMyUser_t(HashMap<String, String> param) {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		UserDto dto = dao.getMyUser_t(param);
+		return dto;
+	}
 	
 
 

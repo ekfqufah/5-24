@@ -80,6 +80,7 @@
 	            		console.log("@@@@@@@@2"+data[i].img_1)
 	            		
 	             		$('#datalist').append("<tr onclick='location.href=\"goodsDisplay?g_code="+data[i].g_code+"\"' style='cursor:pointer'>"+
+	             				
 	            								"<td>"+data[i].g_code+"</td>"+
 	            								"<td>"+data[i].g_name+"</td>"+
 	            								"<td>"+data[i].g_price+"</td>"+

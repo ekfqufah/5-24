@@ -7,7 +7,7 @@
 <title>Insert title here</title>
  <%
  				String u_id = (String)session.getAttribute("u_id");	    	
- 			 %> 
+ %> 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="Expires" content="-1" />
@@ -17,11 +17,11 @@
     <meta name="viewport" content="width=1024" />
     
     <link rel="alternate" href="http://m.cgv.co.kr" />
-    <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/webfont.css" />
-    <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/reset.css" />
+   	<link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/webfont.css" />  
+    <!-- <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/reset.css" /> -->
     <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/layout.css" />
     <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/module.css?20211209" />
-    <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/content.css" />
+  	<link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/content.css" /> 
     <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/common.css" />
     
     <link rel="stylesheet" media="print" type="text/css" href="https://img.cgv.co.kr/R2014/css/print.css" />    
@@ -121,23 +121,7 @@
 	    		 location.href="cartProcess?g_code="+${goods.g_code}+"&g_name="+g_name+"&g_price="+${goods.g_price}+"&c_amount="+c_amount+"&u_id="+u_id; 
 	   	 	 }
     	});
-	     
-	    
  	});
- 	
- 	$(document).ready(function() {
-   	 $('#c_amount').change(function() {
-	    	 
-			   /* var c_amount = $('.c_amount'+count).val();*/
-			   let svalue = $(this).val();//선택한 좌석 value값 가져옴 (a1~g10)
-			   var g_price = ${goods.g_price};
-			   /* alert("this?"+svalue); */  
-			   
-			    $('.total_price').text(svalue*g_price);
-		   });
- 	}); 
- 	 
-		   
    </script>
 </head>
 <body>
@@ -146,7 +130,7 @@
 
 <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/giftstore/giftstore.css" />
 
-
+<jsp:include page="../main/mainHeader.jsp" flush="false"></jsp:include> 
 	<%--  <h1 id="title">제목</h1>
 	 <input type="button" value="버튼" id="btn2" class="btn2">
 	 
@@ -188,17 +172,6 @@
 		</form>
 	</table> --%>
 	
-	<div class='category_wrap'>
- <div class='category_contents_wrap'>
-     <ul class='category_content'>
-		<li id='cm1' name='categorymenu' class=''><a href='#' onclick="javascript:fnCategoryData('1');">팝콘</a></li>
-		<li id='cm2' name='categorymenu' class=''><a href='#' onclick="javascript:fnCategoryData('2');">음료</a></li>
-		<li id='cm3' name='categorymenu' class=''><a href='#' onclick="javascript:fnCategoryData('3');">스낵</a></li>
-	</ul>
-     <ul class='cart_content'>
-         <li><a href='#' onclick='javascript:app.goLogin();return false;'>장바구니</a><span id='cartviewcnt'>0</span></li>     </ul>
- </div>
-</div>
 
     <!-- E 카테고리 메뉴 & 받은선물/장바구니 -->
     
@@ -213,10 +186,8 @@
 		    	<strong class='category_product_detail_title'>${goods.g_name}</strong>   
 		    <div class='category_product_detail_contents'>         
 		   			<div class='category_product_detail_contents_img_wrap'>
-		                 <ul class='bxslider'>
-		             		 <!-- <li><img src='http://img.cgv.co.kr/GiftStore/Product/Pc/Detail/15463252014310.jpg' alt='#'></li> -->
-		             		 <li><img src='${pageContext.request.contextPath}/resources/${goods.img_1}' class='img_list'></li>
-                 		 </ul>
+		                 <ul style="list-style: none;">
+		              <li><img src="${pageContext.request.contextPath}/resources/${goods.img_1}" alt='제품 사진'></li>                 </ul>
 		           	</div>           
 		           	
 		           	<div class='category_product_detail_contents_wrap'>               
@@ -249,7 +220,7 @@
 		           <span class='com_total_price' id='spantotalprice'>?</span>               	
 		           </div>               	
 		           <div class='category_product_detail_total_price'>               		
-		           <p class='com_form_total_price'>총 구매금액<span class='com_total_price0 com_product_total_price total_price'>0</span></p>               	
+		           <p class='com_form_total_price'>총 구매금액<span class='com_total_price0 com_product_total_price'>4,500</span></p>               	
 		           </div>                
 		           </div>               
 				           <div align="right" class='category_product_detail_btn_wrap'> 
@@ -315,6 +286,6 @@
 		    <!-- 추가상품 -->
 	</form>
    
-	
+<jsp:include page="../main/mainFooter.jsp" flush="false"></jsp:include>	
 </body>
 </html>
