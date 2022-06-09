@@ -45,7 +45,7 @@
 		text-align: center;
 	}	
 	
-	.sort_default, .button2 {
+	.sort_default, .button2, .add_btn, .edit_btn, .del_btn {
 		background-color: white;
 		border-color: #E0E0E0;
 		border-radius: 5px;
@@ -60,7 +60,6 @@
 	}; */
 	
 	$(function(){
-		//alert("ぞしぞしぞしぞししぞし");
 	    $("input:button[name='button']").on('click',function(){
 	        var kind = $(this).val();	//獄動戚 適遣 鞠醸聖 獣, 鯵紺 獄動税 葵戚 kind 痕呪拭 眼沿
 	      	
@@ -74,20 +73,28 @@
 	            success : function(data){
 	            	
 	            	$('#datalist').empty()
-	            	$('#datalist').append("<tr><td>雌念腰硲</td><td>雌念戚硯</td><td>雌念亜維</td><td>雌念紫遭戚硯</td><td>雌念紫遭</td></tr>")
+	            	$('#datalist').append("<tr><td>雌念腰硲</td><td>雌念戚硯</td><td>雌念亜維</td><td>雌念紫遭</td><td>搾壱</td></tr>")
 	            	for(var i = 0; i<data.length;i++){
 	            		console.log("@@@@@@@@1"+data[i].img_origin)
 	            		console.log("@@@@@@@@2"+data[i].img_1)
 	            		
-	             		$('#datalist').append("<tr onclick='location.href=\"goodsDisplay?g_code="+data[i].g_code+"\"' style='cursor:pointer'>"+
-	             				
+	             		$('#datalist').append("<tr style='cursor:pointer'>"+
 	            								"<td>"+data[i].g_code+"</td>"+
-	            								"<td>"+data[i].g_name+"</td>"+
+	            								"<td><a href=\"goodsDisplay?g_code="+data[i].g_code+"\">"+data[i].g_name+"</a></td>"+
 	            								"<td>"+data[i].g_price+"</td>"+
-	            								"<td>"+data[i].img_origin+"</td>"+
 	            								"<td><img src='${pageContext.request.contextPath}/resources/"+data[i].img_1+"' class='img_list'></td>"+
-	            		  					  "</tr>") 
+	            							     "<td>"+
+	            									"<input type='button' value='呪舛' onclick='location.href=\"edit_goods_process?g_code="+data[i].g_code+"\"' class='edit_btn'>"+
+	            									"<input type='button' value='肢薦' onclick='check();' class='del_btn'>"+
+	            					 				"<input type='hidden' id='g_code_hidden' value='"+data[i].g_code+"'>"+				
+	            								 "</td>"+
+	            		  					  "</tr>"
+	             							) 
 	            	}
+	            	$('#datalist').append(
+	            			 "<tr><td colspan='5'><input type='button' value='雌念 蓄亜' onclick='location.href=\"addGoods\"' class='add_btn'></td></tr>"
+	            			
+	            							)
 	            	//$('#datalist').append("<tr><td colspan='5'><input type='button' value='雌念 蓄亜' onclick='location.href=\"addmovie\"''></td></tr>");
 	            	
 	            												/* <input type="button" value="慎鉢 蓄亜" onclick="location.href='reg_movie'">			 */
@@ -108,13 +115,22 @@
 		});
 </script>
 
+<script type="text/javascript">	
+	function check(){
+		var value = $('#g_code_hidden').val();
+	    if(confirm("肢薦馬獣畏柔艦猿?")){
+	        location.href = "del_goods?g_code="+value;
+	    } else {
+	    }
+	}
+</script>
 </head>
 <body>
 <jsp:include page="../main/mainHeader.jsp" flush="false"></jsp:include>
 	<div class="main_body">
 		<div class="list_title">
 			<h3 class="title_h3">[淫軒切] 雌念 軒什闘</h3>
-			<div id="list_search_btn">
+<%-- 			<div id="list_search_btn">
 				<a href="addGoods">雌念蓄亜</a>
 				<a href="goodsDisplay?g_code=2">雌室舛左</a>
 				<a href="cartlist?u_id=wjdcksgml">舌郊姥艦鯉系</a>
@@ -132,7 +148,7 @@
 				<a href='notice/list'>notice</a>
 				<a href='qna_main'>qna</a>
 				<a href='review/list'>/review</a>
-			</div>
+			</div> --%>
 		</div>
 		<div id="list_sort_btn">
 			<input type="button" name="button" value="置重授" class="sort_default">

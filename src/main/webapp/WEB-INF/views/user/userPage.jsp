@@ -7,7 +7,7 @@
 <meta charset="EUC-KR">
 <%
 				String u_id = (String)session.getAttribute("u_id");
-	        System.out.println("u_id"+u_id);
+	        
 	        	if(u_id == null) {
 	        		%>
 	        		<script>
@@ -61,43 +61,14 @@
 }
 
 
-</style>s
+</style>
 </head>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
- 
-  <script type="text/javascript">	
-		function del_Ok(){
-			
-			var pwd = prompt("비밀번호를 입력하세요.");
-			 var u_pwd = ${user.u_pwd};
-			 var u_id = "<%=u_id%>";
-			 if(pwd == u_pwd){ 			 	
-			 	if(confirm("정말 탈퇴 하시겠습니까?") == true){
-					location.href = "delete?u_id="+u_id;
-				}
-			 } else {
-					alert("비밀번호가 맞지 않습니다.");
-				}
-		 }
-		   <%--  
-		    var u_pwd = $('#userDto.u_pwd').val();
-			  if(pwd == u_pwd){ 
-				if(confirm("정말 탈퇴 하시겠습니까?") == true){
-					location.href = "delete?u_id="<%=u_id%>;
-				}
-			 } else {
-				alert("비밀번호가 맞지 않습니다.");
-				history.go(-1);
-			}  --%>
-		     
-		    
-		
-	</script>
- 
 <body>
 
+마이페이지입니다.
 	<jsp:include page="../main/mainHeader.jsp" flush="false"></jsp:include>
 	
 	
@@ -109,7 +80,7 @@
   <div class="media-body">
   
   		<div class="div1 divs" style="width: 100%-170px;  margin-left: 170px; border-bottom: 1px solid rgba(0, 0, 0, 0.09);">
-		    <div> <span style="font-size: 29px;"> ${user.u_name}</span></div>
+		    <div> <span style="font-size: 29px;"> 정찬희</span></div>
 	    </div>
 	   
 	    
@@ -118,18 +89,15 @@
 	    </div>
 		    <div style="width: 100%-170px;  margin-left: 170px; border-bottom: 1px solid rgba(0, 0, 0, 0.09);"></div>
 		<div class="div2 divs">
-		    <div><span style="font-size: 20px;">등급:${user.u_auth}</span></div>
+		    <div><span style="font-size: 20px;">등급:A</span></div>
 	    </div>
 	    
 	    <div class="div2 divs">
-
-			<div> 
-				<a href="editUser?u_id=<%=u_id%>">프로필수정 </a><span></span>&nbsp;/&nbsp;
-				<a href="#" onclick="del_Ok();">탈퇴
-			</a></div>
+		    <div> <a href="register">프로필수정 </a><span></span>&nbsp;/&nbsp;<a href="#s">탈퇴</a></div>
 	    </div>
   </div>
 </div>
+
 
  <div class="userMovie" style="font-size: 12px;">
 	<table class="table table-hover userMovie1">

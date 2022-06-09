@@ -28,7 +28,7 @@ public interface UserService {
 	public UserDto tryToFinPwd(HashMap<String, String> param);
 	
 	public ArrayList<MovieDto> getMybookList(HashMap<String, String> param);
-	public UserDto getMyUser_t(HashMap<String, String> param);
+	
 	public ArrayList<ReviewDto> getMyReviewList(HashMap<String, String> param);
 	public ArrayList<FaqDto> getMyFaqList(HashMap<String, String> param);
 	public ArrayList<NoticeDto> getMyNotice_tList(HashMap<String, String> param);

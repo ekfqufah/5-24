@@ -5,9 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
- <%
- 				String u_id = (String)session.getAttribute("u_id");	    	
- 			 %> 
+
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="Expires" content="-1" />
@@ -103,41 +101,19 @@
 	     
  	$(function(){
 	     $(".cartBtn").on("click",function(){
-	    	
 	    	 var c_amount = $('#c_amount').val();
 	    	 var g_name = $('#g_name').val();
-	    	 var u_id = "<%=u_id%>";
 	    	 if(c_amount==0){
 	    		 alert("상품 수량을 선택해주세요.");
 	    		 goods_frm.c_amount.focus();
 	    	 }
-	    	 else if(u_id ==null){
-	    		 alert("로그인을해주세요");
-	    		 location.href="login";		 
-	    	 }
 	    	 else if(confirm('장바구니추가??')){
 	    		// location.href="cartProcess?g_code="+${goods.g_code};
 	    		alert("g_price"+${goods.g_price})
-	    		 location.href="cartProcess?g_code="+${goods.g_code}+"&g_name="+g_name+"&g_price="+${goods.g_price}+"&c_amount="+c_amount+"&u_id="+u_id; 
+	    		 location.href="cartProcess?g_code="+${goods.g_code}+"&g_name="+g_name+"&g_price="+${goods.g_price}+"&c_amount="+c_amount+"&u_id=wjdcksgml";
 	   	 	 }
     	});
-	     
-	    
  	});
- 	
- 	$(document).ready(function() {
-   	 $('#c_amount').change(function() {
-	    	 
-			   /* var c_amount = $('.c_amount'+count).val();*/
-			   let svalue = $(this).val();//선택한 좌석 value값 가져옴 (a1~g10)
-			   var g_price = ${goods.g_price};
-			   /* alert("this?"+svalue); */  
-			   
-			    $('.total_price').text(svalue*g_price);
-		   });
- 	}); 
- 	 
-		   
    </script>
 </head>
 <body>
@@ -204,7 +180,7 @@
     
 	<!-- 상품정보 -->
 	<form method="post" action="buy" name="goods_frm">
-			<input type="hidden" name="u_id" value="<%=u_id%>">	<%-- 0527 임시로 id 설정하여 같이 보냄 - 근지 --%>
+			<input type="hidden" name="u_id" value="wjdcksgml">	<%-- 0527 임시로 id 설정하여 같이 보냄 - 근지 --%>
 			<input type="hidden" name="g_code" value="${goods.g_code}">
 			<input type="hidden" id="g_name" name="g_name" value="${goods.g_name}">
 			<input type="hidden" name="g_price" value="${goods.g_price}" id="g_price">
@@ -214,9 +190,7 @@
 		    <div class='category_product_detail_contents'>         
 		   			<div class='category_product_detail_contents_img_wrap'>
 		                 <ul class='bxslider'>
-		             		 <!-- <li><img src='http://img.cgv.co.kr/GiftStore/Product/Pc/Detail/15463252014310.jpg' alt='#'></li> -->
-		             		 <li><img src='${pageContext.request.contextPath}/resources/${goods.img_1}' class='img_list'></li>
-                 		 </ul>
+		              <li><img src='http://img.cgv.co.kr/GiftStore/Product/Pc/Detail/15463252014310.jpg' alt='#'></li>                 </ul>
 		           	</div>           
 		           	
 		           	<div class='category_product_detail_contents_wrap'>               
@@ -249,35 +223,11 @@
 		           <span class='com_total_price' id='spantotalprice'>?</span>               	
 		           </div>               	
 		           <div class='category_product_detail_total_price'>               		
-		           <p class='com_form_total_price'>총 구매금액<span class='com_total_price0 com_product_total_price total_price'>0</span></p>               	
+		           <p class='com_form_total_price'>총 구매금액<span class='com_total_price0 com_product_total_price'>4,500</span></p>               	
 		           </div>                
 		           </div>               
 				           <div align="right" class='category_product_detail_btn_wrap'> 
-				           
-				             	
-      		
-      		<script>
-      			function logincheck(){
-      				alert("로그인해주세요.");
-      				location.href="login";
-      			}
-      		</script>
-      		
-     
-            <%
-				
-                System.out.println("u_id"+u_id);
-	        	if(u_id == null) {
-	        		%>
-	 	           		<a href='#'  id="cartBtn"  class='btn_cart' onclick="logincheck()">장바구니</a>
-	 	           <%
-	        	}else{
-	        		%>
-	 	           	<a href='#'  id="cartBtn" class='btn_cart cartBtn'>장바구니</a>
-	 	           <%
-	        	}
-			%>
-				       
+					           <a href='#'  id="cartBtn" class='btn_cart cartBtn'>장바구니</a>       
 					           
 					           <!-- <input type="button" value="장바구니" id="cartBtn" class="cartBtn">  -->       
 					           <a href='#'class="buyBtn" >구매하기</a>              
