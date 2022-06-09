@@ -1,5 +1,6 @@
 package com.javalec.team.controller;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.javalec.team.dto.CartDto;
 import com.javalec.team.dto.GoodsDto;
+import com.javalec.team.dto.MovieDto;
 import com.javalec.team.service.GoodsService;
 
 @Controller
@@ -62,9 +64,10 @@ public class GoodsController {
 		 String path = servletContext.getRealPath("/");
 		 path += "resources\\";
 		 System.out.println("path@@@@"+path);
+		 
 		GoodsDto dto = goodsService.getGoodsGcode();	
-		int g_code = dto.getG_code();			
-		param.put("g_code", Integer.toString(g_code));
+		int g_code = dto.getG_code()+1;	
+		param.put("g_code", g_code+"");
 		int count = 0;
 		
 		for (MultipartFile mf : fileList) {
@@ -178,5 +181,67 @@ public class GoodsController {
 			goodsService.insertBuy(param);
 		}
 		return "redirect:/";	
+	}
+	
+	//0609 관리자 상품 수정 - 근지
+	@RequestMapping("/edit_goods_process")
+	public String edit_goods_process(@RequestParam HashMap<String, String> param, Model model) {
+		GoodsDto dto = goodsService.show(param);
+		model.addAttribute("dto", dto);
+		System.out.println("getG_code====="+dto.getG_code());
+		System.out.println("getG_name====="+dto.getG_name());
+		System.out.println("getG_price====="+dto.getG_price());
+		return "goods/edit_goods";	
+	}
+
+	//0609 관리자 상품 db 수정 - 근지	
+	@RequestMapping("/edit_goods")
+	public String edit_goods(MultipartHttpServletRequest mtfRequest ,@RequestParam HashMap<String, String> param, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
+		
+		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+
+		 ServletContext servletContext = request.getSession().getServletContext();
+		 String path = servletContext.getRealPath("/");
+		 path += "resources\\";
+		 
+		int count = 0;
+			
+		for (MultipartFile mf : fileList) {
+			count ++;
+			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+			long fileSize = mf.getSize(); // 파일 사이즈
+
+			System.out.println("originFileName : " + originFileName);
+			System.out.println("fileSize : " + fileSize);
+			
+			String filename = System.currentTimeMillis() + originFileName;
+			String safeFile = path +filename;
+			
+			param.put("img_origin", originFileName);
+			
+			if(count == 1) {
+				mf.transferTo(new File(safeFile));
+				param.put("img_1", filename);
+				goodsService.edit_goods(param);
+			
+			}else {
+				mf.transferTo(new File(safeFile));
+				param.put("img_2", filename);
+				
+				goodsService.edit_goodsimg(param);
+			}
+			
+		}
+		
+		return "redirect:goodsList";	
+	}
+	
+
+	
+	//0609 관리자 상품 삭제 - 근지
+	@RequestMapping(value = "/del_goods")
+	public String del_goods(@RequestParam HashMap<String, String> param, Model model) {
+		goodsService.del_goods(param);
+		return "redirect:goodsList";	
 	}
 }

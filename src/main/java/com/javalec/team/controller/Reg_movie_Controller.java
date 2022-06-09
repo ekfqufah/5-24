@@ -48,7 +48,6 @@ public class Reg_movie_Controller {
 		MovieDto movieDto = service.getMove(param);		
 		model.addAttribute("movie",movieDto);
 		ArrayList<MovieDto> dtoList =service.getStillCut(param);
-		System.out.println(dtoList.get(0).getM_pics());
 		model.addAttribute("dtoList",dtoList);
 	}
 
@@ -124,7 +123,7 @@ public class Reg_movie_Controller {
 					
 					try {
 						mf.transferTo(new File(safeFile));
-						service.reg_movieimg(param);
+						service.edit_movieimg(param);
 						
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
@@ -136,7 +135,6 @@ public class Reg_movie_Controller {
 //			service.edit_movie(param);
 			return "redirect:movie_list";	
 		}
-		
 		
 
 	//0525 관리자 영화 삭제 - 근지
@@ -152,7 +150,6 @@ public class Reg_movie_Controller {
 public String movie_list(HttpServletRequest request, Model model) {
 	System.out.println("request 값 제대로 나옴??? movie_list ===>"+request.getParameter("kind"));
 	ArrayList<MovieDto> list = service.list();
-	//System.out.println(list.get(0).getM_position());
 	model.addAttribute("list", list);
 	return "reg_movie/movie_list";
 }
@@ -165,9 +162,9 @@ public String movie_list(HttpServletRequest request, Model model) {
 			sort = "m_date desc";
 		} else {
 			if (request.getParameter("kind").trim().equals("최신순")) {
-				sort = "m_code desc";
+				sort = "m_date desc";
 			} else if (request.getParameter("kind").trim().equals("오래된순")) {
-				sort = "m_code";
+				sort = "m_date";
 			} else if (request.getParameter("kind").trim().equals("인기순")) {
 				sort = "m_rate desc";
 			}
@@ -203,11 +200,14 @@ public String movie_list(HttpServletRequest request, Model model) {
 
 			String filename = System.currentTimeMillis() + originFileName;
 			String safeFile = path +filename;
+			MovieDto movieDto = service.getm_code();
+			int m_code = Integer.parseInt(movieDto.getM_code()) + 1;
 
 			param.put("m_originimg", originFileName);
 			param.put("m_position", filename);
 			param.put("m_pics", "");
-
+			param.put("m_code", m_code+"");
+			
 			try {
 				mf.transferTo(new File(safeFile));
 				service.reg_movie(param);
@@ -220,15 +220,12 @@ public String movie_list(HttpServletRequest request, Model model) {
 				e.printStackTrace();
 			}
 		}
-		MovieDto movieDto = service.getm_code();
+		
 		for (MultipartFile mf : m_picsfiles) {
 			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 			long fileSize = mf.getSize(); // 파일 사이즈
-			param.put("m_code", movieDto.getM_code());
 			System.out.println("originFileName : " + originFileName);
 			System.out.println("fileSize : " + fileSize);
-
-
 
 			String filename = System.currentTimeMillis() + originFileName;
 			String safeFile = path +filename;

@@ -6,11 +6,11 @@
     
     <insert id="reg_movie" parameterType="hashmap">
         insert into movie(m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics, m_originimg) 
-        values (movie_seq.nextval, #{m_date}, #{m_title}, #{m_intro}, #{m_detail}, #{m_time}, #{m_period}, #{m_grade}, #{m_genre}, #{m_director}, #{m_actor}, 0, #{m_position}, #{m_pics}, #{m_originimg})
+        values (#{m_code}, #{m_date}, #{m_title}, #{m_intro}, #{m_detail}, #{m_time}, #{m_period}, #{m_grade}, #{m_genre}, #{m_director}, #{m_actor}, 0, #{m_position}, #{m_pics}, #{m_originimg})
     </insert>
     
     <select id="list" resultType="com.javalec.team.dto.MovieDto">
-        select m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics ,m_originimg 
+        select m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics 
         from movie 
         order by m_date desc
     </select>
@@ -23,11 +23,13 @@
     
     
     <insert id="edit_movie" parameterType="hashmap">
-        update movie 
-        set m_date=#{m_date}, m_title=#{m_title}, m_intro=#{m_intro}, m_detail=#{m_detail}, m_time=#{m_time}
-          , m_period=#{m_period}, m_grade=#{m_grade}, m_genre=#{m_genre}, m_director=#{m_director}  
-          , m_actor=#{m_actor}, m_rate=#{m_rate}, m_position=#{m_position}, m_pics=#{m_pics}   
-         where m_code=#{m_code}
+		update movie 
+		set m_date=#{m_date}, m_title=#{m_title}, m_intro=#{m_intro}, 
+			m_detail=#{m_detail}, m_time=#{m_time}, m_period=#{m_period}, 
+			m_grade=#{m_grade}, m_genre=#{m_genre}, m_director=#{m_director}, 
+			m_actor=#{m_actor}, m_position=#{m_position}, m_pics=#{m_pics}, 
+			m_originimg=#{m_originimg}
+		where m_code=#{m_code}
     </insert>
     
     <select id="show" resultType="com.javalec.team.dto.MovieDto">
@@ -78,5 +80,12 @@
 		insert into screen(sc_code, m_code, h_num, m_date, m_period)values (screen_seq.nextval, #{m_code}, #{h_num}, #{m_date}, #{m_period}) 
 	</insert>
 	
+    
+    <insert id="edit_movieimg" parameterType="hashmap">
+		update movieimg 
+		set m_originimg=#{m_originimg}, m_pics=#{m_pics}
+		where m_code=#{m_code}
+    </insert>
+
     
 </mapper>

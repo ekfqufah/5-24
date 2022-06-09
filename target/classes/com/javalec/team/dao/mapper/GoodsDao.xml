@@ -8,7 +8,7 @@
 
      <select id="getGoods" resultType="com.javalec.team.dto.GoodsDto" parameterType="hashmap">
         <!-- select mem_pwd from mvc_member where mem_uid=#{mem_uid} --> 
-        select * from goods where g_code = #{g_code}
+        select g_name,g_code,g_price from goods where g_code = #{g_code}
     </select> 
  
    <insert id="insertBuy">
@@ -31,7 +31,30 @@
         <!-- select  max(g_code) from goods --> 
         select max(g_code) as g_code from goods
     </select>
+  
+  
        
-
+    <insert id="del_goods" parameterType="hashmap">
+        delete goods where g_code=#{g_code}
+    </insert>
+    
+        
+    <select id="show" resultType="com.javalec.team.dto.GoodsDto">
+        select g_code, g_name, g_price, img_origin, img_1
+        from goods
+        where g_code=#{g_code}
+    </select>
+    
+    <insert id="edit_goods" parameterType="hashmap">
+		update goods 
+		set g_code=#{g_code}, g_name=#{g_name}, g_price=#{g_price}, 
+			img_origin=#{img_origin}, img_1=#{img_1}
+		where g_code=#{g_code}
+    </insert>
+    <insert id="edit_goodsimg" parameterType="hashmap">
+		update goodsimg 
+		set img_origin=#{img_origin}, img_2=#{img_2}
+		where g_code=#{g_code}
+    </insert>
        
 </mapper>

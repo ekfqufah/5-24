@@ -128,7 +128,7 @@
 		   						var result = '';
 		   					    if ( rsp.success ) {
 		   					    	alert('결제성공');
-		   					    	location.href="/team/";
+		   					    	
 		   					    	// 결제성공시 컨트롤러로 보내져서 history table에 추가됨
 						    		document.buy_frm.submit();
 		   					    } else {
@@ -235,7 +235,7 @@
 		color:black;
 		border-color: #E0E0E0;
 	}
-	
+
 </style>
 
 
@@ -253,39 +253,7 @@
 				<td>상품총가격</td>
 				<td>삭제</td>
 			</tr>	
-	<script>
-	$(document).ready(function() {
-		let total_price = 0;
-		 $('.cart_listc_code').on('click',function () {
-			
-			 let c_code = $(this).val();
-			 let price = Number($("."+c_code).val());
-			 let val = this.checked;
-			 if(val == true){
-			 	total_price = total_price + price;
-			 }else if(val == false){
-				 total_price = total_price - price;
-             }
-			 
-			 $('#total_price').text("총가격: "+total_price+"원");
-		 })
-		 /*  if($('#cart_listc_code').is(":checked") == true){
-			alert("들어오냐?");*/
-			/* alert($("#cart_listg_price").val()); */
-			
-			
-			 /* let svalue = $(this).val();
-			
-			let numarr = new Array();
-			numarr.push($(this).val();)  */
-		
-			
-		 
-				
-		
-	});
 	
-	</script>
 			
 			<form method="post" action="buy?u_id=<%=u_id%>" name="cart_frm">
 			<script>
@@ -301,12 +269,11 @@
 						
 					<tr>
 						<td id="row1">
-							<input type="checkbox" class="cart_listc_code" id="cart_listc_code" name="cart_listc_code" value="${cartlist.c_code}">
-							<input type="hidden" class="${cartlist.c_code}" id="cart_listg_price" name="cart_listc_code" value="${cartlist.g_price}">
+							<input type="checkbox" name="cart_listc_code" value="${cartlist.c_code}">
 						</td>
 						
 						<td id="row2" width="200">
-							<img style="width: 80px; height: 80px" src='${pageContext.request.contextPath}/resources/${cartlist.img_1}'>
+							<img src='${pageContext.request.contextPath}/resources/${cartlist.img_1}'>
 						</td>	
 											
 						<td id="row3">
@@ -337,11 +304,7 @@
 		
 		</c:forEach> 
 				
-				<!-- <tr class="blank">sdsd</tr> -->
-				<tr>
-					<td colspan="8" id="total_price" style="text-align: right; padding-right: 50px;">총가격: 0원</td> 
-					
-				</tr>
+				<tr class="blank"></tr>
 				<tr class="buyBtnClass">
 					<td colspan="8">
 						<input type="button" value="선택상품주문"  id="buyBtn" class="cart_buyBtn">

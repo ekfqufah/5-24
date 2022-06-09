@@ -57,7 +57,6 @@ public class MainController {
 				
 				if (request.getParameter("kind").trim().equals("최신순")) {
 					sort = "m_date desc";
-					System.out.println("ddd");
 				} else if (request.getParameter("kind").trim().equals("오래된순")) {
 					sort = "m_date";
 				} else if (request.getParameter("kind").trim().equals("인기순")) {	// 일단 평점순으로 임시설정

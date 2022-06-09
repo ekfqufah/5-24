@@ -47,9 +47,6 @@ public class UserController {
 	@RequestMapping("userPage")
 	public String userpage(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println(param.get("u_id"));
-		UserDto MyUser_t =  service.getMyUser_t(param);
-		model.addAttribute("user",MyUser_t);
-		
 		/* ArrayList<ReviewDto> myReviewList = service.getMyReviewList(param); */
 		ArrayList<FaqDto> myFaqList =  service.getMyFaqList(param);
 		ArrayList<NoticeDto> myNotice_tList = service.getMyNotice_tList(param);
@@ -170,10 +167,14 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "delete")
-	public String delete(@RequestParam HashMap<String, String> param) throws IOException {
+	public void delete(@RequestParam HashMap<String, String> param, HttpServletResponse response) throws IOException {
+		
+		response.setContentType("text/html");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		
+		
 		service.outUser(param);
-		session.invalidate();
-		return "redirect:/";
 	}
 	
 	@RequestMapping("findId")

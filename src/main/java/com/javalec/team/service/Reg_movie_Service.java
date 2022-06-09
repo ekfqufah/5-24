@@ -21,4 +21,6 @@ public interface Reg_movie_Service {
 	public ArrayList<MovieDto> serch_mov(Model model);
 	public MovieDto getMove(HashMap<String, String> param);
 	 public ArrayList<MovieDto> getStillCut(HashMap<String, String> param);
+	 
+	public void edit_movieimg(HashMap<String, String> param);
 }

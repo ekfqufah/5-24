@@ -1,3 +1,4 @@
+<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -256,7 +257,7 @@
 		        	<span class="header_title_span">TEAM3_CINEMA</span>
 	        	</a>
 	        </h1>
-	             <%
+	        <%
 				String u_id = (String)session.getAttribute("u_id");
 	        
 	        	if(u_id == null) {
@@ -292,8 +293,7 @@
 		            <span class="dropdown_span">영화</span>
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		           <li><a class="dropdown-item" href="movie_list">영화</a></li>
-		            <li><a class="dropdown-item" href="movie_list">무비차트</a></li>
+		            <li><a class="dropdown-item" href="main_movie_list">무비차트</a></li>
 		          </ul>
 		        </li>
 		        <li class="nav-item dropdown">
@@ -333,19 +333,27 @@
 		            <li><a class="dropdown-item" href="review">제휴할인</a></li>
 		          </ul>
 		        </li>
-		        
-		        <li>
-		          <a href="reg_movie">
-		            <span class="dropdown_span">영화등록</span>
-		          </a>
-		        </li>
-		        &nbsp;&nbsp;&nbsp;&nbsp;
-		        
-		        <li>
-		         <a href="addGoods">
-		            <span class="dropdown_span">상품등록</span>
-		          </a>
-		        </li>
+
+ 			<%
+				if(u_id==null || !(u_id.equals("admin"))) {
+					
+				} else if(u_id.equals("admin")) {
+			%>
+			        <li>
+			          <a href="movie_list">
+			            <span class="dropdown_span">영화 리스트</span>
+			          </a>
+			        </li>
+			        &nbsp;&nbsp;&nbsp;&nbsp;
+			        <li>
+			         <a href="goodsList">
+			            <span class="dropdown_span">상품 리스트</span>
+			          </a>
+			        </li>
+			
+			<%		
+				}
+			%>
 		        
 		      </ul>
 		      <form class="d-flex" role="search" method="post" action="serch_mov_main" name="search_frm">

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.javalec.team.dao.CartDao;
 import com.javalec.team.dao.GoodsDao;
+import com.javalec.team.dao.Reg_movie_Dao;
 import com.javalec.team.dto.GoodsDto;
 import com.javalec.team.dto.MovieDto;
 import com.javalec.team.service.GoodsService;
@@ -62,6 +63,32 @@ public class GoodsServiceImpl implements GoodsService{
 		GoodsDao dao = sqlSession.getMapper(GoodsDao.class);
 		ArrayList<GoodsDto> dto = dao.list_sort(param);
 		return dto;
+	}
+
+	@Override
+	public void del_goods(HashMap<String, String> param) {
+		GoodsDao dao = sqlSession.getMapper(GoodsDao.class);
+		dao.del_goods(param);
+	}
+
+	@Override
+	public GoodsDto show(HashMap<String, String> param) {
+		GoodsDao dao = sqlSession.getMapper(GoodsDao.class);
+		GoodsDto dto = dao.show(param);
+		
+		return dto;
+	}
+
+	@Override
+	public void edit_goods(HashMap<String, String> param) {
+		GoodsDao dao = sqlSession.getMapper(GoodsDao.class);
+		dao.edit_goods(param);
+	}
+
+	@Override
+	public void edit_goodsimg(HashMap<String, String> param) {
+		GoodsDao dao = sqlSession.getMapper(GoodsDao.class);
+		dao.edit_goodsimg(param);
 	}
 	
 
