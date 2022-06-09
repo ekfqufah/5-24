@@ -1,3 +1,4 @@
+<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -125,6 +126,8 @@
             right: 300px;
             bottom: 100px;
             z-index: 2;
+            
+            display: none;
         }
       
       #res_btn {
@@ -205,24 +208,25 @@
 		}
       }
       
-	
-/*       $(document).ready(function(){
-          $(".hi").on('click',function(){
-        	  alert("ㅋ르릭");
-              e.preventDefault();
-              BPOPUP =  $('#bpopup1').bPopup({
-                   modalClose : false
-          });
-          });
-    	  
-      }); */
 	$(function(){
 		$(".hi").click(function(){ //레이어 팝업 열기 버튼 클릭 시
 			$('#popup').bPopup(); //  
 		});
 				
 	});
+	
+      $(document).ready(function () {
+    	  
+    	   //  특정 위치에서 부터 버튼 나타고, 사라지게..효과는 fade로
+    	    $(window).scroll(function () {
+    			if ($(this).scrollTop() > 230) {
+    				$('.layer_popup').fadeIn(200);
+    			} else {
+    				$('.layer_popup').fadeOut(200);
+    			}
+    		});
 
+    	});
       
     </script>
 </head>
@@ -248,18 +252,34 @@
         </div>
 	    <div class="contents">
 	        <h1 class="header_title">
-	        	<a href="index" class="main_index">
+	        	<a href="/team/" class="main_index">
 		        	<img src="https://img.icons8.com/cotton/64/undefined/popcorn.png"/>
 		        	<span class="header_title_span">TEAM3_CINEMA</span>
 	        	</a>
 	        </h1>
-	        <ul class="header_login">
-	            <li class="header_con"><a href="#" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png" alt="로그인" class="cgv_img"/><span>로그인</span></a></li>
-	            <li class="header_con"><a href="#" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginJoin.png" alt="회원가입" class="cgv_img"/><span>회원가입</span></a></li>
-	            <li class="header_con"><a href="#" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginMember.png" alt="마이페이지" class="cgv_img"/><span>마이페이지</span></a></li>
-	            <li class="header_con"><a href="#" class="header_a"><img src="https://cdn-icons.flaticon.com/png/512/2997/premium/2997834.png?token=exp=1654572631~hmac=808157ccee560e484daf3e6b70424210" alt="장바구니" class="cgv_img" id="cart_img"/><span>장바구니</span></a></li>
-	            <li class="header_con"><a href="#" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginCustomer.png" alt="고객센터" class="cgv_img"/><span>고객센터</span></a></li>
-	        </ul>
+	        <%
+				String u_id = (String)session.getAttribute("u_id");
+	        
+	        	if(u_id == null) {
+			%>
+		        <ul class="header_login">
+		          <li class="header_con"><a href="login" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png" alt="로그인" class="cgv_img"/><span>로그인</span></a></li>
+		            <li class="header_con"><a href="register" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginJoin.png" alt="회원가입" class="cgv_img"/><span>회원가입</span></a></li>
+		            <li class="header_con"><a href="userPage?u_id=<%=u_id%>" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginMember.png" alt="마이페이지" class="cgv_img"/><span>마이페이지</span></a></li>
+		            <li class="header_con"><a href="#" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginCustomer.png" alt="고객센터" class="cgv_img"/><span>고객센터</span></a></li>
+		        </ul>
+	        <%
+	        	} else {
+	        %>
+		        <ul class="header_login">
+		          <li class="header_con"><a href="logOut" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png" alt="로그아웃" class="cgv_img"/><span>로그아웃</span></a></li>
+		            <li class="header_con"><a href="cartlist?u_id=<%=u_id%>" class="header_a"><img src="https://cdn-icons.flaticon.com/png/512/2997/premium/2997834.png?token=exp=1654572631~hmac=808157ccee560e484daf3e6b70424210" alt="장바구니" class="cgv_img" id="cart_img"/><span>장바구니</span></a></li>
+		            <li class="header_con"><a href="userPage?u_id=<%=u_id%>" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginMember.png" alt="마이페이지" class="cgv_img"/><span>마이페이지</span></a></li>
+		            <li class="header_con"><a href="#" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginCustomer.png" alt="고객센터" class="cgv_img"/><span>고객센터</span></a></li>
+		        </ul>
+		    <% 
+	        	}
+		    %>
 	    </div>
         
         <hr id="first_line">
@@ -273,8 +293,7 @@
 		            <span class="dropdown_span">영화</span>
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		            <li><a class="dropdown-item" href="#">영화</a></li>
-		            <li><a class="dropdown-item" href="#">무비차트</a></li>
+		            <li><a class="dropdown-item" href="main_movie_list">무비차트</a></li>
 		          </ul>
 		        </li>
 		        <li class="nav-item dropdown">
@@ -282,7 +301,7 @@
 		            <span class="dropdown_span" id="reservation">예매</span>
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		            <li><a class="dropdown-item" href="#">예매</a></li>
+		            <li><a class="dropdown-item" href="reser">예매</a></li>
 		          </ul>
 		        </li>
 		        <li class="nav-item dropdown">
@@ -290,12 +309,12 @@
 		            <span class="dropdown_span">스토어</span>
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		            <li><a class="dropdown-item" href="#">영화관람권</a></li>
-		            <li><a class="dropdown-item" href="#">기프트카드</a></li>
-		            <li><a class="dropdown-item" href="#">콤보</a></li>
-		            <li><a class="dropdown-item" href="#">팝콘</a></li>
-		            <li><a class="dropdown-item" href="#">음료</a></li>
-		            <li><a class="dropdown-item" href="#">스낵</a></li>
+		             <li><a class="dropdown-item" href="goodsList">영화관람권</a></li>
+		            <li><a class="dropdown-item" href="goodsList">기프트카드</a></li>
+		            <li><a class="dropdown-item" href="goodsList">콤보</a></li>
+		            <li><a class="dropdown-item" href="goodsList">팝콘</a></li>
+		            <li><a class="dropdown-item" href="goodsList">음료</a></li>
+		            <li><a class="dropdown-item" href="goodsList">스낵</a></li>
 		          </ul>
 		        </li>
 		        <li class="nav-item dropdown">
@@ -303,14 +322,39 @@
 		            <span class="dropdown_span">공지사항</span>
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		            <li><a class="dropdown-item" href="#">공지사항</a></li>
-		            <li><a class="dropdown-item" href="#">QnA</a></li>
-		            <li><a class="dropdown-item" href="#">FaQ</a></li>
-		            <li><a class="dropdown-item" href="#">영화/예매</a></li>
-		            <li><a class="dropdown-item" href="#">멤버십</a></li>
-		            <li><a class="dropdown-item" href="#">제휴할인</a></li>
+		             <li><a class="dropdown-item" href="noticeList">공지사항</a></li>
+		            <li><a class="dropdown-item" href="qna_main">QnA</a></li>
+		            <li><a class="dropdown-item" href="faqList">FaQ</a></li>
+		             <li><a class="dropdown-item" href="reviewList">reivew</a></li>
+		            <!-- <li><a class="dropdown-item" href="#">영화/예매</a></li>
+		            <li><a class="dropdown-item" href="#">멤버십</a></li> -->
+		            
+		            
+		            <li><a class="dropdown-item" href="review">제휴할인</a></li>
 		          </ul>
 		        </li>
+
+ 			<%
+				if(u_id==null || !(u_id.equals("admin"))) {
+					
+				} else if(u_id.equals("admin")) {
+			%>
+			        <li>
+			          <a href="movie_list">
+			            <span class="dropdown_span">영화 리스트</span>
+			          </a>
+			        </li>
+			        &nbsp;&nbsp;&nbsp;&nbsp;
+			        <li>
+			         <a href="goodsList">
+			            <span class="dropdown_span">상품 리스트</span>
+			          </a>
+			        </li>
+			
+			<%		
+				}
+			%>
+		        
 		      </ul>
 		      <form class="d-flex" role="search" method="post" action="serch_mov_main" name="search_frm">
 		        <input class="form-control me-2 sm" type="search" placeholder="제목으로 검색" aria-label="Search" name="kind" id="search_con">
@@ -321,7 +365,7 @@
 		</nav>
 		
 		<div class="layer_popup">
-			<button type="button" class="btn btn-danger btn-lg" id="res_btn">예매하기</button>
+			<button type="button" class="btn btn-danger btn-lg" id="res_btn" onclick="location.href='reser' ">예매하기</button>
 			<button type="button" id="goTop_btn" onclick="goTop()">
 				<img src="https://img.cgv.co.kr/R2014/images/common/btn/gotoTop.png" alt="최상단으로 이동" class="goTop_img"/>
 			</button>

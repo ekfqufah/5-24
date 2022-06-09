@@ -1,7 +1,10 @@
 package com.javalec.team.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javalec.team.dto.Criteria;
+import com.javalec.team.dto.GoodDto;
 import com.javalec.team.dto.ReviewDto;
 import com.javalec.team.dto.pageMakerDto;
+import com.javalec.team.service.GoodService;
 import com.javalec.team.service.ReviewService;
 
 @Controller
@@ -24,7 +29,10 @@ public class ReivewController {
 	@Autowired
 	private ReviewService service;
 	
-	@RequestMapping("review/list")
+	@Autowired
+	private GoodService goodservice;
+	
+	@RequestMapping("reviewList")
 	public String list(Model model, Criteria cri) {
 		System.out.println("@@@### ReivewController list() start");
 		
@@ -41,14 +49,14 @@ public class ReivewController {
 		return "/review/list";
 	}
 	
-	@RequestMapping("/write_view") //수정해야할듯 마이페이지에서 넘어온다
+	@RequestMapping("/reviewWrite_view") //수정해야할듯 마이페이지에서 넘어온다
 	public String write_view() {
 		System.out.println("@@@### write_view()");
 		
-		return "redirect:write";
+		return "review/write";
 	}
 	
-	@RequestMapping("/review/write")
+	@RequestMapping("/reviewWrite")
 	public String write(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### ReivewController write() start");
 		
@@ -64,10 +72,10 @@ public class ReivewController {
 		
 		System.out.println("@@@### ReivewController write() end");
 		
-		return "redirect:list";
+		return "redirect:reviewList";
 	}
 	
-	@RequestMapping("/review/delete")
+	@RequestMapping("/reviewDelete")
 	public String delete(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### ReivewController delete() start");
 		
@@ -75,10 +83,10 @@ public class ReivewController {
 		
 		System.out.println("@@@### ReivewController delete() end");
 		
-		return "redirect:list";
+		return "redirect:reviewList";
 	}
 	
-	@RequestMapping("/review/modify_view")
+	@RequestMapping("/reviewModify_view")
 	public String modify_view(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### modify_view()");
 		
@@ -88,7 +96,7 @@ public class ReivewController {
 		return "/review/modify";
 	}
 	
-	@RequestMapping(value = "/review/modify")
+	@RequestMapping(value = "/reviewModify")
 	public String modify(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### ReivewController modify() start");
 		
@@ -96,6 +104,57 @@ public class ReivewController {
 		
 		System.out.println("@@@### ReivewController modify() end");
 		
-		return "redirect:list";
+		return "redirect:reviewList";
 	}
+	
+	@RequestMapping("/reviewGood")
+	public String good(@RequestParam HashMap<String, String> param, HttpServletResponse response) throws IOException {
+		System.out.println("@@@### ReivewController good() start");
+		
+		response.setContentType("text/html");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		
+		//추천수를 올리기전에 추천 테이블 만들고 거기에 유저아이디, 리뷰코드, 추천코드, 추천yn만든다
+		GoodDto dto = goodservice.get(param);
+		if (goodservice.get(param) == null) {
+			System.out.println("추천한적 없음 start");
+			goodservice.insert(param);
+			service.upGood(param);
+			System.out.println("추천한적 없음 end");
+		} else {
+			System.out.println("추천한적 있음 start");
+			
+			out.println("<script>alert('이미 추천한 글입니다.');history.back();</script>");
+			out.flush();
+			
+		}
+		
+		System.out.println("@@@### ReivewController good() end");
+		
+		return "redirect:reviewList";
+	}
+	
+//	@RequestMapping("/good")
+//	@ResponseBody
+//	public int good(@RequestParam HashMap<String, String> param, Model model) {
+//		System.out.println("@@@### ReivewController good() start");
+//		
+//		System.out.println("ajax id ==>"+param.get("u_id"));
+//		System.out.println("ajax r_code ==>"+param.get("r_code"));
+//		
+//		GoodDto dto = goodservice.get(param);
+//		int result = 0;
+//		
+//		if (dto.getGo_yn() == 0) {
+//			result = 0;
+//		}else {
+//			result = 1;
+//		}
+//		
+//		model.addAttribute("result", result);
+//		System.out.println("@@@### ReivewController good() end");
+//		return result;
+//		
+//	}
 }

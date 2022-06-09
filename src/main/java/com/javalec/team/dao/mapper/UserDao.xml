@@ -17,7 +17,10 @@
     <delete id="outUser">
 		delete from user_t where u_id=#{u_id}
     </delete>
-    
+    <insert id="editUser" parameterType="hashmap">
+        update user_t set u_pwd = #{u_pwd}, u_birth = #{u_birth}, u_email = #{u_email}, u_tel = #{u_tel}, 
+        u_addr1 = #{u_addr1}, u_addr2 = #{u_addr2}, u_addr3 = #{u_addr3} where u_id = #{u_id} 
+    </insert>
     <select id="checkId" resultType="com.javalec.team.dto.UserDto">
       <!-- select count(*) as check from user_t where u_id= '#{u_id}' -->
       select count(*) as uidcheck from user_t where u_id= #{u_id}
@@ -42,15 +45,15 @@
         from review where u_id=#{u_id}
      </select>
      <select id="getMyFaqList" resultType="com.javalec.team.dto.FaqDto">
-        select f_code,u_id,f_category,f_title, f_content,f_num
+        select f_code,u_id,f_category,f_title, f_content
         from faq where u_id=#{u_id}
      </select>
       <select id="getMyNotice_tList" resultType="com.javalec.team.dto.NoticeDto">
-        select n_code,u_id,n_title,n_content, n_view,n_num
+        select n_code,u_id,n_title,n_content, n_view
         from notice_t where u_id=#{u_id}
      </select>
        <select id="getMyQnaList" resultType="com.javalec.team.dto.QnaDto">
-        select q_code,u_id,q_category,q_title, q_content,q_num,q_email,q_answer
+        select q_code,u_id,q_category,q_title, q_content,q_email,q_answer
         from qna where u_id=#{u_id}
      </select>
        <select id="getMygoodsList" resultType="com.javalec.team.dto.GoodsDto">

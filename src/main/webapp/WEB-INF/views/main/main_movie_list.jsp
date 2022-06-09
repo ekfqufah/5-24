@@ -106,7 +106,7 @@
             <ol class="movie_list_ol">
             
         <c:forEach items="${list }" var="dto" varStatus="status">
-                <li class="movie_list_li">
+                <li class="movie_list_li" onClick = "location.href='movieDisplay?m_code=${dto.m_code}'"> 
                     <div class="box-image" >
                         <strong class="rank" id="rank_color">No.${status.index +1}</strong>	
                         <a href="#">

@@ -13,8 +13,13 @@
     </insert>
     
     <select id="getAllCart" resultType="com.javalec.team.dto.CartDto">
-        select c_code,c_amount,G_CODE,u_id,g_price from cart where u_id=#{u_id} 
-    </select> 
+        <!-- select c_code,c_amount,G_CODE,u_id,g_price from cart where u_id=#{u_id}  -->
+        Select c.c_code as c_code , c.c_amount as c_amount, c.g_code as g_code, c.u_id as u_id ,  c.g_price as g_price
+        ,  g.img_origin as img_origin ,  g.img_1 as img_1,  g.g_name as g_name
+	  from cart c , goods g
+	  where c.g_code = g.g_code(+)
+	  and c.u_id = #{u_id}
+    </select>  
  
     
     <delete id="delCart" parameterType="hashmap">

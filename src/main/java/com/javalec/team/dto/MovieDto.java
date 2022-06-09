@@ -20,8 +20,25 @@ public class MovieDto {
 	private String m_pics;	//영화스틸컷
 	private String m_actor; //출연배우
 	private String m_detail; //영화상세설명
+	private String m_originimg; //이미
+	private String m_imgcode; //이미지
 	
-	
+	public String getM_originimg() {
+		return m_originimg;
+	}
+
+	public void setM_originimg(String m_originimg) {
+		this.m_originimg = m_originimg;
+	}
+
+	public String getM_imgcode() {
+		return m_imgcode;
+	}
+
+	public void setM_imgcode(String m_imgcode) {
+		this.m_imgcode = m_imgcode;
+	}
+
 	public String getM_actor() {
 		return m_actor;
 	}

@@ -13,13 +13,17 @@ public class ReviewDto {
 	private int r_view;
 	private int m_code;
 	
+	private int rn;
+	private int nn;
+	
 	public ReviewDto() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 
 	public ReviewDto(int r_code, String r_name, String u_id, int b_code, int b_yn, Timestamp r_date, int r_rate,
-			int r_view, int m_code) {
+			int r_view, int m_code, int rn, int nn) {
 		this.r_code = r_code;
 		this.r_name = r_name;
 		this.u_id = u_id;
@@ -29,7 +33,10 @@ public class ReviewDto {
 		this.r_rate = r_rate;
 		this.r_view = r_view;
 		this.m_code = m_code;
+		this.rn = rn;
+		this.nn = nn;
 	}
+
 
 
 	public int getR_code() {
@@ -102,6 +109,22 @@ public class ReviewDto {
 
 	public void setM_code(int m_code) {
 		this.m_code = m_code;
+	}
+
+	public int getRn() {
+		return rn;
+	}
+
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
+
+	public int getNn() {
+		return nn;
+	}
+
+	public void setNn(int nn) {
+		this.nn = nn;
 	}
 	
 

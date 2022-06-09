@@ -17,4 +17,6 @@ public interface NoticeDao {
 	public int num();
     /* °Ô½ÃÆÇ ÃÑ °¹¼ö */
     public int getTotal();
+    public ArrayList<NoticeDto> searchTitle(Criteria cri);
+    public ArrayList<NoticeDto> searchContent(Criteria cri);
 }

@@ -71,6 +71,17 @@
     .fa-star {
     	color: yellow;
     }
+    
+    /* 한줄 말줄임 */
+    .main_movie_title {
+	    display: inline-block;
+	    text-overflow: 
+	    ellipsis;white-space: 
+	    nowrap;overflow: 
+	    hidden;
+	    width: 150px;
+    }
+    
 </style>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -124,9 +135,9 @@
 				<table>
 					<tr>
 						<c:forEach items="${list }" var="dto" begin="0" end="5">
-							<td class="list_td">
+							<td class="list_td"  style = "cursor:pointer;" onClick = "location.href='movieDisplay?m_code=${dto.m_code}'">
 								<div><img src='${pageContext.request.contextPath}/resources/${dto.m_position}' class="main_img rounded"></div>
-								<div>${dto.m_title }</div> 
+								<div class="main_movie_title">${dto.m_title }</div> 
 								<div><i class="fa-solid fa-star"></i>&nbsp;${dto.m_rate }</div>
 								
 				 				<input type="hidden" id="m_code_hidden" value="${dto.m_code }">				

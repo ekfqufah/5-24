@@ -21,7 +21,7 @@ public interface UserDao {
 	public void outUser(HashMap<String, String> param); 
 	
 	public UserDto checkId(HashMap<String, String> param);
-	
+	public UserDto editUser(HashMap<String, String> param);
 	public UserDto confirmUserId(HashMap<String, String> param);
 	
 	public UserDto tryToFindId(HashMap<String, String> param);

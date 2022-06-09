@@ -1,10 +1,10 @@
 package com.javalec.team.controller;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,11 +25,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.javalec.team.dto.CartDto;
 import com.javalec.team.dto.GoodsDto;
 import com.javalec.team.dto.MovieDto;
-import com.javalec.team.service.CartService;
 import com.javalec.team.service.GoodsService;
-
-
-
 
 @Controller
 public class GoodsController {
@@ -46,8 +42,14 @@ public class GoodsController {
 	
 	@RequestMapping(value = "addGoods", method = RequestMethod.GET)
 	public String upload2(Locale locale, Model model) {
-		System.out.println("@@@1");
+		
 		return "goods/addGoods";
+	}
+	
+	@RequestMapping(value = "goodsList", method = RequestMethod.GET)
+	public String goodsList(Locale locale, Model model) {
+		
+		return "goods/goodsList";
 	}
 
 	@RequestMapping(value = "/upload")
@@ -62,15 +64,16 @@ public class GoodsController {
 		 String path = servletContext.getRealPath("/");
 		 path += "resources\\";
 		 System.out.println("path@@@@"+path);
+		 
 		GoodsDto dto = goodsService.getGoodsGcode();	
-		int g_code = dto.getG_code();			
-		param.put("g_code", Integer.toString(g_code));
+		int g_code = dto.getG_code()+1;	
+		param.put("g_code", g_code+"");
 		int count = 0;
 		
 		for (MultipartFile mf : fileList) {
 			count ++;
-			String originFileName = mf.getOriginalFilename(); // ¿øº» ÆÄÀÏ ¸í
-			long fileSize = mf.getSize(); // ÆÄÀÏ »çÀÌÁî
+			String originFileName = mf.getOriginalFilename(); // ì›ë³¸ íŒŒì¼ ëª…
+			long fileSize = mf.getSize(); // íŒŒì¼ ì‚¬ì´ì¦ˆ
 
 			System.out.println("originFileName : " + originFileName);
 			System.out.println("fileSize : " + fileSize);
@@ -95,72 +98,54 @@ public class GoodsController {
 			
 		}
 
-		return "mainview";
+		return "goods/goodsList";
 	}
-	
-	
 
-	
-	
-	
-	
 	@RequestMapping("goodsajax")
 	@ResponseBody
 	public ArrayList<GoodsDto> ajax(@RequestParam HashMap<String, String> param, Model model) {
 	
-		System.out.println("request °ª Á¦´ë·Î ³ª¿È??? ajax ===>"+param.get("kind"));
+		System.out.println("request å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™??? ajax ===>"+param.get("kind"));
 		
 		String sort = "";
 		
 		
-		if (param.get("kind").trim() == null) {	// Ã³À½È­¸é ½ÃÀÛ½Ã null°ªÀÌ¶ó¼­. Ã¹È­¸é ÄÁÆ®·Ñ·¯ »õ·Î ¸¸µé¾î¼­ ±×·² ÀÏ ¾ø°ÚÁö¸¸!
+		if (param.get("kind").trim() == null) {	// ì²˜ìŒí™”ë©´ ì‹œì‘ì‹œ nullê°’ì´ë¼ì„œ. ì²«í™”ë©´ ì»¨íŠ¸ë¡¤ëŸ¬ ìƒˆë¡œ ë§Œë“¤ì–´ì„œ ê·¸ëŸ´ ì¼ ì—†ê² ì§€ë§Œ!
 			sort = "g_code desc";
 			
 		} else {
 			
-			if (param.get("kind").trim().equals("ÃÖ½Å¼ø")) {
+			if (param.get("kind").trim().equals("ìµœì‹ ìˆœ")) {
 				System.out.println("ddd");
 				sort = "g_code desc";
-			} else if (param.get("kind").trim().equals("¿À·¡µÈ¼ø")) {
+			} else if (param.get("kind").trim().equals("ì˜¤ë˜ëœìˆœ")) {
 				
 				sort = "g_code";
-			} else if (param.get("kind").trim().equals("ÀÎ±â¼ø")) {	// ÀÏ´Ü ÆòÁ¡¼øÀ¸·Î ÀÓ½Ã¼³Á¤
+			} else if (param.get("kind").trim().equals("ì¸ê¸°ìˆœ")) {	// ì¼ë‹¨ í‰ì ìˆœìœ¼ë¡œ ì„ì‹œì„¤ì •
 				
 				sort = "m_rate desc";
 			}
 		}
 	
-		// Á¤·Ä¼ø dao¿¡ º¸³»±â À§ÇØ ´ãÀ½
+		// ì •ë ¬ìˆœ daoì— ë³´ë‚´ê¸° ìœ„í•´ ë‹´ìŒ
 		param.put("sort", sort);
 		ArrayList<GoodsDto> list_sort = goodsService.list_sort(param);
 		
 		
 		 System.out.println(list_sort.get(0).getG_code());
 		 System.out.println(list_sort.get(0).getG_name());
-		 
-		
-		
-		//model.addAttribute("list_sort", list_sort);
 		return list_sort;
 	}
-	
-	
-	
-	
-	
+
 	public void getGoods(@RequestParam HashMap<String, String> param, Model model) {
 		GoodsDto goodsdto = goodsService.getGoods(param);		
 		model.addAttribute("goods",goodsdto);
 	}
 	
-	@RequestMapping("mainview")
-	public String mainview(HttpServletRequest request) {
-		return "mainview";
-	}
+
 	
 	@RequestMapping("goodsDisplay")
 	public String goodsDisplay(@RequestParam HashMap<String, String> param,Model model) {
-		//System.out.println("µé¾î¿À³Ä?@@@@@@@@@@@@@@");
 		getGoods(param,model);
 		return "goods/goodsDisplay";
 	}
@@ -181,15 +166,12 @@ public class GoodsController {
 				param.put("g_code",Integer.toString( buylist.get(i).getC_amount()));
 				param.put("c_amount", Integer.toString(buylist.get(i).getC_amount()));
 				param.put("g_price", Integer.toString(price));
-				//System.out.println(param.get("c_code"));
 				cartController.deleteCart(param, null);
 				goodsService.insertBuy(param);
 			}
 			model.addAttribute("cartlist",buylist);
-			return "mainview";
+			return "redirect:/";
 		}
-		
-	
 		
 		
 		if(cart_listc_code == null) {
@@ -198,14 +180,68 @@ public class GoodsController {
 		
 			goodsService.insertBuy(param);
 		}
-		return "mainview";	
+		return "redirect:/";	
 	}
 	
-	
-	
-	
-	
-	
+	//0609 ê´€ë¦¬ì ìƒí’ˆ ìˆ˜ì • - ê·¼ì§€
+	@RequestMapping("/edit_goods_process")
+	public String edit_goods_process(@RequestParam HashMap<String, String> param, Model model) {
+		GoodsDto dto = goodsService.show(param);
+		model.addAttribute("dto", dto);
+		System.out.println("getG_code====="+dto.getG_code());
+		System.out.println("getG_name====="+dto.getG_name());
+		System.out.println("getG_price====="+dto.getG_price());
+		return "goods/edit_goods";	
+	}
+
+	//0609 ê´€ë¦¬ì ìƒí’ˆ db ìˆ˜ì • - ê·¼ì§€	
+	@RequestMapping("/edit_goods")
+	public String edit_goods(MultipartHttpServletRequest mtfRequest ,@RequestParam HashMap<String, String> param, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
+		
+		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+
+		 ServletContext servletContext = request.getSession().getServletContext();
+		 String path = servletContext.getRealPath("/");
+		 path += "resources\\";
+		 
+		int count = 0;
+			
+		for (MultipartFile mf : fileList) {
+			count ++;
+			String originFileName = mf.getOriginalFilename(); // ì›ë³¸ íŒŒì¼ ëª…
+			long fileSize = mf.getSize(); // íŒŒì¼ ì‚¬ì´ì¦ˆ
+
+			System.out.println("originFileName : " + originFileName);
+			System.out.println("fileSize : " + fileSize);
+			
+			String filename = System.currentTimeMillis() + originFileName;
+			String safeFile = path +filename;
+			
+			param.put("img_origin", originFileName);
+			
+			if(count == 1) {
+				mf.transferTo(new File(safeFile));
+				param.put("img_1", filename);
+				goodsService.edit_goods(param);
+			
+			}else {
+				mf.transferTo(new File(safeFile));
+				param.put("img_2", filename);
+				
+				goodsService.edit_goodsimg(param);
+			}
+			
+		}
+		
+		return "redirect:goodsList";	
+	}
 	
 
+	
+	//0609 ê´€ë¦¬ì ìƒí’ˆ ì‚­ì œ - ê·¼ì§€
+	@RequestMapping(value = "/del_goods")
+	public String del_goods(@RequestParam HashMap<String, String> param, Model model) {
+		goodsService.del_goods(param);
+		return "redirect:goodsList";	
+	}
 }

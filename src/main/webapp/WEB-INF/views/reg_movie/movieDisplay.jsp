@@ -4,11 +4,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <head>
-     <c:forEach items="${dtoList}" var="dto">
-		                      
-		                                <img src="${pageContext.request.contextPath}/resources/${dto.m_pics}" onerror="errorImage(this)" />
-		                      
-                   </c:forEach>
     <!-- <meta id="ctl00_og_image" property="og:image" content="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85829/85829_185.jpg"></meta> -->
     <link rel="alternate" href="http://m.cgv.co.kr" />
    <!--  <link rel="shortcut icon" href="https://img.cgv.co.kr/theater_img/favicon.ico" type="image/x-icon" /> -->
@@ -20,8 +15,8 @@
     <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/content.css" />
     <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/common.css" />
     
-<!--     <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/eggupdate.css" />
-    <link rel="stylesheet" media="print" type="text/css" href="https://img.cgv.co.kr/R2014/css/print.css" />    --> 
+    <!-- <link rel="stylesheet" media="all" type="text/css" href="https://img.cgv.co.kr/R2014/css/eggupdate.css" />
+    <link rel="stylesheet" media="print" type="text/css" href="https://img.cgv.co.kr/R2014/css/print.css" />     -->
     <link rel="stylesheet" type="text/css" href="https://img.cgv.co.kr/R2014/js/jquery.ui/smoothness/jquery-ui-1.10.4.custom.min.css" />
     
     <script type="text/javascript" src="/common/js/extraTheaters.js"></script>
@@ -62,10 +57,10 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<jsp:include page="../main/mainHeader.jsp" flush="false"></jsp:include> 
 </head>
 <body>
 	
+
 	<!-- Contaniner -->
 	<div id="contaniner"  class=""><!-- 벽돌 배경이미지 사용 시 class="bg-bricks" 적용 / 배경이미지가 없을 경우 class 삭제  -->
         
@@ -91,7 +86,6 @@
     <div class="box-image">
             <span class="thumb-image"> 
                 <img src="${pageContext.request.contextPath}/resources/${movie.m_position}" alt="브로커 포스터 새창" onerror="errorImage(this)"/>
-                <span class="ico-grade grade-12"> ${movie.m_grade}세 이상</span>
             </span> 
         </a> 
     </div>
@@ -164,12 +158,10 @@
             
             <div id="ctl00_PlaceHolderContent_Section_Still_Cut" class="sect-stillcut">
                 <div class="heading">
-                    <h4>스틸컷</h4><span class="count"><strong id="stillcut_current">1</strong>/5건</span>
+                    <h4>스틸컷</h4><span class="count"><strong id="stillcut_current"></strong></span>
                     
                 </div>
-                <div class="slider-wrap">
-                    <div class="slider" id="still_motion">
-                        
+                <div class="">
                            <c:forEach items="${dtoList}" var="dto">
 		                        <div class="item-wrap">
 		                            <div class="item">
@@ -177,10 +169,7 @@
 		                            </div>
 		                        </div>
                            </c:forEach>
-                        <button type="button" class="btn-prev">이전 페이지 이동</button>
-                        <button type="button" class="btn-next">다음 페이지 이동</button>
                         
-                    </div>
                 </div>
             </div><!-- .sect-stillcut -->
          
@@ -284,6 +273,6 @@
 </div>
 
 
+
 </body>
-<jsp:include page="../main/mainFooter.jsp" flush="false"></jsp:include>
 </html>

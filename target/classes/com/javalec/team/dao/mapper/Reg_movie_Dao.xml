@@ -2,12 +2,11 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.javalec.team.dao.Reg_movie_Dao">
     
     <insert id="reg_movie" parameterType="hashmap">
-    	insert into movie(m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics, m_originimg) 
-        values (movie_seq.nextval, #{m_date}, #{m_title}, #{m_intro}, #{m_detail}, #{m_time}, #{m_period}, #{m_grade}, #{m_genre}, #{m_director}, #{m_actor}, 0, #{m_position}, #{m_pics}, #{m_originimg})
+        insert into movie(m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics, m_originimg) 
+        values (#{m_code}, #{m_date}, #{m_title}, #{m_intro}, #{m_detail}, #{m_time}, #{m_period}, #{m_grade}, #{m_genre}, #{m_director}, #{m_actor}, 0, #{m_position}, #{m_pics}, #{m_originimg})
     </insert>
     
     <select id="list" resultType="com.javalec.team.dto.MovieDto">
@@ -24,16 +23,13 @@
     
     
     <insert id="edit_movie" parameterType="hashmap">
-    	update movie 
-    	set m_date=#{m_date}, m_title=#{m_title}, m_intro=#{m_intro}, m_detail=#{m_detail}, m_time=#{m_time}
-    	  , m_period=#{m_period}, m_grade=#{m_grade}, m_genre=#{m_genre}, m_director=#{m_director}  
-    	  , m_actor=#{m_actor}, m_position=#{m_position}, m_pics=#{m_pics}, m_originimg=#{m_originimg}
-    	 where m_code=#{m_code}
-    </insert>
-    
-    <insert id="edit_movieimg" parameterType="hashmap">
-    	update movieimg set m_code=#{m_code}, m_originimg=#{m_originimg}, m_pics=#{m_pics}
-		where m_code = #{m_code}
+		update movie 
+		set m_date=#{m_date}, m_title=#{m_title}, m_intro=#{m_intro}, 
+			m_detail=#{m_detail}, m_time=#{m_time}, m_period=#{m_period}, 
+			m_grade=#{m_grade}, m_genre=#{m_genre}, m_director=#{m_director}, 
+			m_actor=#{m_actor}, m_position=#{m_position}, m_pics=#{m_pics}, 
+			m_originimg=#{m_originimg}
+		where m_code=#{m_code}
     </insert>
     
     <select id="show" resultType="com.javalec.team.dto.MovieDto">
@@ -43,12 +39,9 @@
     </select>
     
     <insert id="del_movie" parameterType="hashmap">
-    	delete movie where m_code=#{m_code}
+        delete movie where m_code=#{m_code}
     </insert>
-
-
-
-	<select id="list_sort" resultType="com.javalec.team.dto.MovieDto">
+    <select id="list_sort" resultType="com.javalec.team.dto.MovieDto">
         select m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics 
         from movie 
         order by ${sort}
@@ -58,9 +51,8 @@
         select max(m_code) as m_code 
         from movie 
     </select>
-
      <insert id="reg_movieimg" parameterType="hashmap">
-    	insert into movieimg(m_imgcode, m_code, m_originimg, m_pics) 
+        insert into movieimg(m_imgcode, m_code, m_originimg, m_pics) 
         values (MOVIEIMG_SEQ.nextval, #{m_code}, #{m_originimg}, #{m_pics})
     </insert>
     <select id="listPicsImg" resultType="com.javalec.team.dto.MovieDto">
@@ -69,26 +61,31 @@
         order by m_imgcode
     </select>
     
-    <select id="getStillCut" resultType="com.javalec.team.dto.MovieDto">
-        select * 
-        from movieimg
+     <select id="getStillCut" resultType="com.javalec.team.dto.MovieDto">
+        select * from movieimg
         where m_code = #{m_code}
     </select>
     
-    
-    <select id="getMax_m_code" resultType="com.javalec.team.dto.MovieDto">
+    <select id="serch_mov" resultType="com.javalec.team.dto.MovieDto">
+		select m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics
+		from movie 
+		where m_title like '%'||#{serch_mov}||'%' 
+	</select>
+	
+	<select id="getMax_m_code" resultType="com.javalec.team.dto.MovieDto">
     	select max(m_code) as m_code from movie 
     </select>
 
 	<insert parameterType="hashmap" id="screen">
 		insert into screen(sc_code, m_code, h_num, m_date, m_period)values (screen_seq.nextval, #{m_code}, #{h_num}, #{m_date}, #{m_period}) 
 	</insert>
-
-	<select id="serch_mov" resultType="com.javalec.team.dto.MovieDto">
-		select m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics
-		from movie 
-		where m_title like '%'||#{serch_mov}||'%' 
-	</select>
+	
     
+    <insert id="edit_movieimg" parameterType="hashmap">
+		update movieimg 
+		set m_originimg=#{m_originimg}, m_pics=#{m_pics}
+		where m_code=#{m_code}
+    </insert>
+
     
 </mapper>

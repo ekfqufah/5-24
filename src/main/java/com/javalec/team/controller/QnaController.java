@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javalec.team.dto.Criteria;
 import com.javalec.team.dto.QnaDto;
@@ -17,6 +19,7 @@ import com.javalec.team.dto.UserDto;
 import com.javalec.team.dto.pageMakerDto;
 import com.javalec.team.service.QnaService;
 import com.javalec.team.service.UserService;
+import com.javalec.team.service.Impl.MailSendService2;
 
 @Controller
 public class QnaController {
@@ -26,6 +29,9 @@ public class QnaController {
 	
 	@Autowired
 	private UserService service2;
+	
+	@Autowired
+	private MailSendService2 mailService1;
 	
 	@Autowired
 	HttpSession session;
@@ -78,13 +84,13 @@ public class QnaController {
 			
 			System.out.println("@@@### adminInfo end");
 			
-			return "redirect:/qna/list";
+			return "redirect:/qnaList";
 			
 		}
 		
 	}
 	
-	@RequestMapping("/qna/list")
+	@RequestMapping("/qnaList")
 	public String list(@RequestParam HashMap<String, String> param, Model model, Criteria cri) {
 		System.out.println("@@@### QnaController list() start");
 		
@@ -285,7 +291,7 @@ public class QnaController {
 //		
 //	}
 	
-	@RequestMapping("/qna/write")
+	@RequestMapping("/qnaWrite")
 	public String write(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### QnaController write() start");
 		
@@ -295,10 +301,10 @@ public class QnaController {
 		
 		System.out.println("@@@### QnaController write() end");
 		
-		return "redirect:list";
+		return "redirect:qnaList";
 	}
 	
-	@RequestMapping("/qna/show")
+	@RequestMapping("/qnaShow")
 	public String show(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### QnaController show() start");
 		
@@ -310,7 +316,7 @@ public class QnaController {
 		return "qna/show";
 	}
 	
-	@RequestMapping("/qna/delete")
+	@RequestMapping("/qnaDelete")
 	public String delete(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### QnaController delete() start");
 		
@@ -318,10 +324,10 @@ public class QnaController {
 		
 		System.out.println("@@@### QnaController delete() end");
 		
-		return "redirect:list";
+		return "redirect:qnaList";
 	}
 	
-	@RequestMapping("/qna/modify_view")
+	@RequestMapping("/qnaModify_view")
 	public String modify_view(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### modify_view()");
 		
@@ -331,7 +337,7 @@ public class QnaController {
 		return "/qna/modify";
 	}
 	
-	@RequestMapping(value = "/qna/modify")
+	@RequestMapping(value = "/qnaModify")
 	public String modify(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### QnaController modify() start");
 		
@@ -339,7 +345,15 @@ public class QnaController {
 		
 		System.out.println("@@@### QnaController modify() end");
 		
-		return "redirect:list";
+		return "redirect:qnaList";
+	}
+	
+	@RequestMapping(value = "/mailCheck1", method = RequestMethod.GET)
+	@ResponseBody
+	public String mailCheck(String email) {
+		System.out.println("이메일인증 : " + email);
+		
+		return mailService1.joinEmail1(email);
 	}
 
 }

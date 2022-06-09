@@ -13,7 +13,7 @@ public interface ReviewDao {
 	public void delete(HashMap<String, String> param);
 	public void modify(HashMap<String, String> param);
     public int getTotal();
-    public void upView(HashMap<String, String> param);
+    public void upGood(HashMap<String, String> param); //¼öÁ¤
     public void insertRate(HashMap<String, String> param);
     public ReviewDto getMcode(HashMap<String, String> param);
     public ReviewDto getRateAvg(HashMap<String, String> param);

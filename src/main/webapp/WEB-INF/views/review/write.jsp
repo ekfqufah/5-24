@@ -8,6 +8,12 @@
 <title>Insert title here</title>
 <script type="text/javascript" charset="UTF-8">
 	function check_ok() {
+		if (document.review_form.r_rate.value.length == 0) {
+			alert("평점을 입력하세요.");
+			review_form.r_rate.focus();
+			return;
+		}
+
 		if (document.review_form.r_name.value.length == 0) {
 			alert("리뷰내용을 입력하세요.");
 			review_form.r_name.focus();
@@ -20,11 +26,13 @@
 </script>
 </head>
 <body>
+<jsp:include page="../main/mainHeader.jsp" flush="false"></jsp:include>
 	<div id="content_area">
 		<div id="title">
 			<h1>리뷰글 작성</h1>
 		</div>
 		<form name="review_form" method="post" action="write">
+		<input type="hidden" name="b_code" value="##########################">  <!-- 마이페이지에서 받은 예매코드 정보 -->   
 			<table border="1" width="500">
 				<tr>
 					<td width="100">UserID</td> <!-- 유저 아이디 input이 아니라 나중에 회원테이블에서 받아야함 -->
@@ -44,7 +52,7 @@
 				</tr>
 				<tr>
 					<td colspan="4">
-					<textarea rows="3" cols="50" placeholder="리뷰내용"></textarea>
+					<textarea rows="3" cols="50" name="r_name" placeholder="리뷰내용"></textarea>
 					<!-- <input type="text" name="r_name" width="495"> -->
 					</td>
 				</tr>
@@ -58,5 +66,6 @@
 			</table>
 		</form>
 	</div>
+	<jsp:include page="../main/mainFooter.jsp" flush="false"></jsp:include>
 </body>
 </html>
