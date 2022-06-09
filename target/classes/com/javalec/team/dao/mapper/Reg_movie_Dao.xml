@@ -64,4 +64,19 @@
         where m_code = #{m_code}
     </select>
     
+    <select id="serch_mov" resultType="com.javalec.team.dto.MovieDto">
+		select m_code, m_date, m_title, m_intro, m_detail, m_time, m_period, m_grade, m_genre, m_director, m_actor, m_rate, m_position, m_pics
+		from movie 
+		where m_title like '%'||#{serch_mov}||'%' 
+	</select>
+	
+	<select id="getMax_m_code" resultType="com.javalec.team.dto.MovieDto">
+    	select max(m_code) as m_code from movie 
+    </select>
+
+	<insert parameterType="hashmap" id="screen">
+		insert into screen(sc_code, m_code, h_num, m_date, m_period)values (screen_seq.nextval, #{m_code}, #{h_num}, #{m_date}, #{m_period}) 
+	</insert>
+	
+    
 </mapper>

@@ -33,26 +33,29 @@ public class CartController {
 		for (int i = 0; i < cartlist.size(); i++) {
 			if( g_code == cartlist.get(i).getG_code()) {
 				updateCart(param, model);
-				return "redirect:index";	
+				return "redirect:goodsList";	
 			}
 		}
 		int price = Integer.parseInt(param.get("g_price"))*Integer.parseInt(param.get("c_amount"));
 		param.put("g_price", Integer.toString(price));
 		cartservice.insertCart(param);
-		return "redirect:index";	
+		return "redirect:/";	
 	}
 	
 	@RequestMapping("cartlist")
 	public String cartlist(@RequestParam HashMap<String, String> param,Model model) {	
 		cartlist =cartservice.getAllCart(param);
 		if(model !=null) {
+//			System.out.println(param.get("u_id"));
+//			System.out.println("@@@@@@@@@@@"+cartlist.get(0).getImg_1());
 			model.addAttribute("cartlist",cartlist);
-			if(cartlist.size() > 0 ) {
-				return "cart/cartlist";	
+			return "cart/cartlist";	
+			/*if(cartlist.size() > 0 ) {
+				
 			}else {
 				model.addAttribute("cart","0");
 				return "redirect:index";
-			}
+			}*/
 		}else {
 			return null;
 		}

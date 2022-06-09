@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 
 <!-- CSS only -->
@@ -20,7 +22,7 @@
 		font-size: 13px;
 	    line-height: 1.2;
 	    color: #666;
-	    font-family: 'Noto Sans KR', 'CJONLYONENEW', '¸¼Àº °íµñ', 'µ¸¿ò', Dotum, sans-serif;
+	    font-family: 'Noto Sans KR', 'CJONLYONENEW', 'ë§‘ì€ ê³ ë”•', 'ë‹ì›€', Dotum, sans-serif;
 	    font-weight: 400;
 
         /* min-width : 1120px;	
@@ -72,7 +74,7 @@
        .header_con {
             list-style: none;
         }
-    /* aÅÂ±×¿¡ ÅØ½ºÆ® ¹ØÁÙÀ» ¾ø¾Ö°í »ö»óÀ» #333 */
+    /* aíƒœê·¸ì— í…ìŠ¤íŠ¸ ë°‘ì¤„ì„ ì—†ì• ê³  ìƒ‰ìƒì„ #333 */
         .header_a {
             text-decoration: none;
             color:#333;
@@ -123,6 +125,8 @@
             right: 300px;
             bottom: 100px;
             z-index: 2;
+            
+            display: none;
         }
       
       #res_btn {
@@ -145,10 +149,36 @@
       	text-decoration: none;
       	color:#333;
       }
-
+      
+      #cart_img {
+      	width: 30px;
+      	height: 30px;
+      	margin-bottom: 3px;
+      }
+	
+	.adreduce {
+		text-align: center;
+		background-color: black;
+	}
+	
+	/*ë ˆì´ì–´ íŒì—… ì˜ì—­*/
+	#popup {
+	 opacity: 0;
+	 display: none;
+	 position: relative;
+	 width: auto;
+	 border: black;
+	 padding: 20px;
+	 background-color: black;
+	}  
 </style>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<!-- Bpopup -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
+
     <script>
 		function goTop(){
 			$('html').scrollTop(0);
@@ -166,6 +196,37 @@
         });
       } ); */
 
+      
+      function searchCheck() {
+/*      	alert(document.getElementById("search_con").value); */
+
+     	if (!document.getElementById('search_con').value) {
+     		alert("ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+		} else {
+			document.search_frm.submit();
+		}
+      }
+      
+	$(function(){
+		$(".hi").click(function(){ //ë ˆì´ì–´ íŒì—… ì—´ê¸° ë²„íŠ¼ í´ë¦­ ì‹œ
+			$('#popup').bPopup(); //  
+		});
+				
+	});
+	
+      $(document).ready(function () {
+    	  
+    	   //  íŠ¹ì • ìœ„ì¹˜ì—ì„œ ë¶€í„° ë²„íŠ¼ ë‚˜íƒ€ê³ , ì‚¬ë¼ì§€ê²Œ..íš¨ê³¼ëŠ” fadeë¡œ
+    	    $(window).scroll(function () {
+    			if ($(this).scrollTop() > 230) {
+    				$('.layer_popup').fadeIn(200);
+    			} else {
+    				$('.layer_popup').fadeOut(200);
+    			}
+    		});
+
+    	});
+      
     </script>
 </head>
 <body>
@@ -175,8 +236,14 @@
                 <div id="TopBarWrapper" class="sect-head-ad">
                     <div class="top_extend_ad_wrap">
                         <div class="adreduce" id="adReduce">                    
-                            <iframe src="//ad.cgv.co.kr/NetInsight/html/CGV/CGV_201401/main@TopBar_EX" width="100%" height="80" title="" frameborder="0" scrolling="no" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0" name="TopBanner" id="TopBanner"></iframe>
-                        </div> 
+                           <!--  <iframe src="//ad.cgv.co.kr/NetInsight/html/CGV/CGV_201401/main@TopBar_EX" width="100%" height="80" title="" frameborder="0" scrolling="no" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0" name="TopBanner" id="TopBanner"></iframe> -->
+                        	<img src="https://adimg.cgv.co.kr/images/202205/Witch2/0602_980x80.jpg" class="hi">
+                        </div>
+                        <div id="popup">
+						   <p>
+						     <iframe src='https://tv.naver.com/embed/26947241?autoPlay=true' frameborder='no' scrolling='no' marginwidth='0' marginheight='0' WIDTH='544' HEIGHT='306' allow='autoplay' allowfullscreen></iframe>
+						   </p>
+						</div>
                         <div class="adextend" id="adExtend"></div>
                     </div>
                 </div>    
@@ -184,17 +251,34 @@
         </div>
 	    <div class="contents">
 	        <h1 class="header_title">
-	        	<a href="index" class="main_index">
+	        	<a href="/team/" class="main_index">
 		        	<img src="https://img.icons8.com/cotton/64/undefined/popcorn.png"/>
 		        	<span class="header_title_span">TEAM3_CINEMA</span>
 	        	</a>
 	        </h1>
-	        <ul class="header_login">
-	          <li class="header_con"><a href="login" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png" alt="·Î±×ÀÎ" class="cgv_img"/><span>·Î±×ÀÎ</span></a></li>
-	            <li class="header_con"><a href="register" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginJoin.png" alt="È¸¿ø°¡ÀÔ" class="cgv_img"/><span>È¸¿ø°¡ÀÔ</span></a></li>
-	            <li class="header_con"><a href="userPage?u_id=wjdcksgml" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginMember.png" alt="¸¶ÀÌÆäÀÌÁö" class="cgv_img"/><span>¸¶ÀÌÆäÀÌÁö</span></a></li>
-	            <li class="header_con"><a href="#" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginCustomer.png" alt="°í°´¼¾ÅÍ" class="cgv_img"/><span>°í°´¼¾ÅÍ</span></a></li>
-	        </ul>
+	             <%
+				String u_id = (String)session.getAttribute("u_id");
+	        
+	        	if(u_id == null) {
+			%>
+		        <ul class="header_login">
+		          <li class="header_con"><a href="login" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png" alt="ë¡œê·¸ì¸" class="cgv_img"/><span>ë¡œê·¸ì¸</span></a></li>
+		            <li class="header_con"><a href="register" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginJoin.png" alt="íšŒì›ê°€ì…" class="cgv_img"/><span>íšŒì›ê°€ì…</span></a></li>
+		            <li class="header_con"><a href="userPage?u_id=<%=u_id%>" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginMember.png" alt="ë§ˆì´í˜ì´ì§€" class="cgv_img"/><span>ë§ˆì´í˜ì´ì§€</span></a></li>
+		            <li class="header_con"><a href="#" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginCustomer.png" alt="ê³ ê°ì„¼í„°" class="cgv_img"/><span>ê³ ê°ì„¼í„°</span></a></li>
+		        </ul>
+	        <%
+	        	} else {
+	        %>
+		        <ul class="header_login">
+		          <li class="header_con"><a href="logOut" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png" alt="ë¡œê·¸ì•„ì›ƒ" class="cgv_img"/><span>ë¡œê·¸ì•„ì›ƒ</span></a></li>
+		            <li class="header_con"><a href="cartlist?u_id=<%=u_id%>" class="header_a"><img src="https://cdn-icons.flaticon.com/png/512/2997/premium/2997834.png?token=exp=1654572631~hmac=808157ccee560e484daf3e6b70424210" alt="ì¥ë°”êµ¬ë‹ˆ" class="cgv_img" id="cart_img"/><span>ì¥ë°”êµ¬ë‹ˆ</span></a></li>
+		            <li class="header_con"><a href="userPage?u_id=<%=u_id%>" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginMember.png" alt="ë§ˆì´í˜ì´ì§€" class="cgv_img"/><span>ë§ˆì´í˜ì´ì§€</span></a></li>
+		            <li class="header_con"><a href="#" class="header_a"><img src="https://img.cgv.co.kr/R2014/images/common/ico/loginCustomer.png" alt="ê³ ê°ì„¼í„°" class="cgv_img"/><span>ê³ ê°ì„¼í„°</span></a></li>
+		        </ul>
+		    <% 
+	        	}
+		    %>
 	    </div>
         
         <hr id="first_line">
@@ -205,73 +289,77 @@
 		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 		        <li class="nav-item dropdown">
 		          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            <span class="dropdown_span">¿µÈ­</span>
+		            <span class="dropdown_span">ì˜í™”</span>
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		            <li><a class="dropdown-item" href="movie_list">¿µÈ­</a></li>
-		            <li><a class="dropdown-item" href="movie_list">¹«ºñÂ÷Æ®</a></li>
+		           <li><a class="dropdown-item" href="movie_list">ì˜í™”</a></li>
+		            <li><a class="dropdown-item" href="movie_list">ë¬´ë¹„ì°¨íŠ¸</a></li>
 		          </ul>
 		        </li>
 		        <li class="nav-item dropdown">
 		          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            <span class="dropdown_span" id="reservation">¿¹¸Å</span>
+		            <span class="dropdown_span" id="reservation">ì˜ˆë§¤</span>
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		            <li><a class="dropdown-item" href="reser">¿¹¸Å</a></li> 		<!-- ¿¹¸Å ¸µÅ©  -->
+		            <li><a class="dropdown-item" href="reser">ì˜ˆë§¤</a></li>
 		          </ul>
 		        </li>
 		        <li class="nav-item dropdown">
 		          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            <span class="dropdown_span">½ºÅä¾î</span>
+		            <span class="dropdown_span">ìŠ¤í† ì–´</span>
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		            <li><a class="dropdown-item" href="goodsList">¿µÈ­°ü¶÷±Ç</a></li>
-		            <li><a class="dropdown-item" href="goodsList">±âÇÁÆ®Ä«µå</a></li>
-		            <li><a class="dropdown-item" href="goodsList">ÄŞº¸</a></li>
-		            <li><a class="dropdown-item" href="goodsList">ÆËÄÜ</a></li>
-		            <li><a class="dropdown-item" href="goodsList">À½·á</a></li>
-		            <li><a class="dropdown-item" href="goodsList">½º³¼</a></li>
+		             <li><a class="dropdown-item" href="goodsList">ì˜í™”ê´€ëŒê¶Œ</a></li>
+		            <li><a class="dropdown-item" href="goodsList">ê¸°í”„íŠ¸ì¹´ë“œ</a></li>
+		            <li><a class="dropdown-item" href="goodsList">ì½¤ë³´</a></li>
+		            <li><a class="dropdown-item" href="goodsList">íŒì½˜</a></li>
+		            <li><a class="dropdown-item" href="goodsList">ìŒë£Œ</a></li>
+		            <li><a class="dropdown-item" href="goodsList">ìŠ¤ë‚µ</a></li>
 		          </ul>
 		        </li>
 		        <li class="nav-item dropdown">
 		          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            <span class="dropdown_span">°øÁö»çÇ×</span>
+		            <span class="dropdown_span">ê³µì§€ì‚¬í•­</span>
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		            <li><a class="dropdown-item" href="notice/list">°øÁö»çÇ×</a></li>
+		             <li><a class="dropdown-item" href="noticeList">ê³µì§€ì‚¬í•­</a></li>
 		            <li><a class="dropdown-item" href="qna_main">QnA</a></li>
-		            <li><a class="dropdown-item" href="faq/list">FaQ</a></li>
-		            <!-- <li><a class="dropdown-item" href="#">¿µÈ­/¿¹¸Å</a></li>
-		            <li><a class="dropdown-item" href="#">¸â¹ö½Ê</a></li> -->
-		            <li><a class="dropdown-item" href="review">Á¦ÈŞÇÒÀÎ</a></li>
+		            <li><a class="dropdown-item" href="faqList">FaQ</a></li>
+		             <li><a class="dropdown-item" href="reviewList">reivew</a></li>
+		            <!-- <li><a class="dropdown-item" href="#">ì˜í™”/ì˜ˆë§¤</a></li>
+		            <li><a class="dropdown-item" href="#">ë©¤ë²„ì‹­</a></li> -->
+		            
+		            
+		            <li><a class="dropdown-item" href="review">ì œíœ´í• ì¸</a></li>
 		          </ul>
 		        </li>
 		        
 		        <li>
 		          <a href="reg_movie">
-		            <span class="dropdown_span">¿µÈ­µî·Ï</span>
+		            <span class="dropdown_span">ì˜í™”ë“±ë¡</span>
 		          </a>
 		        </li>
 		        &nbsp;&nbsp;&nbsp;&nbsp;
 		        
 		        <li>
 		         <a href="addGoods">
-		            <span class="dropdown_span">»óÇ°µî·Ï</span>
+		            <span class="dropdown_span">ìƒí’ˆë“±ë¡</span>
 		          </a>
 		        </li>
+		        
 		      </ul>
-		      <form class="d-flex" role="search">
-		        <input class="form-control me-2 sm" type="search" placeholder="Á¦¸ñÀ¸·Î °Ë»ö" aria-label="Search">
-		        <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+		      <form class="d-flex" role="search" method="post" action="serch_mov_main" name="search_frm">
+		        <input class="form-control me-2 sm" type="search" placeholder="ì œëª©ìœ¼ë¡œ ê²€ìƒ‰" aria-label="Search" name="kind" id="search_con">
+		        <button class="btn btn-outline-secondary btn-sm" type="button" onclick="searchCheck()">Search</button>
 		      </form>
 		    </div>
 		  </div>
 		</nav>
 		
 		<div class="layer_popup">
-			<button type="button" class="btn btn-danger btn-lg" id="res_btn">¿¹¸ÅÇÏ±â</button>
+			<button type="button" class="btn btn-danger btn-lg" id="res_btn" onclick="location.href='reser' ">ì˜ˆë§¤í•˜ê¸°</button>
 			<button type="button" id="goTop_btn" onclick="goTop()">
-				<img src="https://img.cgv.co.kr/R2014/images/common/btn/gotoTop.png" alt="ÃÖ»ó´ÜÀ¸·Î ÀÌµ¿" class="goTop_img"/>
+				<img src="https://img.cgv.co.kr/R2014/images/common/btn/gotoTop.png" alt="ìµœìƒë‹¨ìœ¼ë¡œ ì´ë™" class="goTop_img"/>
 			</button>
 		</div>
 		

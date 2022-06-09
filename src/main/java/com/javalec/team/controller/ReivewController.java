@@ -1,7 +1,10 @@
 package com.javalec.team.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javalec.team.dto.Criteria;
 import com.javalec.team.dto.GoodDto;
@@ -30,7 +32,7 @@ public class ReivewController {
 	@Autowired
 	private GoodService goodservice;
 	
-	@RequestMapping("review/list")
+	@RequestMapping("reviewList")
 	public String list(Model model, Criteria cri) {
 		System.out.println("@@@### ReivewController list() start");
 		
@@ -47,33 +49,33 @@ public class ReivewController {
 		return "/review/list";
 	}
 	
-	@RequestMapping("/review/write_view") //ìˆ˜ì •í•´ì•¼í• ë“¯ ë§ˆì´í˜ì´ì§€ì—ì„œ ë„˜ì–´ì˜¨ë‹¤
+	@RequestMapping("/reviewWrite_view") //¼öÁ¤ÇØ¾ßÇÒµí ¸¶ÀÌÆäÀÌÁö¿¡¼­ ³Ñ¾î¿Â´Ù
 	public String write_view() {
 		System.out.println("@@@### write_view()");
 		
 		return "review/write";
 	}
 	
-	@RequestMapping("/review/write")
+	@RequestMapping("/reviewWrite")
 	public String write(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### ReivewController write() start");
 		
 		service.write(param);
 		
-		ReviewDto dto = service.getMcode(param); //ì˜ˆë§¤ í…Œì´ë¸”ì—ì„œ ì˜í™” ì½”ë“œ ê°€ì ¸ì˜´
+		ReviewDto dto = service.getMcode(param); //¿¹¸Å Å×ÀÌºí¿¡¼­ ¿µÈ­ ÄÚµå °¡Á®¿È
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("m_code", Integer.toString(dto.getM_code())); //ì˜í™”ì½”ë“œ mapì— ë‹´ìŒ
-		ReviewDto rateDto = service.getRateAvg(map);  //ì˜í™”ì½”ë“œ ì¡°ê±´ìœ¼ë¡œ í•´ë‹¹ì˜í™”ì˜ í‰ì  í‰ê· ëƒ„
-		map.put("r_rate", Integer.toString(rateDto.getR_rate())); //í‰ì  mapì— ë‹´ìŒ
+		map.put("m_code", Integer.toString(dto.getM_code())); //¿µÈ­ÄÚµå map¿¡ ´ãÀ½
+		ReviewDto rateDto = service.getRateAvg(map);  //¿µÈ­ÄÚµå Á¶°ÇÀ¸·Î ÇØ´ç¿µÈ­ÀÇ ÆòÁ¡ Æò±Õ³¿
+		map.put("r_rate", Integer.toString(rateDto.getR_rate())); //ÆòÁ¡ map¿¡ ´ãÀ½
 		
-		service.insertRate(map); //ì˜í™” í…Œì´ë¸”ì— í‰ì  ì—…ë°ì´íŠ¸í•¨
+		service.insertRate(map); //¿µÈ­ Å×ÀÌºí¿¡ ÆòÁ¡ ¾÷µ¥ÀÌÆ®ÇÔ
 		
 		System.out.println("@@@### ReivewController write() end");
 		
-		return "redirect:list";
+		return "redirect:reviewList";
 	}
 	
-	@RequestMapping("/review/delete")
+	@RequestMapping("/reviewDelete")
 	public String delete(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### ReivewController delete() start");
 		
@@ -81,10 +83,10 @@ public class ReivewController {
 		
 		System.out.println("@@@### ReivewController delete() end");
 		
-		return "redirect:list";
+		return "redirect:reviewList";
 	}
 	
-	@RequestMapping("/review/modify_view")
+	@RequestMapping("/reviewModify_view")
 	public String modify_view(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### modify_view()");
 		
@@ -94,7 +96,7 @@ public class ReivewController {
 		return "/review/modify";
 	}
 	
-	@RequestMapping(value = "/review/modify")
+	@RequestMapping(value = "/reviewModify")
 	public String modify(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### ReivewController modify() start");
 		
@@ -102,29 +104,57 @@ public class ReivewController {
 		
 		System.out.println("@@@### ReivewController modify() end");
 		
-		return "redirect:list";
+		return "redirect:reviewList";
 	}
 	
-	@RequestMapping("/good")
-	@ResponseBody
-	public int good(@RequestParam HashMap<String, String> param, Model model) {
+	@RequestMapping("/reviewGood")
+	public String good(@RequestParam HashMap<String, String> param, HttpServletResponse response) throws IOException {
 		System.out.println("@@@### ReivewController good() start");
 		
-		System.out.println("ajax id ==>"+param.get("u_id"));
-		System.out.println("ajax r_code ==>"+param.get("r_code"));
+		response.setContentType("text/html");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
 		
+		//ÃßÃµ¼ö¸¦ ¿Ã¸®±âÀü¿¡ ÃßÃµ Å×ÀÌºí ¸¸µé°í °Å±â¿¡ À¯Àú¾ÆÀÌµğ, ¸®ºäÄÚµå, ÃßÃµÄÚµå, ÃßÃµyn¸¸µç´Ù
 		GoodDto dto = goodservice.get(param);
-		int result = 0;
-		
-		if (dto.getGo_yn() == 0) {
-			result = 0;
-		}else {
-			result = 1;
+		if (goodservice.get(param) == null) {
+			System.out.println("ÃßÃµÇÑÀû ¾øÀ½ start");
+			goodservice.insert(param);
+			service.upGood(param);
+			System.out.println("ÃßÃµÇÑÀû ¾øÀ½ end");
+		} else {
+			System.out.println("ÃßÃµÇÑÀû ÀÖÀ½ start");
+			
+			out.println("<script>alert('ÀÌ¹Ì ÃßÃµÇÑ ±ÛÀÔ´Ï´Ù.');history.back();</script>");
+			out.flush();
+			
 		}
 		
-		model.addAttribute("result", result);
 		System.out.println("@@@### ReivewController good() end");
-		return result;
 		
+		return "redirect:reviewList";
 	}
+	
+//	@RequestMapping("/good")
+//	@ResponseBody
+//	public int good(@RequestParam HashMap<String, String> param, Model model) {
+//		System.out.println("@@@### ReivewController good() start");
+//		
+//		System.out.println("ajax id ==>"+param.get("u_id"));
+//		System.out.println("ajax r_code ==>"+param.get("r_code"));
+//		
+//		GoodDto dto = goodservice.get(param);
+//		int result = 0;
+//		
+//		if (dto.getGo_yn() == 0) {
+//			result = 0;
+//		}else {
+//			result = 1;
+//		}
+//		
+//		model.addAttribute("result", result);
+//		System.out.println("@@@### ReivewController good() end");
+//		return result;
+//		
+//	}
 }

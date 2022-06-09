@@ -8,15 +8,23 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 <style type="text/css">
+
+	.main
+	{
+		font-size: 13px;
+	    line-height: 1.2;
+	    color: #666;
+	    font-family: 'Noto Sans KR', 'CJONLYONENEW', '맑은 고딕', '돋움', Dotum, sans-serif;
+	    font-weight: 400;
+	}
 	  .pageInfo{
 	      list-style : none;
 	      display: inline-block;
-	    margin: 50px 0 0 100px;      
+	    margin: 50px 0 0 0;      
 	  }
 	  .pageInfo li{
 	      float: left;
 	    font-size: 20px;
-	    margin-left: 18px;
 	    padding: 7px;
 	    font-weight: 500;
 	  }
@@ -26,24 +34,52 @@
 	 .active{
       background-color: #cdd5ec;
   }
+      #content_area
+    {
+        /* min-width : 1120px;	
+    	max-width : 1280px;	
+    	margin:auto; */
+
+        /* float: left; */
+        margin: 5px 250px 0px 250px;
+        /* display: flex;  */
+        
+    }
+  
 </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 
 <script type="text/javascript">
 	$(".pageInfo a").on("click", function(e) {
         e.preventDefault();
         moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-        moveForm.attr("action", "/notice/list");
+        moveForm.attr("action", "/noticeList");
         moveForm.submit();
 	})
 </script>
+<script type="text/javascript">
+/* function searchCheck1() {
+
+	     	if (!document.getElementById('search').value) {
+	     		alert("제목을 입력해주세요.");
+			} else {
+				document.search_frm.submit();
+			}
+	      } */
+</script>
 </head>
 <body>
+<jsp:include page="../main/mainHeader.jsp" flush="false"></jsp:include>
+<div class="main">
 	<div id="content_area">
 		<div id="title">
-			<h1>공지사항</h1>
-		</div>
-		<div id="boardArea">
-			<table width="900" cellspacing="0" style="margin-bottom: 20px" border="1">
+			<h3>공지사항</h3>
+		</div><hr>
+	</div>
+	<div id="content_area">
+			<table cellspacing="0" class="table">
 				<tr height="25">
 					<td width="40" align="center">번호</td>
 					<td width="550" align="center">글제목</td>
@@ -53,10 +89,10 @@
 				</tr>
 				<c:set var="num" value="${pageMaker.total - ((pageMaker.cri.pageNum - 1) * 10)}"></c:set>
 				<c:forEach items="${list}" var="dto">
-					<tr>
+					<tr align="center">
 						<td>${num}</td>
-						<td>
-							<a href="show?n_code=${dto.n_code}">${dto.n_title}</a>
+						<td align="left">
+							<a href="noticeShow?n_code=${dto.n_code}">${dto.n_title}</a>
 						</td>
 						<td>${dto.u_id}</td>
 						<td><fmt:formatDate pattern="yyyy/MM/dd" value="${dto.n_date}"/> </td>
@@ -65,7 +101,21 @@
 				<c:set var="num" value="${num-1 }"></c:set>
 				</c:forEach>
 			</table>
+		</div>
+		
+		<div>
+			<form action="noticeSearch" method="post" name="search_frm">
+				<select class="form-control" name="kind">
+					<option value="제목">제목</option>
+					<option value="내용">내용</option>
+				</select>
+				<input class="form-control" type="search" placeholder="검색" name="search" id="search">
+				<button class="btn btn-outline-secondary btn-sm" type="submit">검색</button>
+				<!-- <button class="btn btn-outline-secondary btn-sm" type="button" onclick="searchCheck1()">검색</button> -->
+			</form>
+		</div>
 
+		<div id="content_area" align="center">
 			<div class="pageInfo_wrap">
 				<div class="pageInfo_area">
 					<ul id="pageInfo" class="pageInfo">
@@ -94,16 +144,19 @@
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 			</form>
 		</div>
+		</div>
+		<div id="content_area" align="center">
 		<div id="writeBtn">
 		<%
 		String u_auth = (String)session.getAttribute("u_auth");
 		%>
 		<c:set var="admin" value="A"/>
 		<c:if test="${admin eq u_auth}"> <!-- 관리자만 작성 버튼 활성화 -->
-			<a href="write_view">공지사항 작성</a>
+			<input type="button" class="btn btn-outline-secondary btn-sm" value="글 작성" onclick="location.href='noticeWrite_view'">&nbsp;&nbsp;
 		</c:if>
-			<a href="login_yn">메인으로</a>
+			<input type="button" class="btn btn-outline-secondary btn-sm" value="메인으로" onclick="location.href='index'">
 		</div>
-	</div>
+</div>
+<jsp:include page="../main/mainFooter.jsp" flush="false"></jsp:include>
 </body>
 </html>

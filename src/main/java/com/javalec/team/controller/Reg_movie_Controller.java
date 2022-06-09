@@ -66,14 +66,77 @@ public class Reg_movie_Controller {
 		return "reg_movie/edit_movie";	
 	}
 
-	//0525 관리자 영화 db 수정 - 근지
-	@RequestMapping("/edit_movie")
-	public String edit_movie(@RequestParam HashMap<String, String> param, Model model) {
+	//0525 관리자 영화 db 수정 - 근지	
+		@RequestMapping("/edit_movie")
+		public String edit_movie(MultipartHttpServletRequest mtfRequest ,@RequestParam HashMap<String, String> param, Model model, HttpServletRequest request) {
+			
+				List<MultipartFile> m_positionfiles = mtfRequest.getFiles("m_position");
+				List<MultipartFile> m_picsfiles = mtfRequest.getFiles("m_pics");
+				 //String path = "C:\\test\\"; 
+
+				
+				 ServletContext servletContext = request.getSession().getServletContext();
+				 String path = servletContext.getRealPath("/");
+				 path += "resources\\";
+				 System.out.println("path@@@@"+path);
+				for (MultipartFile mf : m_positionfiles) {
+					String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+					long fileSize = mf.getSize(); // 파일 사이즈
+
+					System.out.println("originFileName : " + originFileName);
+					System.out.println("fileSize : " + fileSize);
+					
+					String filename = System.currentTimeMillis() + originFileName;
+					String safeFile = path +filename;
+					
+					param.put("m_originimg", originFileName);
+					param.put("m_position", filename);
+					param.put("m_pics", "");
+					
+					try {
+						mf.transferTo(new File(safeFile));
+						service.edit_movie(param);
+						
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			    MovieDto movieDto = service.getm_code();
+				for (MultipartFile mf : m_picsfiles) {
+					String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+					long fileSize = mf.getSize(); // 파일 사이즈
+					param.put("m_code", movieDto.getM_code());
+					System.out.println("originFileName : " + originFileName);
+					System.out.println("fileSize : " + fileSize);
+					
+					 
+					
+					String filename = System.currentTimeMillis() + originFileName;
+					String safeFile = path +filename;
+					
+					param.put("m_originimg", originFileName);
+					param.put("m_pics", filename);
+					
+					try {
+						mf.transferTo(new File(safeFile));
+						service.reg_movieimg(param);
+						
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			
+//			service.edit_movie(param);
+			return "redirect:movie_list";	
+		}
 		
-		service.edit_movie(param);
 		
-		return "redirect:movie_list";	
-	}
 
 	//0525 관리자 영화 삭제 - 근지
 	@RequestMapping(value = "/del_movie")
@@ -82,11 +145,15 @@ public class Reg_movie_Controller {
 		return "redirect:movie_list";	
 	}
 	
-	//0526 에이젝스 사용시 첫화면. 기본값은 order by 최신순 - 근지
-	@RequestMapping("/movie_list")
-	public String movie_list() {
-		return "reg_movie/movie_list";
-	}
+	//0526 에이젝스 사용시 첫화면. 기본값은 order by 최신순 - 근지 - 이게 필요 없어짐
+@RequestMapping("/movie_list")
+//@RequestMapping("/reg_movie/movie_list")
+public String movie_list(HttpServletRequest request, Model model) {
+	System.out.println("request 값 제대로 나옴??? movie_list ===>"+request.getParameter("kind"));
+	ArrayList<MovieDto> list = service.list();
+	model.addAttribute("list", list);
+	return "reg_movie/movie_list";
+}
 
 	@RequestMapping("/ajax")
 	@ResponseBody
@@ -181,4 +248,22 @@ public class Reg_movie_Controller {
 		}
 		return "redirect:main_movie_list";
 	}
+	
+	//0531 영화 검색 - 근지
+		@RequestMapping("/serch_mov")
+		@ResponseBody
+		public ArrayList<MovieDto> serch_mov(HttpServletRequest request, Model model) {
+			System.out.println("검색 내용=====>"+request.getParameter("kind").trim());
+			
+			model.addAttribute("serch_mov",request.getParameter("kind").trim());	
+			ArrayList<MovieDto> list_sort = service.serch_mov(model);
+			
+			for (int i = 0; i < list_sort.size(); i++) {
+				String str = String.valueOf(list_sort.get(i).getM_date());
+				str = str.substring(0, 10);
+				list_sort.get(i).setM_date2(str);
+			}
+			
+			return list_sort;
+		}
 }

@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javalec.team.dto.Criteria;
 import com.javalec.team.dto.QnaDto;
@@ -17,6 +19,7 @@ import com.javalec.team.dto.UserDto;
 import com.javalec.team.dto.pageMakerDto;
 import com.javalec.team.service.QnaService;
 import com.javalec.team.service.UserService;
+import com.javalec.team.service.Impl.MailSendService2;
 
 @Controller
 public class QnaController {
@@ -28,6 +31,9 @@ public class QnaController {
 	private UserService service2;
 	
 	@Autowired
+	private MailSendService2 mailService1;
+	
+	@Autowired
 	HttpSession session;
 	
 	@RequestMapping("/qna_main")
@@ -37,10 +43,10 @@ public class QnaController {
 		String u_id = (String) session.getAttribute("u_id");
 		String u_auth = (String) session.getAttribute("u_auth");
 		
-		System.out.println("ìºìŠ¤íŒ…ì•ˆí•œ id="+session.getAttribute("u_id"));
-		System.out.println("ìºìŠ¤íŒ…ì•ˆí•œ auth="+session.getAttribute("u_auth"));
-		System.out.println("stringìœ¼ë¡œ ë°›ì€ id="+u_id);
-		System.out.println("stringìœ¼ë¡œ ë°›ì€ auth="+u_auth);
+		System.out.println("Ä³½ºÆÃ¾ÈÇÑ id="+session.getAttribute("u_id"));
+		System.out.println("Ä³½ºÆÃ¾ÈÇÑ auth="+session.getAttribute("u_auth"));
+		System.out.println("stringÀ¸·Î ¹ŞÀº id="+u_id);
+		System.out.println("stringÀ¸·Î ¹ŞÀº auth="+u_auth);
 		
 		if (session.getAttribute("u_auth") == null) {
 			System.out.println("@@@### doesn't login");
@@ -78,13 +84,13 @@ public class QnaController {
 			
 			System.out.println("@@@### adminInfo end");
 			
-			return "redirect:/qna/list";
+			return "redirect:/qnaList";
 			
 		}
 		
 	}
 	
-	@RequestMapping("/qna/list")
+	@RequestMapping("/qnaList")
 	public String list(@RequestParam HashMap<String, String> param, Model model, Criteria cri) {
 		System.out.println("@@@### QnaController list() start");
 		
@@ -93,12 +99,13 @@ public class QnaController {
 		
 		if (session.getAttribute("u_auth") == null) {
 			System.out.println("nonuser go list start");
-
-			System.out.println("ì´ë©”ì¼ ì˜ë°›ì•„ì™”ë‚˜?"+param.get("q_email"));
-
-			System.out.println("ì„¸ì…˜ìœ¼ë¡œ ë°›ì€ ë©”ì¼="+session.getAttribute("q_email"));
+			
+			System.out.println("ÀÌ¸ŞÀÏ Àß¹Ş¾Æ¿Ô³ª?"+param.get("q_email"));
+			
+			System.out.println("¼¼¼ÇÀ¸·Î ¹ŞÀº ¸ŞÀÏ="+session.getAttribute("q_email"));
 			
 			if (param.get("q_email") == null) {
+				System.out.println("param emailÀÌ nullÀÓ sessionÀ¸·Î ¹ŞÀ½");
 				cri.setQ_email((String) session.getAttribute("q_email"));
 				
 				System.out.println("cri PageNum ===>"+cri.getPageNum());
@@ -113,7 +120,7 @@ public class QnaController {
 				model.addAttribute("pageMaker", pageMake);
 				
 			}else {
-				System.out.println("session emailì´ nullì„ paramìœ¼ë¡œ ë°›ìŒ");
+				System.out.println("session emailÀÌ nullÀÓ paramÀ¸·Î ¹ŞÀ½");
 				cri.setQ_email(param.get("q_email"));
 				
 				System.out.println("cri PageNum ===>"+cri.getPageNum());
@@ -124,8 +131,11 @@ public class QnaController {
 				pageMakerDto pageMake = new pageMakerDto(cri, newTotal);
 				
 				model.addAttribute("pageMaker", pageMake);
+				
 			}
 
+			
+			
 			ArrayList<QnaDto> dtos = service.newListPaging(cri);
 			model.addAttribute("list", dtos);
 			
@@ -159,13 +169,13 @@ public class QnaController {
 			
 		} else {
 			System.out.println("user go list start");
-
-			System.out.println("ì´ë©”ì¼ ì˜ë°›ì•„ì™”ë‚˜?"+param.get("q_email"));
-
-			System.out.println("ì„¸ì…˜ìœ¼ë¡œ ë°›ì€ ë©”ì¼="+session.getAttribute("q_email"));
-
-
-			//session.getAttribute("q_email"); ì—¬ëŸ¬ë²ˆ ê¸€ ì“°ë©´ ì„¸ì…˜ ì—‰í‚¤ë‚˜?
+			
+			System.out.println("ÀÌ¸ŞÀÏ Àß¹Ş¾Æ¿Ô³ª?"+param.get("q_email"));
+			
+			System.out.println("¼¼¼ÇÀ¸·Î ¹ŞÀº ¸ŞÀÏ="+session.getAttribute("q_email"));
+			
+			
+			//session.getAttribute("q_email"); ¿©·¯¹ø ±Û ¾²¸é ¼¼¼Ç ¾ûÅ°³ª?
 			
 			
 			if (param.get("q_email") == null) {
@@ -224,9 +234,9 @@ public class QnaController {
 //		if (session.getAttribute("u_auth") == null) {
 //			System.out.println("nonuser go list start");
 //			
-//			System.out.println("ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ß¹Ş¾Æ¿Ô³ï¿½?"+param.get("q_email"));
+//			System.out.println("ÀÌ¸ŞÀÏ Àß¹Ş¾Æ¿Ô³ª?"+param.get("q_email"));
 //			
-//			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½="+session.getAttribute("q_email"));
+//			System.out.println("¼¼¼ÇÀ¸·Î ¹ŞÀº ¸ŞÀÏ="+session.getAttribute("q_email"));
 //			
 //			param.put("q_email", (String) session.getAttribute("q_email"));
 //			
@@ -254,11 +264,11 @@ public class QnaController {
 //		} else {
 //			System.out.println("user go list start");
 //			
-//			System.out.println("ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ß¹Ş¾Æ¿Ô³ï¿½?"+param.get("q_email"));
+//			System.out.println("ÀÌ¸ŞÀÏ Àß¹Ş¾Æ¿Ô³ª?"+param.get("q_email"));
 //			
-//			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½="+session.getAttribute("q_email"));
+//			System.out.println("¼¼¼ÇÀ¸·Î ¹ŞÀº ¸ŞÀÏ="+session.getAttribute("q_email"));
 //			
-//			//session.getAttribute("q_email"); ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½?
+//			//session.getAttribute("q_email"); ¿©·¯¹ø ±Û ¾²¸é ¼¼¼Ç ¾ûÅ°³ª?
 //			
 //			
 //			if (param.get("q_email") == null) {
@@ -281,7 +291,7 @@ public class QnaController {
 //		
 //	}
 	
-	@RequestMapping("/qna/write")
+	@RequestMapping("/qnaWrite")
 	public String write(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### QnaController write() start");
 		
@@ -291,10 +301,10 @@ public class QnaController {
 		
 		System.out.println("@@@### QnaController write() end");
 		
-		return "redirect:list";
+		return "redirect:qnaList";
 	}
 	
-	@RequestMapping("/qna/show")
+	@RequestMapping("/qnaShow")
 	public String show(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### QnaController show() start");
 		
@@ -306,7 +316,7 @@ public class QnaController {
 		return "qna/show";
 	}
 	
-	@RequestMapping("/qna/delete")
+	@RequestMapping("/qnaDelete")
 	public String delete(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### QnaController delete() start");
 		
@@ -314,10 +324,10 @@ public class QnaController {
 		
 		System.out.println("@@@### QnaController delete() end");
 		
-		return "redirect:list";
+		return "redirect:qnaList";
 	}
 	
-	@RequestMapping("/qna/modify_view")
+	@RequestMapping("/qnaModify_view")
 	public String modify_view(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### modify_view()");
 		
@@ -327,7 +337,7 @@ public class QnaController {
 		return "/qna/modify";
 	}
 	
-	@RequestMapping(value = "/qna/modify")
+	@RequestMapping(value = "/qnaModify")
 	public String modify(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### QnaController modify() start");
 		
@@ -335,7 +345,15 @@ public class QnaController {
 		
 		System.out.println("@@@### QnaController modify() end");
 		
-		return "redirect:list";
+		return "redirect:qnaList";
+	}
+	
+	@RequestMapping(value = "/mailCheck1", method = RequestMethod.GET)
+	@ResponseBody
+	public String mailCheck(String email) {
+		System.out.println("ÀÌ¸ŞÀÏÀÎÁõ : " + email);
+		
+		return mailService1.joinEmail1(email);
 	}
 
 }

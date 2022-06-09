@@ -128,6 +128,6 @@ public class Res_movie_Controller {
     //결제 완료 후 메인 페이지 이동
     @RequestMapping("st")
     public String nextt(){
-        return "main/index";
+        return "redirect:/";
     }
 }

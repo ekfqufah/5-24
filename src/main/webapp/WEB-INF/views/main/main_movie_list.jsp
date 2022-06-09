@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -46,7 +46,7 @@
     <link rel="stylesheet" type="text/css" href="https://img.cgv.co.kr/R2014/js/icheck/iCheck.css" />
 
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
 	.wrap-movie-chart {
@@ -66,7 +66,17 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
-    	
+    
+		// í˜ì´ì§€ í˜¸ì¶œí•˜ìë§ˆì ìœ„ì˜ ì œì´ì¿¼ë¦¬ ì‹¤í–‰
+		$(document).ready(function(){
+			var sorted = $(".sort_name").val();
+			
+			if (sorted.length==0) {
+				sorted = "ìµœì‹ ìˆœ";
+			}
+			
+			$('#order_type').val(sorted).trigger('change');
+		});
     </script>
 </head>
 <body>
@@ -74,27 +84,29 @@
 <div class="wrap-movie-chart">
         <!-- Heading Map Multi -->
         <div class="tit-heading-wrap" style="border: none">
-            <h3 >¹«ºñÂ÷Æ®</h3>
+            <h3 >ë¬´ë¹„ì°¨íŠ¸</h3>
         </div>
         
         <!-- //Heading Map Multi -->
         
         <!-- Sorting -->
-        <div class="sect-sorting">
-            <label for="order_type" class="hidden">Á¤·Ä</label>
-            <select id="order_type" name="order-type">
-				<option title="ÇöÀç ¼±ÅÃµÊ" selected value="1">¿¹¸ÅÀ²¼ø</option>
-                <option value="2">ÆòÁ¡¼ø</option>
-                <option value="3">°ü¶÷°´¼ø</option>
-            </select>
-            <button type="button" class="round gray"><span>GO</span></button>
-        </div>
+        <form method="post" action="sort_check">
+	        <div class="sect-sorting">
+	            <label for="order_type" class="hidden">ì •ë ¬</label>
+	            <select id="order_type" name="kind">
+					<option title="í˜„ì¬ ì„ íƒë¨" selected value="ìµœì‹ ìˆœ">ìµœì‹ ìˆœ</option>
+	                <option value="ì˜¤ë˜ëœìˆœ">ì˜¤ë˜ëœìˆœ</option>
+	                <option value="ì¸ê¸°ìˆœ">ì¸ê¸°ìˆœ</option>
+	            </select>
+	            <button type="submit" class="round gray"><span>GO</span></button>
+	        </div>
+        </form>
         <!-- //Sorting -->
         <div class="sect-movie-chart">
             <ol class="movie_list_ol">
             
         <c:forEach items="${list }" var="dto" varStatus="status">
-                <li class="movie_list_li">
+                <li class="movie_list_li" onClick = "location.href='movieDisplay?m_code=${dto.m_code}'"> 
                     <div class="box-image" >
                         <strong class="rank" id="rank_color">No.${status.index +1}</strong>	
                         <a href="#">
@@ -111,18 +123,18 @@
                         </a>
 
                         <div class="score">
-                            <strong class="percent">ÆòÁ¡<span>${dto.m_rate }</span></strong>
+                            <strong class="percent">í‰ì <span>${dto.m_rate }</span></strong>
                         </div>
 
                         <span class="txt-info">
                             <strong>
                                 <fmt:formatDate pattern="yyyy-MM-dd" value="${dto.m_date }" /> 
-                                <span>°³ºÀ</span>
+                                <span>ê°œë´‰</span>
                                 
                             </strong>
                         </span>
                         <span class="like"> 
-                            <a class="link-reservation" href="#">¿¹¸Å</a>
+                            <a class="link-reservation" href="#">ì˜ˆë§¤</a>
                         </span>
                     </div>    
                 </li>
@@ -132,6 +144,8 @@
 			</ol>
 		</div>
 
+<!-- 0607 ì œì´ì¿¼ë¦¬ ì‹¤í–‰ì‹œí‚¤ê¸° ìœ„í•´ - ê·¼ì§€ -->
+<input type="hidden" class="sort_name" value="${sort_name }">
 
 <jsp:include page="mainFooter.jsp" flush="false"></jsp:include>
 </body>

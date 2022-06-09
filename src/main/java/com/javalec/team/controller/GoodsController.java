@@ -167,7 +167,7 @@ public class GoodsController {
 				goodsService.insertBuy(param);
 			}
 			model.addAttribute("cartlist",buylist);
-			return "main/index";
+			return "redirect:/";
 		}
 		
 		
@@ -177,6 +177,6 @@ public class GoodsController {
 		
 			goodsService.insertBuy(param);
 		}
-		return "main/index";	
+		return "redirect:/";	
 	}
 }

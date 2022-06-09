@@ -129,7 +129,14 @@ public class UserServiceImpl implements UserService{
 		ArrayList<GoodsDto> list = dao.getMygoodsList(param);
 		return list;
 	}
-
+	
+	@Override
+	public UserDto editUser(HashMap<String, String> param) {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		UserDto dto = dao.editUser(param);
+		
+		return dto;
+	}
 	
 
 

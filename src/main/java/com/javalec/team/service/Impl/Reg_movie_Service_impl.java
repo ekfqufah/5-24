@@ -56,7 +56,15 @@ public class Reg_movie_Service_impl implements Reg_movie_Service {
 		
 		return show;
 	}
-
+	
+	@Override
+	public ArrayList<MovieDto> serch_mov(Model model) {
+		Reg_movie_Dao dao = sqlSession.getMapper(Reg_movie_Dao.class);
+		ArrayList<MovieDto> serch_mov = dao.serch_mov(model);
+		
+		return serch_mov;
+	}
+	
 	@Override
 	public ArrayList<MovieDto> list_sort(Model model) {
 		Reg_movie_Dao dao = sqlSession.getMapper(Reg_movie_Dao.class);
@@ -97,5 +105,11 @@ public class Reg_movie_Service_impl implements Reg_movie_Service {
 		ArrayList<MovieDto> listStillcut = dao.getStillCut(param);
 		
 		return listStillcut;
+	}
+	
+	@Override
+	public void screen(HashMap<String, String> param) {
+		Reg_movie_Dao dao = sqlSession.getMapper(Reg_movie_Dao.class);
+		dao.screen(param);
 	}
 }

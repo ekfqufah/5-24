@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 
 <!-- CSS only -->
@@ -24,7 +24,7 @@
 		font-size: 13px;
 	    line-height: 1.2;
 	    color: #666;
-	    font-family: 'Noto Sans KR', 'CJONLYONENEW', '¸¼Àº °íµñ', 'µ¸¿ò', Dotum, sans-serif;
+	    font-family: 'Noto Sans KR', 'CJONLYONENEW', 'ë§‘ì€ ê³ ë”•', 'ë‹ì›€', Dotum, sans-serif;
 	    font-weight: 400;
 	}
 	
@@ -71,6 +71,17 @@
     .fa-star {
     	color: yellow;
     }
+    
+    /* í•œì¤„ ë§ì¤„ì„ */
+    .main_movie_title {
+	    display: inline-block;
+	    text-overflow: 
+	    ellipsis;white-space: 
+	    nowrap;overflow: 
+	    hidden;
+	    width: 150px;
+    }
+    
 </style>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -116,17 +127,17 @@
  		<div class="chart">
 			<div class="inner_chart">
 				<div class="chart_top">
-					<div class="chart_title">¹«ºñÂ÷Æ®</div>
+					<div class="chart_title">ë¬´ë¹„ì°¨íŠ¸</div>
 					<div>
-						<button class="btn btn-outline-secondary btn-sm" id="chart_btn" onclick="main_movie_list()">ÀüÃ¼º¸±â</button>
+						<button class="btn btn-outline-secondary btn-sm" id="chart_btn" onclick="main_movie_list()">ì „ì²´ë³´ê¸°</button>
 					</div>
 				</div>
 				<table>
 					<tr>
 						<c:forEach items="${list }" var="dto" begin="0" end="5">
-							<td class="list_td">
-								<div><a href="movieDisplay?m_code=${dto.m_code}"><img src='${pageContext.request.contextPath}/resources/${dto.m_position}' class="main_img rounded"></a></div>
-								<div>${dto.m_title }</div> 
+							<td class="list_td"  style = "cursor:pointer;" onClick = "location.href='movieDisplay?m_code=${dto.m_code}'">
+								<div><img src='${pageContext.request.contextPath}/resources/${dto.m_position}' class="main_img rounded"></div>
+								<div class="main_movie_title">${dto.m_title }</div> 
 								<div><i class="fa-solid fa-star"></i>&nbsp;${dto.m_rate }</div>
 								
 				 				<input type="hidden" id="m_code_hidden" value="${dto.m_code }">				

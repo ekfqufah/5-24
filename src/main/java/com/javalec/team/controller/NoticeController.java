@@ -1,7 +1,9 @@
 package com.javalec.team.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ public class NoticeController {
 	@Autowired
 	private NoticeService service;
 	
-	@RequestMapping("/notice/list")
+	@RequestMapping("/noticeList")
 	public String list(Model model, Criteria cri) {
 		System.out.println("@@@### NoticeController list() start");
 		
@@ -55,7 +57,7 @@ public class NoticeController {
 //		return "/notice/list";
 //	}
 	
-	@RequestMapping("/notice/write_view")
+	@RequestMapping("/noticeWrite_view")
 	public String write_view(Model model) {
 		System.out.println("@@@### write_view()");
 		
@@ -68,7 +70,7 @@ public class NoticeController {
 		return "/notice/write";
 	}
 	
-	@RequestMapping("/notice/write")
+	@RequestMapping("/noticeWrite")
 	public String write(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### NoticeController write() start");
 		
@@ -76,16 +78,16 @@ public class NoticeController {
 		
 		System.out.println("@@@### NoticeController write() end");
 		
-		return "redirect:list";
+		return "redirect:noticeList";
 	}
 	
-	@RequestMapping("/notice/show")
+	@RequestMapping("/noticeShow")
 	public String show(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### NoticeController show() start");
 		
 		System.out.println("@@@### NoticeController upView() start");
 		
-		service.upView(param); //Í≤åÏãúÍ∏ÄÏùÑ ÌÅ¥Î¶≠ÌïòÎ©¥ Ï°∞ÌöåÏàòÎ•º Ïò¨Î¶º
+		service.upView(param); //∞‘Ω√±€¿ª ≈¨∏Ø«œ∏È ¡∂»∏ºˆ∏¶ ø√∏≤
 		
 		System.out.println(session.getAttribute("u_auth"));
 		
@@ -99,7 +101,7 @@ public class NoticeController {
 		return "/notice/show";
 	}
 	
-	@RequestMapping("/notice/delete")
+	@RequestMapping("/noticeDelete")
 	public String delete(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### NoticeController delete() start");
 		
@@ -107,10 +109,10 @@ public class NoticeController {
 		
 		System.out.println("@@@### NoticeController delete() end");
 		
-		return "redirect:list";
+		return "redirect:noticeList";
 	}
 	
-	@RequestMapping("/notice/modify_view")
+	@RequestMapping("/noticeModify_view")
 	public String modify_view(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### modify_view()");
 		
@@ -120,7 +122,7 @@ public class NoticeController {
 		return "/notice/modify";
 	}
 	
-	@RequestMapping(value = "/notice/modify")
+	@RequestMapping(value = "/noticeModify")
 	public String modify(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### NoticeController modify() start");
 		
@@ -128,7 +130,34 @@ public class NoticeController {
 		
 		System.out.println("@@@### NoticeController modify() end");
 		
-		return "redirect:list";
+		return "redirect:noticeList";
 	}
+	
+	//æ¯æÓº≠¡÷§–ºÆ
+//	@RequestMapping("/noticeSearch")
+//	public String search(HttpServletRequest request, Model model, Criteria cri) {
+//		System.out.println("@@@### NoticeController search() start");
+//		
+//		request.getParameter("kind");
+//		if (request.getParameter("kind").equals("¡¶∏Ò")) {
+//			ArrayList<NoticeDto> dtos = service.searchTitle(cri);
+//			model.addAttribute("list", dtos);
+//			
+////			Assertions.assertThat("kind").isSameAs("");
+//		} else {
+//			ArrayList<NoticeDto> dtos = service.searchContent(cri);
+//			model.addAttribute("list", dtos);
+//		}
+//		
+//		int total = service.getTotal();
+//		
+//		pageMakerDto pageMake = new pageMakerDto(cri, total);
+//		
+//		model.addAttribute("pageMaker", pageMake);
+//		
+//		System.out.println("@@@### NoticeController search() end");
+//		
+//		return "/notice/list";
+//	}
 
 }

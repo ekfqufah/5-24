@@ -19,7 +19,7 @@ public class FaqController {
 	@Autowired
 	private FaqService service;
 	
-	@RequestMapping("/faq/list")
+	@RequestMapping("/faqList")
 	public String list(@RequestParam HashMap<String, String> param, Model model, Criteria cri) {
 		System.out.println("@@@### FaqController list() start");
 		
@@ -50,7 +50,7 @@ public class FaqController {
 //		return "/faq/list";
 //	}
 	
-	@RequestMapping("/faq/write_view")
+	@RequestMapping("/faqWrite_view")
 	public String write_view(Model model) {
 		System.out.println("@@@### write_view()");
 		
@@ -63,7 +63,7 @@ public class FaqController {
 		return "/faq/write";
 	}
 	
-	@RequestMapping("/faq/write")
+	@RequestMapping("/faqWrite")
 	public String write(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### FaqController write() start");
 		
@@ -71,10 +71,10 @@ public class FaqController {
 		
 		System.out.println("@@@### FaqController write() end");
 		
-		return "redirect:list";
+		return "redirect:faqList";
 	}
 	
-	@RequestMapping("/faq/show")
+	@RequestMapping("/faqShow")
 	public String show(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### FaqController show() start");
 		
@@ -86,7 +86,7 @@ public class FaqController {
 		return "/faq/show";
 	}
 	
-	@RequestMapping("/faq/delete")
+	@RequestMapping("/faqDelete")
 	public String delete(@RequestParam HashMap<String, String> param) {
 		System.out.println("@@@### FaqController delete() start");
 		
@@ -94,10 +94,10 @@ public class FaqController {
 		
 		System.out.println("@@@### FaqController delete() end");
 		
-		return "redirect:list";
+		return "redirect:faqList";
 	}
 	
-	@RequestMapping("/faq/modify_view")
+	@RequestMapping("/faqModify_view")
 	public String modify_view(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### modify_view()");
 		
@@ -107,7 +107,7 @@ public class FaqController {
 		return "/faq/modify";
 	}
 	
-	@RequestMapping(value = "/faq/modify")
+	@RequestMapping(value = "/faqModify")
 	public String modify(@RequestParam HashMap<String, String> param, Model model) {
 		System.out.println("@@@### FaqController modify() start");
 		
@@ -115,6 +115,6 @@ public class FaqController {
 		
 		System.out.println("@@@### FaqController modify() end");
 		
-		return "redirect:list";
+		return "redirect:faqList";
 	}
 }

@@ -23,12 +23,29 @@
 	}
 
 </script>
+<style type="text/css">
+        #content_area
+    {
+        /* min-width : 1120px;	
+    	max-width : 1280px;	
+    	margin:auto; */
+
+        /* float: left; */
+        margin: 5px 250px 0px 250px;
+        /* display: flex;  */
+        
+    }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body>
-	<center>
-		<h1>글 수 정 하 기</h1>
-		<form name="faq_form" method="post" action="modify?f_code=${show.f_code}">
-			<table border="1">
+<jsp:include page="../main/mainHeader.jsp" flush="false"></jsp:include>
+	<div id="content_area">
+	<div id="content_area">
+		<h3>글 수 정 하 기</h3>
+		<form name="faq_form" method="post" action="faqModify?f_code=${show.f_code}">
+			<table class="table">
 				<tr height="30">
 					<td width="80">작성자</td>
 					<td width="140">
@@ -38,7 +55,7 @@
 				<tr height="30">
 					<td width="80">카테고리</td>
 					<td colspan="3" width="460">
-						<select name="f_category">
+						<select name="f_category" class="form-control">
 							<option value="예매/매표">예매/매표</option>
 							<option value="결제">결제</option>
 							<option value="오류">오류</option>
@@ -50,23 +67,25 @@
 				<tr height="30">
 					<td width="80">글제목</td>
 					<td colspan="3" width="460">
-						<input type="text" name="f_title" size="55" maxlength="50" value="${show.f_title}">
+						<input type="text" class="form-control" name="f_title" size="55" maxlength="50" value="${show.f_title}">
 					</td>
 				</tr>
 				<tr>
 					<td colspan="4">
-						<textarea rows="10" cols="65" name="f_content">${show.f_content}</textarea>
+						<textarea rows="10" class="form-control" cols="65" name="f_content">${show.f_content}</textarea>
 					</td>
 				</tr>
-				<tr height="50" align="center">
+				<tr height="50" align="right">
 					<td colspan="4">
-						<input type="button" onclick="check_ok()" value="글수정">&nbsp;&nbsp;&nbsp;
-						<input type="reset" value="다시작성">&nbsp;&nbsp;&nbsp;
-						<a href="list">글목록</a>
+						<input type="button" class="btn btn-outline-secondary btn-sm" value="글 수정" onclick="check_ok()">
+						<input type="reset" class="btn btn-outline-secondary btn-sm" value="다시작성">
+						<input type="button" class="btn btn-outline-secondary btn-sm" value="글 목록" onclick="location.href='faqList'">
 					</td>				
 				</tr>
 			</table>
 		</form>
-	</center>
+	</div>
+	</div>
+	<jsp:include page="../main/mainFooter.jsp" flush="false"></jsp:include>
 </body>
 </html>

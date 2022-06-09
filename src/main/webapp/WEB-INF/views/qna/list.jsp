@@ -7,16 +7,17 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <style type="text/css">
 	  .pageInfo{
 	      list-style : none;
 	      display: inline-block;
-	    margin: 50px 0 0 100px;      
+	    margin: 50px 0 0 0;      
 	  }
 	  .pageInfo li{
 	      float: left;
 	    font-size: 20px;
-	    margin-left: 18px;
 	    padding: 7px;
 	    font-weight: 500;
 	  }
@@ -26,24 +27,36 @@
 	 .active{
       background-color: #cdd5ec;
   }
+        #content_area
+    {
+        /* min-width : 1120px;	
+    	max-width : 1280px;	
+    	margin:auto; */
+
+        /* float: left; */
+        margin: 5px 250px 0px 250px;
+        /* display: flex;  */
+        
+    }
 </style>
 
 <script type="text/javascript">
 	$(".pageInfo a").on("click", function(e) {
         e.preventDefault();
         moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-        moveForm.attr("action", "/notice/list");
+        moveForm.attr("action", "/qnaList");
         moveForm.submit();
 	})
 </script>
 </head>
 <body>
+<jsp:include page="../main/mainHeader.jsp" flush="false"></jsp:include>
 	<div id="content_area">
 		<div id="title">
-			<h1>1대1문의</h1>
+			<h3>1대1문의</h3>
 		</div>
 		<div id="boardArea">
-			<table width="900" cellspacing="0" style="margin-bottom: 20px" border="1">
+			<table cellspacing="0" class="table">
 				<tr height="25">
 					<td width="40" align="center">번호</td>
 					<td width="120" align="center">작성자</td>
@@ -54,7 +67,7 @@
 				<c:set var="answer" value="답변없음"/>
 				<c:set var="num" value="${pageMaker.total - ((pageMaker.cri.pageNum - 1) * 10)}"></c:set>
 				<c:forEach items="${list}" var="dto">
-					<tr>
+					<tr align="center">
 						<td>${num}</td>
 						<c:choose>
 							<c:when test="${id eq dto.u_id}">
@@ -64,8 +77,8 @@
 								<td>${dto.u_id}</td>
 							</c:otherwise>
 						</c:choose>
-						<td>
-							<a href="show?q_code=${dto.q_code}" style="text-decoration: none;">
+						<td align="left">
+							<a href="qnaShow?q_code=${dto.q_code}" style="text-decoration: none;">
 							<c:choose>
 								<c:when test="${answer eq dto.q_answer}">
 									[미답변]&nbsp;&nbsp;
@@ -82,7 +95,7 @@
 				</c:forEach>
 			</table>
 			
-			<div class="pageInfo_wrap">
+			<div class="pageInfo_wrap" align="center">
 				<div class="pageInfo_area">
 					<ul id="pageInfo" class="pageInfo">
 					
@@ -111,16 +124,26 @@
 			</form>
 			
 		</div>
- 		<div id="writeBtn">
-		<%-- <%
+ 		<div id="writeBtn" align="right">
+		<%
 		String u_auth = (String)session.getAttribute("u_auth");
 		%>
 		<c:set var="admin" value="A"/>
-		<c:if test="${admin eq u_auth}"> <!-- 관리자만 작성 버튼 활성화 -->
+		<c:choose>
+			<c:when test="${admin eq u_auth}">
+				<input type="button" class="btn btn-outline-secondary btn-sm" value="메인으로" onclick="location.href='index'">
+			</c:when>
+			<c:otherwise>
+				<input type="button" class="btn btn-outline-secondary btn-sm" value="1대1 문의하기" onclick="location.href='qna_main'">
+				<input type="button" class="btn btn-outline-secondary btn-sm" value="메인으로" onclick="location.href='index'">
+			</c:otherwise>
+		</c:choose>
+		<%-- <c:if test="${admin eq u_auth}"> <!-- 관리자만 작성 버튼 활성화 -->
 			<a href="write_view">공지사항 작성</a>
-		</c:if> --%>
-			<a href="#">메인으로(미완)</a>
+		</c:if>
+			<a href="index">메인으로</a> --%>
 		</div>
 	</div>
+	<jsp:include page="../main/mainFooter.jsp" flush="false"></jsp:include>
 </body>
 </html>

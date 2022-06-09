@@ -20,6 +20,7 @@
 </script>
 </head>
 <body>
+<jsp:include page="../main/mainHeader.jsp" flush="false"></jsp:include>
 	<div id="content_area">
 		<div id="title">
 			<h1>리뷰글 작성</h1>
@@ -51,5 +52,6 @@
 			</table>
 		</form>
 	</div>
+	<jsp:include page="../main/mainFooter.jsp" flush="false"></jsp:include>
 </body>
 </html>

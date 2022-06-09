@@ -7,13 +7,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.javalec.team.dao.Reg_movie_Dao;
 import com.javalec.team.dao.ReviewDao;
 import com.javalec.team.dto.Criteria;
-import com.javalec.team.dto.MovieDto;
 import com.javalec.team.dto.ReviewDto;
 import com.javalec.team.service.ReviewService;
-
 @Service("ReviewService")
 public class ReviewServiceImpl implements ReviewService{
 
@@ -88,13 +85,13 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public void upView(HashMap<String, String> param) {
-		System.out.println("@@@### ReviewServiceImpl upView() start");
+	public void upGood(HashMap<String, String> param) {
+		System.out.println("@@@### ReviewServiceImpl upGood() start");
 		
 		ReviewDao dao = sqlSession.getMapper(ReviewDao.class);
-		dao.upView(param);
+		dao.upGood(param);
 		
-		System.out.println("@@@### ReviewServiceImpl upView() end");
+		System.out.println("@@@### ReviewServiceImpl upGood() end");
 		
 	}
 
@@ -130,7 +127,5 @@ public class ReviewServiceImpl implements ReviewService{
 		System.out.println("@@@### ReviewServiceImpl getRateAvg() end");
 		return dto;
 	}
-	
-	
 
 }

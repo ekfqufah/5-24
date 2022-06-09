@@ -28,7 +28,7 @@ import com.javalec.team.service.UserService;
 
 @Controller
 public class UserController {
-		
+	
 	@Autowired
 	private UserService service;
 	
@@ -46,13 +46,13 @@ public class UserController {
 	}
 	@RequestMapping("userPage")
 	public String userpage(@RequestParam HashMap<String, String> param, Model model) {
-		
-		ArrayList<ReviewDto> myReviewList = service.getMyReviewList(param);
+		System.out.println(param.get("u_id"));
+		/* ArrayList<ReviewDto> myReviewList = service.getMyReviewList(param); */
 		ArrayList<FaqDto> myFaqList =  service.getMyFaqList(param);
 		ArrayList<NoticeDto> myNotice_tList = service.getMyNotice_tList(param);
 		ArrayList<QnaDto> myQnaList = service.getMyQnaList(param);
 		ArrayList<GoodsDto> mygoodsList = service.getMygoodsList(param);
-		model.addAttribute("myReviewList",myReviewList);
+		/* model.addAttribute("myReviewList",myReviewList); */
 		model.addAttribute("myFaqList",myFaqList);
 		model.addAttribute("myNotice_tList",myNotice_tList);
 		model.addAttribute("myQnaList",myQnaList);
@@ -70,7 +70,7 @@ public class UserController {
 		PrintWriter out = response.getWriter();
 
 		if (dtos.isEmpty()) {
-			out.println("<script>alert('議댁옱�븯吏� �븡�뒗 �쉶�썝�엯�땲�떎.'); self.close();</script>");
+			out.println("<script>alert('鈺곕똻�삺占쎈릭筌욑옙 占쎈륫占쎈뮉 占쎌돳占쎌뜚占쎌뿯占쎈빍占쎈뼄.'); self.close();</script>");
 			out.flush();
 			return "user/login";
 		} else {
@@ -79,16 +79,17 @@ public class UserController {
 				session.setAttribute("u_auth", dtos.get(0).getU_auth());
 				System.out.println(param.get("u_id"));
 				System.out.println(dtos.get(0).getU_auth());
-				return "redirect:index";
+				return "redirect:/";
 			} else {
-				out.println("<script>alert('�븘�씠�뵒 �삉�뒗 鍮꾨�踰덊샇媛� �떎由낅땲�떎.'); self.close();</script>");
+				out.println("<script>alert('占쎈툡占쎌뵠占쎈탵 占쎌굢占쎈뮉 �뜮袁⑨옙甕곕뜇�깈揶쏉옙 占쎈뼄�뵳�굝�빍占쎈뼄.'); self.close();</script>");
 				out.flush();
 				return "user/login";
 			}
 		}
 		
 	}
-		
+	
+	
 	@RequestMapping("register")
 	public String register() {
 			
@@ -122,29 +123,58 @@ public class UserController {
 		
 		
 		if(check != 0) {
-			return "fail";	// 以묐났 �븘�씠�뵒媛� 議댁옱
+			return "fail";	// 餓λ쵎�궗 占쎈툡占쎌뵠占쎈탵揶쏉옙 鈺곕똻�삺
 		} else {
-			return "success";	// 以묐났 �븘�씠�뵒 x
+			return "success";	// 餓λ쵎�궗 占쎈툡占쎌뵠占쎈탵 x
 		}	
 	}
 	
-	//�씠硫붿씪 �씤利�
+	@RequestMapping("editUser")
+	public String editUser(@RequestParam HashMap<String, String> param, Model model) {
+		UserDto dto =  service.confirmUserId(param);
+		model.addAttribute("dto",dto);
+		
+		return "/user/editUser";
+	}
+	
+	@RequestMapping("editUserOk")
+	public String editUserOk(@RequestParam HashMap<String, String> param, Model model, HttpServletResponse response) throws IOException {
+		
+		
+		response.setContentType("text/html");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		
+			try {
+				service.editUser(param);
+				out.println("<script>alert('정보가 수정되었습니다.'); location.href='login';</script>");
+				out.flush();
+				return "redirect:index";
+			} catch (Exception e) {
+				return "/user/editUser";
+			}
+		
+	}
+	
+	//占쎌뵠筌롫뗄�뵬 占쎌뵥筌앾옙
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
 	@ResponseBody
 	public String mailCheck(String email) {
-		System.out.println("�씠硫붿씪 �씤利� �슂泥��씠 �뱾�뼱�샂!");
-		System.out.println("�씠硫붿씪 �씤利� �씠硫붿씪 : " + email);
+		System.out.println("이메일 인증 요청이 들어옴!");
+		System.out.println("이메일 인증 이메일 : " + email);
 		return mailService.joinEmail(email);
 	}
 	
 	
 	@RequestMapping(value = "delete")
-	public String delete(@RequestParam HashMap<String, String> param) {
+	public void delete(@RequestParam HashMap<String, String> param, HttpServletResponse response) throws IOException {
+		
+		response.setContentType("text/html");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		
 		
 		service.outUser(param);
-		
-		
-		return "redirect:login";
 	}
 	
 	@RequestMapping("findId")
@@ -154,7 +184,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("findIdOk")
-	public String findIdOk(@RequestParam HashMap<String, String> param, HttpServletResponse response) throws IOException {
+	public void findIdOk(@RequestParam HashMap<String, String> param, HttpServletResponse response) throws IOException {
 		
 		UserDto dto = service.tryToFindId(param);
 		
@@ -162,15 +192,13 @@ public class UserController {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		
-			if (dto == null) {
-				out.println("<script>alert('議댁옱�븯吏� �븡�뒗 �쉶�썝�엯�땲�떎.'); self.close();</script>");
-				out.flush();
-				return "user/findId";
-			} else {
-				out.println("<script>alert('�쉶�썝�떂�쓽 �븘�씠�뵒�뒗 "+dto.getU_id()+" �엯�땲�떎.'); self.close();</script>");
-				out.flush();
-				return "redirect:login";
-			}
+		if (dto == null) {
+			out.println("<script>alert('존재하지 않는 회원입니다.'); location.href='findId';</script>");
+			out.flush();
+		} else {
+			out.println("<script>alert('회원님의 아이디는 "+dto.getU_id()+" 입니다.'); location.href='login';</script>");
+			out.flush();
+		}
 		
 	}
 
@@ -181,9 +209,15 @@ public class UserController {
 		return "user/findPwd";
 	}
 	
+	@RequestMapping("logOut")
+	public String logout() {
+		System.out.println("@@@### logOut()");
+		
+		return "user/logOut";
+	}
 	
 	@RequestMapping("findPwdOk")
-	public String findPwd(@RequestParam HashMap<String, String> param, HttpServletResponse response) throws IOException {
+	public void findPwd(@RequestParam HashMap<String, String> param, HttpServletResponse response) throws IOException {
 		
 		UserDto dto = service.tryToFinPwd(param);
 		
@@ -192,15 +226,14 @@ public class UserController {
 		PrintWriter out = response.getWriter();
 		
 		if (dto == null) {
-			out.println("<script>alert('議댁옱�븯吏� �븡�뒗 �쉶�썝�엯�땲�떎.'); self.close();</script>");
+			out.println("<script>alert('존재하지 않는 회원입니다.'); location.href='findPwd';</script>");
 			out.flush();
-			return "user/findPwd";
 		} else {
-			out.println("<script>alert('�쉶�썝�떂�쓽 �뙣�뒪�썙�뱶�뒗 "+dto.getU_pwd()+" �엯�땲�떎.'); self.close();</script>");
+			out.println("<script>alert('회원님의 패스워드는 "+dto.getU_pwd()+" 입니다.'); location.href='login';</script>");
 			out.flush();
-			return "redirect:login";
 		}
 		
 	}
 	
 }
+	

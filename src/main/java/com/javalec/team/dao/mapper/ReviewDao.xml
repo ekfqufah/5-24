@@ -6,14 +6,23 @@
 <mapper namespace="com.javalec.team.dao.ReviewDao"> <!-- dao파일 경로 --> 
 
     <select id="list" parameterType="hashmap" resultType="com.javalec.team.dto.ReviewDto">
-        select * from review order by r_code desc
+        <![CDATA[
+        		select nn ,rn, r_code, r_name, u_id, b_code, r_date, r_rate, r_good from(
+        		select rownum as nn, rownum as rn, r_code, r_name, u_id, b_code, r_date, r_rate, r_good
+        		from review where rownum <= #{pageNum} * #{amount}  order by r_code desc)
+        	where rn > (#{pageNum} -1) * #{amount}
+        ]]>
     </select>
 
    <insert id="write" parameterType="hashmap">
    		insert into review(r_code, r_name, u_id, r_rate)
    		 values(review_seq.nextval, #{r_name}, #{u_id}, #{r_rate})
-   		 where b_code=#{b_code} and 1=#{b_yn}
+   		 where b_code=#{b_code}
     </insert>
+    
+    <select id="getTotal" resultType="int">
+        select count(*) from review
+    </select>
     
     <select id="show" parameterType="hashmap" resultType="com.javalec.team.dto.ReviewDto">
         select * from review where r_code=#{r_code}
@@ -31,8 +40,8 @@
     	update review set r_name= #{r_name}, r_rate=#{r_rate} where r_code=#{r_code}
     </update>
     
-    <update id="upView" parameterType="hashmap">
-    	update review set r_view = r_view+1 where r_code=#{r_code}
+    <update id="upGood" parameterType="hashmap">
+    	update review set r_good = r_good+1 where r_code=#{r_code}
     </update>
     
     <update id="insertRate" parameterType="hashmap">
@@ -46,5 +55,6 @@
     <select id="getRateAvg" parameterType="hashmap" resultType="com.javalec.team.dto.ReviewDto">
     	select ceil(avg(nvl(r_rate, 0))) as r_rate from review where m_code=#{m_code}
     </select>
+    
     
 </mapper>
